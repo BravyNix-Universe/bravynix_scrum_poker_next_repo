@@ -1,0 +1,340 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta content="width=device-width, initial-scale=1.0" name="viewport"><meta content="web_standard" name="shell-type"><title>Bravynix Scrum Poker</title><link href="https://fonts.googleapis.com" rel="preconnect"><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"><link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;700&amp;family=Noto+Sans:wght@400;500;600&amp;display=swap" rel="stylesheet"><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"><style>@layer base { html, body { margin: 0; padding: 0; } body { overscroll-behavior: none; } main > :first-child { margin-top: 0 !important; } main > :last-child { margin-bottom: 0 !important; } } ::-webkit-scrollbar { display: none; }</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { "colors": { "surface-container-high": "#e5e7ff", "primary-fixed-dim": "#bbc3ff", "on-error": "#ffffff", "surface-tint": "#4c58a4", "secondary-container": "#feae32", "surface": "#fbf8ff", "on-tertiary-fixed-variant": "#3b4470", "on-error-container": "#93000a", "on-secondary-container": "#6c4500", "on-secondary-fixed-variant": "#643f00", "on-primary-fixed-variant": "#33408a", "surface-variant": "#dde1ff", "tertiary-container": "#37406c", "outline": "#767682", "surface-bright": "#fbf8ff", "on-secondary-fixed": "#2a1800", "surface-dim": "#d4d8f9", "surface-container-low": "#f3f2ff", "background": "#fbf8ff", "secondary-fixed-dim": "#ffb956", "on-primary-container": "#9eaafc", "tertiary-fixed": "#dee1ff", "on-secondary": "#ffffff", "inverse-primary": "#bbc3ff", "error-container": "#ffdad6", "primary-container": "#2f3c86", "primary": "#16246f", "on-surface": "#151a32", "tertiary": "#202955", "on-surface-variant": "#454651", "on-tertiary-fixed": "#0e1842", "error": "#ba1a1a", "on-primary": "#ffffff", "surface-container": "#ececff", "on-background": "#151a32", "inverse-on-surface": "#f0efff", "on-tertiary": "#ffffff", "surface-container-highest": "#dde1ff", "primary-fixed": "#dee0ff", "surface-container-lowest": "#ffffff", "secondary-fixed": "#ffddb5", "secondary": "#835400", "on-primary-fixed": "#000f5c", "outline-variant": "#c6c5d2", "inverse-surface": "#2a2f48", "on-tertiary-container": "#a4ade0", "tertiary-fixed-dim": "#bbc4f8" }, "borderRadius": { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" }, "spacing": { "space-xl": "2rem", "gutter": "1.5rem", "space-xs": "0.25rem", "margin": "2rem", "space-lg": "1.5rem", "space-sm": "0.5rem", "space-md": "1rem" }, "fontFamily": { "display-card-value": [ "Bricolage Grotesque" ], "body-md": [ "Noto Sans" ], "label-lg": [ "Noto Sans" ], "headline-lg": [ "Bricolage Grotesque" ], "body-sm": [ "Noto Sans" ], "headline-md": [ "Bricolage Grotesque" ], "display-lg": [ "Bricolage Grotesque" ], "body-lg": [ "Noto Sans" ], "headline-sm": [ "Bricolage Grotesque" ], "label-md": [ "Noto Sans" ], "label-sm": [ "Noto Sans" ] }, "fontSize": { "display-card-value": [ "32px", { "lineHeight": "36px", "letterSpacing": "-0.01em", "fontWeight": "700" } ], "body-md": [ "14px", { "lineHeight": "20px", "fontWeight": "400" } ], "label-lg": [ "14px", { "lineHeight": "20px", "fontWeight": "600" } ], "headline-lg": [ "28px", { "lineHeight": "36px", "letterSpacing": "-0.01em", "fontWeight": "700" } ], "body-sm": [ "12px", { "lineHeight": "16px", "fontWeight": "400" } ], "headline-md": [ "22px", { "lineHeight": "28px", "fontWeight": "600" } ], "display-lg": [ "40px", { "lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "700" } ], "body-lg": [ "16px", { "lineHeight": "24px", "fontWeight": "400" } ], "headline-sm": [ "18px", { "lineHeight": "24px", "fontWeight": "600" } ], "label-md": [ "12px", { "lineHeight": "16px", "fontWeight": "600" } ], "label-sm": [ "11px", { "lineHeight": "14px", "fontWeight": "500" } ] } } } };</script></head><body class="min-h-screen flex flex-col bg-surface font-body-md text-on-surface"><header class="fixed top-0 left-0 right-0 z-50 bg-surface-container-lowest border-b border-outline-variant"><div class="h-16 max-w-7xl mx-auto px-margin flex items-center justify-between"><div class="flex items-center gap-space-md"><a class="flex items-center gap-space-sm hover:opacity-90 transition-opacity" data-path="home" href="#"><img alt="Bravynix Logo" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1UMort3k9M92uh6n9VZ7JAzztkRv0dh-t5NQCvKERJtAxpU9fGuunjIRIeBSB4s_VC0-RtsLrZ9mSOb9DuAX0B63IAPS4Uu3A_-GPwwDtJa51X6IXgtr4zC3SQpKPCSxFQrHzM4hfp5HCP_6SLH5Ub-Sh_iBVjeZe9Uf_VWfFXtBDKN18L2Lsi4IZShbUyxybaInnxRwLcgF9W8uQEYMSJu4E4J25n04e8jPO-INZF4"><span class="font-headline-sm text-headline-sm text-primary tracking-tight">Bravynix</span></a><span class="hidden sm:inline-block h-4 w-px bg-outline-variant"></span><span class="hidden sm:inline-block font-body-sm text-body-sm text-on-surface-variant">Scrum poker</span></div><nav class="flex items-center gap-space-lg" data-active-classes="bg-surface-container text-primary font-label-md"><a aria-current="page" class="transition-colors bg-surface-container text-primary font-label-md" data-path="home" href="#">Estimate room</a><a class="font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors" data-path="documentation-guide" href="#">Documentation &amp; guide</a><a class="font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors" data-path="github-open-source" href="#">GitHub &amp; open source</a><span class="hidden md:inline-flex items-center px-space-sm py-space-xs rounded-full bg-surface-container font-label-sm text-label-sm text-on-surface-variant">Free &amp; ephemeral</span><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center shrink-0"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></nav></div></header><main class="flex-1 w-full max-w-7xl mx-auto px-margin pt-16 bg-surface"><div class="flex flex-col w-full">
+<!-- 1. HERO SECTION -->
+<section class="w-full max-w-6xl mx-auto pt-10 pb-16 px-6">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+<!-- Left Column: Copy & Form -->
+<div class="lg:col-span-6 flex flex-col justify-center">
+<h1 class="font-headline-lg text-primary text-[56px] leading-[60px] tracking-tight font-bold mb-4">Scrum planning poker in one link</h1>
+<p class="font-body-lg text-on-surface-variant max-w-md mb-8">
+          Create a room, share the link, vote in private and reveal together. No sign-up. Each room deletes itself after 24 hours.
+        </p>
+<!-- Epic Creation Form -->
+<form class="w-full max-w-md flex flex-col gap-1.5" onsubmit="event.preventDefault();">
+<label class="font-label-lg text-on-surface font-medium text-[14px]" for="epic-name">
+            Epic name
+          </label>
+<div class="flex items-center gap-3">
+<input class="h-[44px] flex-1 px-4 rounded-lg bg-surface-container-lowest text-on-surface font-body-lg placeholder-outline focus:outline-none focus:ring-2 focus:ring-primary shadow-sm" id="epic-name" placeholder="Checkout revamp" style="border: 1px solid #767682;" type="text">
+<button class="h-[44px] px-6 rounded-lg bg-primary hover:bg-primary-container text-on-primary font-label-lg font-semibold transition-colors duration-150 shrink-0 shadow-sm" type="submit">
+              Create room
+            </button>
+</div>
+<p class="font-label-sm text-outline mt-2 tracking-normal text-[12px]">
+            No login required • Free forever • Auto-deletes in 24h
+          </p>
+</form>
+</div>
+<!-- Right Column: Tactile Interactive Preview Container -->
+<div class="lg:col-span-6">
+<div class="bg-tertiary rounded-[24px] p-7 shadow-xl relative overflow-hidden" style="border: 1px solid #37406c;">
+<!-- Top room header -->
+<div class="flex items-center justify-between pb-4 mb-4 text-[13px] font-label-md text-surface-container-highest" style="border-bottom: 1px solid #37406c;">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-secondary-container"></span>
+<span class="font-medium">Active room preview • Checkout revamp</span>
+</div>
+<div class="flex items-center gap-1.5 text-surface-variant">
+<span class="w-2 h-2 rounded-full bg-[#1e7a4c]"></span>
+<span class="">5 participants voted</span>
+</div>
+</div>
+<!-- Story card preview -->
+<div class="bg-surface-container-lowest rounded-[16px] p-5 mb-5 shadow-sm text-on-surface">
+<div class="flex items-center justify-between mb-2">
+<span class="font-label-md text-outline">Story 3 of 5</span>
+<span class="px-2.5 py-0.5 rounded-full bg-[#e6f4ec] text-[#1e7a4c] font-label-sm font-semibold text-[11px]">
+                Estimated
+              </span>
+</div>
+<h3 class="font-headline-sm text-[20px] font-semibold text-on-surface mb-4">
+              Show delivery ETA on the order page
+            </h3>
+<!-- Result highlight -->
+<div class="bg-surface-container-low rounded-lg p-3 flex items-center justify-between">
+<div class="flex items-baseline gap-2">
+<span class="font-headline-md text-primary font-bold text-[28px] leading-none">Average 4.6</span>
+<span class="font-label-sm text-outline">points</span>
+</div>
+<div class="text-right">
+<span class="font-label-md text-on-surface-variant font-medium">5 votes • Consensus high</span>
+</div>
+</div>
+</div>
+<!-- Revealed Cards Row -->
+<div class="grid grid-cols-5 gap-2.5 pb-2">
+<!-- Card 1: 2 -->
+<div class="h-[114px] rounded-xl flex flex-col justify-between p-2 relative shadow-md transition-transform hover:-translate-y-1" style="background-color: #1a6e9e; color: #ffffff;">
+<span class="font-display-card-value text-[18px] leading-none">2</span>
+<div class="flex flex-col items-center">
+<div class="w-8 h-8 rounded-full flex items-center justify-center font-label-md font-bold text-on-surface mb-1" style="background-color: rgb(221, 241, 230);">
+                  R
+                </div>
+<span class="font-label-sm text-[11px] truncate max-w-[54px] text-center opacity-95">Rahul</span>
+</div>
+<span class="font-display-card-value text-[18px] leading-none text-right rotate-180">2</span>
+</div>
+<!-- Card 2: 3 -->
+<div class="h-[114px] rounded-xl flex flex-col justify-between p-2 relative shadow-md transition-transform hover:-translate-y-1" style="background-color: #137480; color: #ffffff;">
+<span class="font-display-card-value text-[18px] leading-none">3</span>
+<div class="flex flex-col items-center">
+<div class="w-8 h-8 rounded-full flex items-center justify-center font-label-md font-bold text-on-surface mb-1" style="background-color: rgb(252, 231, 210);">
+                  A
+                </div>
+<span class="font-label-sm text-[11px] truncate max-w-[54px] text-center opacity-95">Arjun</span>
+</div>
+<span class="font-display-card-value text-[18px] leading-none text-right rotate-180">3</span>
+</div>
+<!-- Card 3: 5 (Host) -->
+<div class="h-[114px] rounded-xl flex flex-col justify-between p-2 relative shadow-md transition-transform hover:-translate-y-1" style="background-color: #16735f; color: #ffffff;">
+<span class="font-display-card-value text-[18px] leading-none">5</span>
+<div class="flex flex-col items-center">
+<div class="w-8 h-8 rounded-full flex items-center justify-center font-label-md font-bold text-on-surface mb-1" style="background-color: rgb(227, 231, 251);">
+                  P
+                </div>
+<span class="font-label-sm text-[10px] truncate max-w-[54px] text-center opacity-95">Priya ★</span>
+</div>
+<span class="font-display-card-value text-[18px] leading-none text-right rotate-180">5</span>
+</div>
+<!-- Card 4: 5 -->
+<div class="h-[114px] rounded-xl flex flex-col justify-between p-2 relative shadow-md transition-transform hover:-translate-y-1" style="background-color: #16735f; color: #ffffff;">
+<span class="font-display-card-value text-[18px] leading-none">5</span>
+<div class="flex flex-col items-center">
+<div class="w-8 h-8 rounded-full flex items-center justify-center font-label-md font-bold text-on-surface mb-1" style="background-color: rgb(247, 221, 228);">
+                  M
+                </div>
+<span class="font-label-sm text-[11px] truncate max-w-[54px] text-center opacity-95">Meera</span>
+</div>
+<span class="font-display-card-value text-[18px] leading-none text-right rotate-180">5</span>
+</div>
+<!-- Card 5: 8 -->
+<div class="h-[114px] rounded-xl flex flex-col justify-between p-2 relative shadow-md transition-transform hover:-translate-y-1" style="background-color: #3b7a2a; color: #ffffff;">
+<span class="font-display-card-value text-[18px] leading-none">8</span>
+<div class="flex flex-col items-center">
+<div class="w-8 h-8 rounded-full flex items-center justify-center font-label-md font-bold text-on-surface mb-1" style="background-color: rgb(233, 226, 246);">
+                  An
+                </div>
+<span class="font-label-sm text-[11px] truncate max-w-[54px] text-center opacity-95">Ananya</span>
+</div>
+<span class="font-display-card-value text-[18px] leading-none text-right rotate-180">8</span>
+</div>
+</div>
+<!-- Bottom card note -->
+<div class="pt-3 flex items-center justify-between font-label-sm text-surface-container-high text-[12px]">
+<span class="">Spread: 2 to 8</span>
+<span class="">Most common: 5 (40%)</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- 2. MY ROOMS SECTION -->
+<section class="w-full max-w-6xl mx-auto px-6 py-8">
+<div class="flex items-baseline gap-3 mb-4">
+<h2 class="font-headline-sm text-on-surface text-[20px] font-bold">My rooms</h2>
+<span class="font-body-md text-on-surface-variant text-[14px]">Active rooms on this device</span>
+</div>
+<!-- Plain list layout -->
+<div class="bg-surface-container-lowest rounded-xl shadow-sm divide-y" style="border: 1px solid #c6c5d2; divide-color: #c6c5d2;">
+<!-- Row 1 -->
+<div class="p-4 flex items-center justify-between hover:bg-surface-container-low transition-colors">
+<div class="flex items-center gap-3">
+<span class="font-label-lg font-semibold text-on-surface text-[16px]">Checkout revamp</span>
+<span class="bg-surface-container text-primary rounded-[6px] px-2.5 py-0.5 text-[12px] font-medium">
+            Host
+          </span>
+</div>
+<div class="flex items-center gap-6">
+<div class="flex items-center gap-1.5 text-on-surface-variant font-body-sm text-[14px]">
+<span class="material-symbols-outlined text-[18px]">schedule</span>
+<span class="">Deleted in 18 h</span>
+</div>
+<div class="flex items-center gap-2">
+<button class="bg-surface-container-lowest text-primary hover:bg-surface-container rounded-lg px-4 py-1.5 font-label-md font-semibold text-[14px] transition-colors" style="border: 1px solid rgb(118, 118, 130);">
+              Open
+            </button>
+<button class="p-1.5 text-on-surface-variant hover:text-on-surface rounded-lg hover:bg-surface-container transition-colors" title="More actions">
+<span class="material-symbols-outlined text-[20px]">more_vert</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Row 2 -->
+<div class="p-4 flex items-center justify-between hover:bg-surface-container-low transition-colors">
+<div class="flex items-center gap-3">
+<span class="font-label-lg font-semibold text-on-surface text-[16px]">Mobile app onboarding</span>
+<span class="bg-surface-container-high text-on-surface-variant rounded-[6px] px-2.5 py-0.5 text-[12px] font-medium">
+            Participant
+          </span>
+</div>
+<div class="flex items-center gap-6">
+<div class="flex items-center gap-1.5 font-body-sm text-[14px] text-secondary font-medium">
+<span class="material-symbols-outlined text-[18px]">alarm</span>
+<span class="">Deleted in 3 h</span>
+</div>
+<div class="flex items-center gap-2">
+<button class="bg-surface-container-lowest text-primary hover:bg-surface-container rounded-lg px-4 py-1.5 font-label-md font-semibold text-[14px] transition-colors" style="border: 1px solid rgb(118, 118, 130);">
+              Open
+            </button>
+<button class="p-1.5 text-on-surface-variant hover:text-on-surface rounded-lg hover:bg-surface-container transition-colors" title="More actions">
+<span class="material-symbols-outlined text-[20px]">more_vert</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- 3. HOW IT WORKS SECTION -->
+<section class="w-full max-w-6xl mx-auto px-6 py-14">
+<div class="mb-10">
+<h2 class="font-headline-lg text-[32px] font-bold text-on-surface tracking-tight mb-2">How it works</h2>
+<p class="font-body-md text-on-surface-variant">A clean, predictable flow designed for quick grooming calls.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+<!-- Step 1 -->
+<div class="bg-surface-container-lowest p-6 rounded-xl shadow-sm flex flex-col justify-between" style="border: 1px solid #c6c5d2;">
+<div>
+<div class="h-28 bg-surface-container-low rounded-lg p-4 flex flex-col justify-center items-center gap-2 mb-5">
+<div class="w-full h-8 bg-surface-container-lowest rounded px-2 flex items-center justify-between" style="border: 1px solid #c6c5d2;">
+<span class="font-body-sm text-outline text-[11px]">Sprint 42 Refinement</span>
+<span class="material-symbols-outlined text-outline text-[14px]">link</span>
+</div>
+<div class="w-16 h-3 bg-primary rounded-full opacity-20"></div>
+</div>
+<h3 class="font-headline-sm text-[18px] font-semibold text-on-surface mb-2">1. Create a room</h3>
+<p class="font-body-md text-on-surface-variant text-[14px]">Enter an Epic name and get a private room link in seconds.</p>
+</div>
+</div>
+<!-- Step 2 -->
+<div class="bg-surface-container-lowest p-6 rounded-xl shadow-sm flex flex-col justify-between" style="border: 1px solid #c6c5d2;">
+<div>
+<div class="h-28 bg-surface-container-low rounded-lg p-4 flex flex-col justify-center items-center gap-2 mb-5">
+<div class="flex items-center gap-2 bg-surface-container-lowest px-3 py-1 rounded-full shadow-xs" style="border: 1px solid #c6c5d2;">
+<span class="material-symbols-outlined text-primary text-[14px]">share</span>
+<span class="font-label-sm text-[11px] text-on-surface">bravynix.com/r/482...</span>
+</div>
+<div class="flex -space-x-1.5 mt-1">
+<span class="w-6 h-6 rounded-full bg-[#ddf1e6] flex items-center justify-center text-[10px] font-bold text-on-surface" style="border: 1.5px solid rgb(255, 255, 255);">R</span>
+<span class="w-6 h-6 rounded-full bg-[#fce7d2] flex items-center justify-center text-[10px] font-bold text-on-surface" style="border: 1.5px solid rgb(255, 255, 255);">A</span>
+<span class="w-6 h-6 rounded-full bg-[#e3e7fb] flex items-center justify-center text-[10px] font-bold text-on-surface" style="border: 1.5px solid rgb(255, 255, 255);">P</span>
+</div>
+</div>
+<h3 class="font-headline-sm text-[18px] font-semibold text-on-surface mb-2">2. Share the link</h3>
+<p class="font-body-md text-on-surface-variant text-[14px]">Teammates join instantly with no sign-up or accounts.</p>
+</div>
+</div>
+<!-- Step 3 -->
+<div class="bg-surface-container-lowest p-6 rounded-xl shadow-sm flex flex-col justify-between" style="border: 1px solid #c6c5d2;">
+<div>
+<div class="h-28 bg-surface-container-low rounded-lg p-4 flex justify-center items-center mb-5">
+<div class="w-14 h-20 bg-tertiary rounded-lg p-1.5 shadow-md flex items-center justify-center relative" style="border: 1px solid #37406c;">
+<div class="w-full h-full rounded border border-dashed border-[#a4ade0] flex items-center justify-center">
+<span class="material-symbols-outlined text-[#a4ade0] text-[18px]">lock</span>
+</div>
+</div>
+</div>
+<h3 class="font-headline-sm text-[18px] font-semibold text-on-surface mb-2">3. Vote in private</h3>
+<p class="font-body-md text-on-surface-variant text-[14px]">Pick a card from the deck. Votes stay hidden from everyone.</p>
+</div>
+</div>
+<!-- Step 4 -->
+<div class="bg-surface-container-lowest p-6 rounded-xl shadow-sm flex flex-col justify-between" style="border: 1px solid #c6c5d2;">
+<div>
+<div class="h-28 bg-surface-container-low rounded-lg p-4 flex justify-center items-center gap-3 mb-5">
+<div class="w-12 h-16 rounded-md flex flex-col justify-between p-1.5 shadow-xs" style="background-color: #137480; color: #ffffff;">
+<span class="font-headline-sm text-[12px] leading-none">3</span>
+<span class="material-symbols-outlined text-[14px] self-center">check</span>
+<span class="font-headline-sm text-[12px] leading-none text-right">3</span>
+</div>
+<div class="w-12 h-16 rounded-md flex flex-col justify-between p-1.5 shadow-xs" style="background-color: #16735f; color: #ffffff;">
+<span class="font-headline-sm text-[12px] leading-none">5</span>
+<span class="material-symbols-outlined text-[14px] self-center">check</span>
+<span class="font-headline-sm text-[12px] leading-none text-right">5</span>
+</div>
+</div>
+<h3 class="font-headline-sm text-[18px] font-semibold text-on-surface mb-2">4. Reveal together</h3>
+<p class="font-body-md text-on-surface-variant text-[14px]">Host flips all cards at once to show agreement and average.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- 4. PRIVACY FACTS SECTION -->
+<section class="w-full py-10 px-6 my-10 bg-surface-container-low" style="border-top: 1px solid #c6c5d2; border-bottom: 1px solid #c6c5d2;">
+<div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
+<div class="flex items-start gap-4">
+<div class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-primary text-[24px]">how_to_reg</span>
+</div>
+<p class="font-label-lg font-medium text-on-surface text-[16px] leading-snug pt-1">
+          No accounts. Pick a name if you like.
+        </p>
+</div>
+<div class="flex items-start gap-4">
+<div class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-primary text-[24px]">visibility_off</span>
+</div>
+<p class="font-label-lg font-medium text-on-surface text-[16px] leading-snug pt-1">
+          Votes stay hidden until the host reveals them, even from the host.
+        </p>
+</div>
+<div class="flex items-start gap-4">
+<div class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-primary text-[24px]">auto_delete</span>
+</div>
+<p class="font-label-lg font-medium text-on-surface text-[16px] leading-snug pt-1">
+          Nothing is stored on our servers. Rooms delete themselves after 24 hours.
+        </p>
+</div>
+</div>
+</section>
+<!-- 5. FAQ SECTION -->
+<section class="w-full max-w-3xl mx-auto px-6 py-12">
+<h2 class="font-headline-lg text-[28px] font-bold text-on-surface tracking-tight mb-8">
+      Frequently asked questions
+    </h2>
+<div class="divide-y" style="border-top: 1px solid #c6c5d2; border-bottom: 1px solid #c6c5d2; divide-color: #c6c5d2;">
+<!-- FAQ 1 -->
+<details class="group py-4 cursor-pointer">
+<summary class="flex justify-between items-center font-label-lg font-medium text-on-surface text-[16px] list-none select-none">
+<span class="">Is it free?</span>
+<span class="material-symbols-outlined text-outline group-open:rotate-180 transition-transform">expand_more</span>
+</summary>
+<p class="mt-3 font-body-md text-on-surface-variant text-[14px] leading-relaxed">
+          Yes, Bravynix Scrum Poker is completely free with no limits on rooms or participants.
+        </p>
+</details>
+<!-- FAQ 2 -->
+<details class="group py-4 cursor-pointer">
+<summary class="flex justify-between items-center font-label-lg font-medium text-on-surface text-[16px] list-none select-none">
+<span class="">What happens if the host leaves?</span>
+<span class="material-symbols-outlined text-outline group-open:rotate-180 transition-transform">expand_more</span>
+</summary>
+<p class="mt-3 font-body-md text-on-surface-variant text-[14px] leading-relaxed">
+          The room stays open and votes remain intact. If the host rejoins using their host link, they regain controls.
+        </p>
+</details>
+<!-- FAQ 3 -->
+<details class="group py-4 cursor-pointer">
+<summary class="flex justify-between items-center font-label-lg font-medium text-on-surface text-[16px] list-none select-none">
+<span class="">How many people can join?</span>
+<span class="material-symbols-outlined text-outline group-open:rotate-180 transition-transform">expand_more</span>
+</summary>
+<p class="mt-3 font-body-md text-on-surface-variant text-[14px] leading-relaxed">
+          Up to 50 people can join a single estimation room without performance degradation.
+        </p>
+</details>
+<!-- FAQ 4 -->
+<details class="group py-4 cursor-pointer">
+<summary class="flex justify-between items-center font-label-lg font-medium text-on-surface text-[16px] list-none select-none">
+<span class="">Why can't someone connect?</span>
+<span class="material-symbols-outlined text-outline group-open:rotate-180 transition-transform">expand_more</span>
+</summary>
+<p class="mt-3 font-body-md text-on-surface-variant text-[14px] leading-relaxed">
+          Bravynix connects peers directly. If a corporate VPN or restrictive office firewall blocks WebRTC connections, switching to a personal network or mobile hotspot usually solves it.
+        </p>
+</details>
+</div>
+</section>
+</div></main><footer class="w-full bg-surface-container-lowest border-t border-outline-variant"><div class="h-16 max-w-7xl mx-auto px-margin flex items-center justify-between"><div class="flex items-center gap-space-md"><span class="font-headline-sm text-headline-sm text-primary tracking-tight">Bravynix</span><span class="font-body-sm text-body-sm text-on-surface-variant">© 2026 Bravynix. Ephemeral estimation for agile squads.</span></div><div class="flex items-center gap-space-lg"><a class="font-body-sm text-body-sm text-on-surface-variant hover:text-on-surface transition-colors" data-path="privacy-policy" href="#">Privacy</a><span class="inline-flex items-center gap-space-xs font-body-sm text-body-sm text-on-surface-variant"><span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>No accounts</span></div></div></footer>
+
+</body></html>

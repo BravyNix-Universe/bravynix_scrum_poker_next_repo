@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_standard" name="shell-type"/><title>Bravynix Scrum Poker</title><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;700&amp;family=Noto+Sans:wght@400;500;600&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base { html, body { margin: 0; padding: 0; } body { overscroll-behavior: none; } main > :first-child { margin-top: 0 !important; } main > :last-child { margin-bottom: 0 !important; } } ::-webkit-scrollbar { display: none; }</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { "colors": { "on-surface-variant": "#454651", "outline": "#767682", "secondary-fixed-dim": "#ffb956", "surface-container-low": "#f3f2ff", "primary": "#16246f", "secondary": "#835400", "primary-container": "#2f3c86", "background": "#fbf8ff", "on-tertiary-fixed-variant": "#3b4470", "on-secondary-fixed-variant": "#643f00", "tertiary-fixed": "#dee1ff", "tertiary": "#202955", "on-error": "#ffffff", "on-primary-fixed-variant": "#33408a", "on-tertiary": "#ffffff", "primary-fixed-dim": "#bbc3ff", "on-primary-container": "#9eaafc", "on-error-container": "#93000a", "on-secondary-fixed": "#2a1800", "error": "#ba1a1a", "surface-variant": "#dde1ff", "secondary-fixed": "#ffddb5", "surface-container-high": "#e5e7ff", "on-primary": "#ffffff", "on-secondary-container": "#6c4500", "inverse-surface": "#2a2f48", "on-primary-fixed": "#000f5c", "on-tertiary-fixed": "#0e1842", "error-container": "#ffdad6", "surface-container-highest": "#dde1ff", "inverse-primary": "#bbc3ff", "surface": "#fbf8ff", "surface-tint": "#4c58a4", "surface-container-lowest": "#ffffff", "secondary-container": "#feae32", "on-secondary": "#ffffff", "primary-fixed": "#dee0ff", "surface-bright": "#fbf8ff", "on-tertiary-container": "#a4ade0", "inverse-on-surface": "#f0efff", "tertiary-container": "#37406c", "tertiary-fixed-dim": "#bbc4f8", "on-background": "#151a32", "surface-container": "#ececff", "on-surface": "#151a32", "outline-variant": "#c6c5d2", "surface-dim": "#d4d8f9" }, "borderRadius": { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" }, "spacing": { "space-lg": "1.5rem", "space-md": "1rem", "space-xs": "0.25rem", "gutter": "1.5rem", "margin": "2rem", "space-xl": "2rem", "space-sm": "0.5rem" }, "fontFamily": { "body-sm": [ "Noto Sans" ], "body-lg": [ "Noto Sans" ], "label-md": [ "Noto Sans" ], "body-md": [ "Noto Sans" ], "label-lg": [ "Noto Sans" ], "headline-sm": [ "Bricolage Grotesque" ], "label-sm": [ "Noto Sans" ], "headline-lg": [ "Bricolage Grotesque" ], "display-lg": [ "Bricolage Grotesque" ], "display-card-value": [ "Bricolage Grotesque" ], "headline-md": [ "Bricolage Grotesque" ] }, "fontSize": { "body-sm": [ "12px", { "lineHeight": "16px", "fontWeight": "400" } ], "body-lg": [ "16px", { "lineHeight": "24px", "fontWeight": "400" } ], "label-md": [ "12px", { "lineHeight": "16px", "fontWeight": "600" } ], "body-md": [ "14px", { "lineHeight": "20px", "fontWeight": "400" } ], "label-lg": [ "14px", { "lineHeight": "20px", "fontWeight": "600" } ], "headline-sm": [ "18px", { "lineHeight": "24px", "fontWeight": "600" } ], "label-sm": [ "11px", { "lineHeight": "14px", "fontWeight": "500" } ], "headline-lg": [ "28px", { "lineHeight": "36px", "letterSpacing": "-0.01em", "fontWeight": "700" } ], "display-lg": [ "40px", { "lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "700" } ], "display-card-value": [ "32px", { "lineHeight": "36px", "letterSpacing": "-0.01em", "fontWeight": "700" } ], "headline-md": [ "22px", { "lineHeight": "28px", "fontWeight": "600" } ] } } } };</script></head><body class="min-h-screen bg-surface-container-low font-body-md text-on-surface"><header class="fixed top-0 left-0 right-0 z-50 bg-surface-container-lowest border-b border-outline-variant"><div class="h-16 max-w-[1440px] mx-auto px-margin flex items-center justify-between"><div class="flex items-center gap-space-md"><a class="flex items-center gap-space-sm hover:opacity-90 transition-opacity" data-path="bravynix-scrum-poker-landing-page" href="#"><span class="font-headline-sm text-headline-sm text-primary font-bold tracking-tight">Bravynix</span></a><span class="h-4 w-px bg-outline-variant"></span><span class="font-label-lg text-label-lg text-on-surface font-semibold">Checkout revamp</span></div><div class="flex items-center gap-space-md"><nav class="flex items-center gap-space-xs bg-surface-container-low p-1 rounded-lg border border-outline-variant" data-active-classes="bg-surface-container-lowest text-primary shadow-sm font-semibold"><a class="px-3 py-1 rounded text-on-surface-variant font-label-md text-label-md transition-colors hover:text-on-surface" data-path="room-host-discuss" href="#">Stories</a><a class="px-3 py-1 rounded text-on-surface-variant font-label-md text-label-md transition-colors hover:text-on-surface" data-path="room-host-history-drawer" href="#">History</a></nav><div class="flex items-center gap-space-xs px-space-sm py-1 rounded-full bg-surface-container border border-outline-variant"><span class="material-symbols-outlined text-on-surface-variant text-[16px]">timer</span><span class="font-label-sm text-label-sm text-on-surface font-medium">01:24</span></div><button class="flex items-center gap-space-xs px-3 py-1.5 rounded-lg bg-surface-container-lowest border border-outline-variant hover:bg-surface-container-low text-on-surface transition-colors cursor-pointer"><span class="material-symbols-outlined text-[16px] text-primary">share</span><span class="font-label-md text-label-md font-semibold">Invite</span></button><div class="flex items-center gap-1.5 px-space-sm py-1"><span class="w-2 h-2 rounded-full bg-[#1E7A4C]"></span><span class="font-label-sm text-label-sm text-[#1E7A4C] font-semibold">Connected</span></div><div class="h-5 w-px bg-outline-variant"></div><div class="flex items-center gap-space-sm"><div class="w-8 h-8 rounded-full bg-surface-container-high border border-outline-variant flex items-center justify-center shrink-0 text-[16px]">🐼</div><div class="flex items-center gap-1"><span class="font-label-md text-label-md text-on-surface font-medium">Priya</span><span class="font-label-sm text-label-sm text-secondary font-semibold">★ (Host)</span></div></div></div></div></header><main class="w-full max-w-[1440px] mx-auto pt-16 bg-surface-container-low min-h-screen"><div class="flex flex-col w-full relative">
+<!-- ROOM CANVAS (Underneath - Host View Dimmed) -->
+<div class="w-full min-h-[calc(100vh-4rem)] p-margin flex flex-col gap-space-lg select-none pointer-events-none opacity-40 filter transition-opacity">
+<!-- Top Phase Tracker & Action Strip -->
+<div class="flex items-center justify-between bg-surface-container-lowest rounded-xl p-space-md shadow-sm">
+<div class="flex items-center gap-space-md">
+<span class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Phase</span>
+<div class="flex items-center gap-space-xs bg-surface-container-low p-1 rounded-lg">
+<span class="px-3 py-1 rounded bg-primary-container text-on-primary font-label-md text-label-md">1. Voting</span>
+<span class="px-3 py-1 rounded text-on-surface-variant font-label-md text-label-md">2. Reveal</span>
+<span class="px-3 py-1 rounded text-on-surface-variant font-label-md text-label-md">3. Consensus</span>
+</div>
+</div>
+<div class="flex items-center gap-space-sm">
+<span class="font-body-sm text-body-sm text-on-surface-variant">4 of 5 teammates voted</span>
+<button class="bg-secondary-container text-on-secondary-container px-4 py-2 rounded-lg font-label-lg text-label-lg">Reveal Cards</button>
+</div>
+</div>
+<!-- Active Story Spotlight Card -->
+<div class="w-full max-w-3xl mx-auto bg-surface-container-lowest rounded-xl p-space-xl shadow-sm text-center flex flex-col items-center gap-space-sm">
+<div class="flex items-center gap-space-xs">
+<span class="bg-surface-container px-2.5 py-0.5 rounded text-primary font-label-sm text-label-sm">CK-103</span>
+<span class="bg-primary-fixed text-on-primary-fixed px-2 py-0.5 rounded font-label-sm text-label-sm">Active Estimation</span>
+</div>
+<h1 class="font-headline-lg text-headline-lg text-on-surface">Show delivery ETA on the order page</h1>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-xl">Surface predictive logistics timeline dynamically during pre-checkout based on warehouse routing and pin-code density.</p>
+</div>
+<!-- Estimation Table Mock Grid -->
+<div class="w-full max-w-4xl mx-auto grid grid-cols-5 gap-space-md pt-4">
+<!-- Seat 1 (Priya Host) -->
+<div class="flex flex-col items-center gap-space-xs">
+<div class="w-20 h-28 rounded-xl bg-primary flex items-center justify-center shadow-md">
+<span class="material-symbols-outlined text-primary-fixed-dim text-2xl">check</span>
+</div>
+<div class="flex items-center gap-1">
+<span class="text-xs">🐼</span>
+<span class="font-label-sm text-label-sm text-on-surface">Priya ★</span>
+</div>
+</div>
+<!-- Seat 2 -->
+<div class="flex flex-col items-center gap-space-xs">
+<div class="w-20 h-28 rounded-xl bg-primary flex items-center justify-center shadow-md">
+<span class="material-symbols-outlined text-primary-fixed-dim text-2xl">check</span>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface">Marcus</span>
+</div>
+<!-- Seat 3 -->
+<div class="flex flex-col items-center gap-space-xs">
+<div class="w-20 h-28 rounded-xl bg-primary flex items-center justify-center shadow-md">
+<span class="material-symbols-outlined text-primary-fixed-dim text-2xl">check</span>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface">Amina</span>
+</div>
+<!-- Seat 4 -->
+<div class="flex flex-col items-center gap-space-xs">
+<div class="w-20 h-28 rounded-xl bg-primary flex items-center justify-center shadow-md">
+<span class="material-symbols-outlined text-primary-fixed-dim text-2xl">check</span>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface">Dev</span>
+</div>
+<!-- Seat 5 -->
+<div class="flex flex-col items-center gap-space-xs">
+<div class="w-20 h-28 rounded-xl bg-surface-container-high flex items-center justify-center">
+<span class="font-label-sm text-label-sm text-outline">Thinking...</span>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface">Elena</span>
+</div>
+</div>
+</div>
+<!-- SOLID 30% SCRIM BACKDROP OVERLAY -->
+<div class="fixed inset-0 top-16 bg-[#161B33]/30 z-30 transition-opacity"></div>
+<!-- STORIES DRAWER CONTAINER (360px wide from left edge) -->
+<aside class="fixed top-16 left-0 bottom-0 w-[360px] bg-surface-container-lowest z-40 shadow-2xl flex flex-col justify-between overflow-hidden">
+<!-- Top Scrollable Content -->
+<div class="flex-1 overflow-y-auto">
+<!-- Drawer Header -->
+<div class="px-space-md pt-5 pb-4 flex items-start justify-between">
+<div>
+<h2 class="font-headline-md text-headline-md text-on-surface">Stories</h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-0.5">Sprint 42 · 5 stories</p>
+</div>
+<button class="w-8 h-8 rounded-lg bg-surface-container-low text-on-surface-variant hover:text-on-surface hover:bg-surface-container flex items-center justify-center transition-colors">
+<span class="material-symbols-outlined text-[18px]">close</span>
+</button>
+</div>
+<!-- Add Story Input -->
+<div class="px-space-md mb-4">
+<div class="relative flex items-center">
+<input class="w-full h-11 pl-3 pr-9 rounded-lg bg-surface-container-lowest text-on-surface font-body-md text-body-md placeholder:text-outline focus:outline-none focus:bg-surface-container-low transition-all" placeholder="Paste Jira / Linear issue title or CK-105..." type="text"/>
+<button class="absolute right-2 text-primary hover:text-primary-container p-1 rounded transition-colors" title="Add story">
+<span class="material-symbols-outlined text-[20px]">add_circle</span>
+</button>
+</div>
+</div>
+<!-- Stories List (5 items) -->
+<div class="px-space-sm flex flex-col gap-1.5 relative">
+<!-- Story 1: Estimated -->
+<div class="group flex items-center gap-space-xs p-2.5 rounded-lg bg-surface-container-lowest hover:bg-surface-container-low transition-colors">
+<button class="cursor-grab text-outline hover:text-on-surface flex items-center shrink-0">
+<span class="material-symbols-outlined text-[18px]">drag_indicator</span>
+</button>
+<div class="flex-1 min-w-0 pr-1">
+<div class="font-body-md text-body-md text-on-surface font-medium truncate">Add UPI autopay to subscriptions</div>
+<div class="flex items-center gap-2 mt-1">
+<span class="px-2 py-0.5 rounded text-[11px] font-semibold bg-[#E6F4EC] text-[#1E7A4C]">Estimated</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Avg 3 pts</span>
+</div>
+</div>
+<button class="text-outline hover:text-on-surface p-1 rounded shrink-0">
+<span class="material-symbols-outlined text-[18px]">more_vert</span>
+</button>
+</div>
+<!-- Story 2: Estimated -->
+<div class="group flex items-center gap-space-xs p-2.5 rounded-lg bg-surface-container-lowest hover:bg-surface-container-low transition-colors">
+<button class="cursor-grab text-outline hover:text-on-surface flex items-center shrink-0">
+<span class="material-symbols-outlined text-[18px]">drag_indicator</span>
+</button>
+<div class="flex-1 min-w-0 pr-1">
+<div class="font-body-md text-body-md text-on-surface font-medium truncate">Save cards with network tokens</div>
+<div class="flex items-center gap-2 mt-1">
+<span class="px-2 py-0.5 rounded text-[11px] font-semibold bg-[#E6F4EC] text-[#1E7A4C]">Estimated</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Avg 5 pts</span>
+</div>
+</div>
+<button class="text-outline hover:text-on-surface p-1 rounded shrink-0">
+<span class="material-symbols-outlined text-[18px]">more_vert</span>
+</button>
+</div>
+<!-- Story 3: Active (Highlighted with Open Dropdown Contextual Popover) -->
+<div class="relative">
+<div class="flex items-center gap-space-xs p-2.5 rounded-lg bg-surface-container-low shadow-sm">
+<button class="cursor-grab text-primary flex items-center shrink-0">
+<span class="material-symbols-outlined text-[18px]">drag_indicator</span>
+</button>
+<div class="flex-1 min-w-0 pr-1">
+<div class="font-body-md text-body-md text-primary font-semibold truncate">Show delivery ETA on the order page</div>
+<div class="flex items-center gap-2 mt-1">
+<span class="px-2 py-0.5 rounded text-[11px] font-semibold bg-[#D9DDF2] text-[#2F3C86]">Active</span>
+<span class="font-label-sm text-label-sm text-primary font-medium">In voting</span>
+</div>
+</div>
+<button class="bg-surface-container text-primary p-1 rounded shrink-0">
+<span class="material-symbols-outlined text-[18px]">more_vert</span>
+</button>
+</div>
+<!-- Open Contextual Popover floating beside the 3rd story -->
+<div class="absolute left-[calc(100%-8px)] top-1 w-48 bg-surface-container-lowest rounded-xl shadow-xl z-50 py-1.5 flex flex-col">
+<!-- 1. Make active (disabled/current) -->
+<button class="flex items-center gap-2.5 px-3 py-2 text-left opacity-40 cursor-not-allowed" disabled="">
+<span class="material-symbols-outlined text-[18px] text-outline">play_arrow</span>
+<span class="font-label-md text-label-md text-outline">Make active</span>
+</button>
+<!-- 2. Rename -->
+<button class="flex items-center gap-2.5 px-3 py-2 text-left hover:bg-surface-container-low text-on-surface transition-colors">
+<span class="material-symbols-outlined text-[18px] text-on-surface-variant">edit</span>
+<span class="font-label-md text-label-md">Rename</span>
+</button>
+<!-- 3. Move up -->
+<button class="flex items-center gap-2.5 px-3 py-2 text-left hover:bg-surface-container-low text-on-surface transition-colors">
+<span class="material-symbols-outlined text-[18px] text-on-surface-variant">arrow_upward</span>
+<span class="font-label-md text-label-md">Move up</span>
+</button>
+<!-- 4. Move down -->
+<button class="flex items-center gap-2.5 px-3 py-2 text-left hover:bg-surface-container-low text-on-surface transition-colors">
+<span class="material-symbols-outlined text-[18px] text-on-surface-variant">arrow_downward</span>
+<span class="font-label-md text-label-md">Move down</span>
+</button>
+<!-- Divider -->
+<div class="h-px bg-surface-container my-1"></div>
+<!-- 5. Remove (destructive text #B42318) -->
+<button class="flex items-center gap-2.5 px-3 py-2 text-left hover:bg-error-container/30 text-[#B42318] transition-colors">
+<span class="material-symbols-outlined text-[18px] text-[#B42318]">delete</span>
+<span class="font-label-md text-label-md font-semibold">Remove</span>
+</button>
+</div>
+</div>
+<!-- Story 4: Queued -->
+<div class="group flex items-center gap-space-xs p-2.5 rounded-lg bg-surface-container-lowest hover:bg-surface-container-low transition-colors">
+<button class="cursor-grab text-outline hover:text-on-surface flex items-center shrink-0">
+<span class="material-symbols-outlined text-[18px]">drag_indicator</span>
+</button>
+<div class="flex-1 min-w-0 pr-1">
+<div class="font-body-md text-body-md text-on-surface truncate">Retry failed payments automatically</div>
+<div class="flex items-center gap-2 mt-1">
+<span class="px-2 py-0.5 rounded text-[11px] font-medium bg-[#ECEEF5] text-[#4A5070]">Queued</span>
+<span class="font-label-sm text-label-sm text-outline">Not estimated</span>
+</div>
+</div>
+<button class="text-outline hover:text-on-surface p-1 rounded shrink-0">
+<span class="material-symbols-outlined text-[18px]">more_vert</span>
+</button>
+</div>
+<!-- Story 5: Queued -->
+<div class="group flex items-center gap-space-xs p-2.5 rounded-lg bg-surface-container-lowest hover:bg-surface-container-low transition-colors">
+<button class="cursor-grab text-outline hover:text-on-surface flex items-center shrink-0">
+<span class="material-symbols-outlined text-[18px]">drag_indicator</span>
+</button>
+<div class="flex-1 min-w-0 pr-1">
+<div class="font-body-md text-body-md text-on-surface truncate">Download GST invoices from orders</div>
+<div class="flex items-center gap-2 mt-1">
+<span class="px-2 py-0.5 rounded text-[11px] font-medium bg-[#ECEEF5] text-[#4A5070]">Queued</span>
+<span class="font-label-sm text-label-sm text-outline">Not estimated</span>
+</div>
+</div>
+<button class="text-outline hover:text-on-surface p-1 rounded shrink-0">
+<span class="material-symbols-outlined text-[18px]">more_vert</span>
+</button>
+</div>
+</div>
+<!-- Collapsed Section: Removed (1) -->
+<div class="px-space-md pt-5 pb-2">
+<button class="flex items-center justify-between w-full py-2 px-2 rounded-lg hover:bg-surface-container-low text-on-surface-variant transition-colors">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[18px]">chevron_right</span>
+<span class="font-label-md text-label-md font-semibold">Removed (1)</span>
+</div>
+<span class="font-label-sm text-label-sm text-outline">Archive</span>
+</button>
+</div>
+</div>
+<!-- Drawer Footer -->
+<div class="p-space-md bg-surface-container-low flex flex-col gap-2">
+<!-- Progress Indicator -->
+<div class="flex items-center justify-between font-label-sm text-label-sm text-on-surface-variant">
+<span>Progress</span>
+<span class="font-semibold text-primary">3 of 5 estimated (60%)</span>
+</div>
+<div class="w-full h-1.5 bg-surface-container-high rounded-full overflow-hidden">
+<div class="bg-primary h-full rounded-full" style="width: 60%"></div>
+</div>
+<!-- Import Link Action -->
+<div class="pt-2 flex items-center justify-between">
+<button class="inline-flex items-center gap-1.5 text-primary hover:text-primary-container font-label-md text-label-md font-semibold transition-colors">
+<span class="material-symbols-outlined text-[16px]">sync_alt</span>
+          Import from Jira / Linear
+        </button>
+<span class="font-body-sm text-body-sm text-outline">Auto-sync on</span>
+</div>
+</div>
+</aside>
+</div></main><footer class="w-full bg-surface-container-lowest border-t border-outline-variant mt-auto"><div class="h-12 max-w-[1440px] mx-auto px-margin flex items-center justify-between"><div class="flex items-center gap-space-md"><span class="font-headline-sm text-headline-sm text-primary tracking-tight text-[15px]">Bravynix</span><span class="font-body-sm text-body-sm text-on-surface-variant">Room #CK-9204 · Ephemeral estimation session</span></div><div class="flex items-center gap-space-lg"><span class="inline-flex items-center gap-space-xs font-body-sm text-body-sm text-on-surface-variant"><span class="w-1.5 h-1.5 rounded-full bg-[#1E7A4C]"></span>End-to-end synced</span><span class="font-body-sm text-body-sm text-on-surface-variant">No account required</span></div></div></footer></body></html>

@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_standard" name="shell-type"/><title>Bravynix Scrum Poker</title><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;700&amp;family=Noto+Sans:wght@400;500;600&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base { html, body { margin: 0; padding: 0; } body { overscroll-behavior: none; } main > :first-child { margin-top: 0 !important; } main > :last-child { margin-bottom: 0 !important; } } ::-webkit-scrollbar { display: none; }</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { "colors": { "on-surface-variant": "#454651", "outline": "#767682", "secondary-fixed-dim": "#ffb956", "surface-container-low": "#f3f2ff", "primary": "#16246f", "secondary": "#835400", "primary-container": "#2f3c86", "background": "#fbf8ff", "on-tertiary-fixed-variant": "#3b4470", "on-secondary-fixed-variant": "#643f00", "tertiary-fixed": "#dee1ff", "tertiary": "#202955", "on-error": "#ffffff", "on-primary-fixed-variant": "#33408a", "on-tertiary": "#ffffff", "primary-fixed-dim": "#bbc3ff", "on-primary-container": "#9eaafc", "on-error-container": "#93000a", "on-secondary-fixed": "#2a1800", "error": "#ba1a1a", "surface-variant": "#dde1ff", "secondary-fixed": "#ffddb5", "surface-container-high": "#e5e7ff", "on-primary": "#ffffff", "on-secondary-container": "#6c4500", "inverse-surface": "#2a2f48", "on-primary-fixed": "#000f5c", "on-tertiary-fixed": "#0e1842", "error-container": "#ffdad6", "surface-container-highest": "#dde1ff", "inverse-primary": "#bbc3ff", "surface": "#fbf8ff", "surface-tint": "#4c58a4", "surface-container-lowest": "#ffffff", "secondary-container": "#feae32", "on-secondary": "#ffffff", "primary-fixed": "#dee0ff", "surface-bright": "#fbf8ff", "on-tertiary-container": "#a4ade0", "inverse-on-surface": "#f0efff", "tertiary-container": "#37406c", "tertiary-fixed-dim": "#bbc4f8", "on-background": "#151a32", "surface-container": "#ececff", "on-surface": "#151a32", "outline-variant": "#c6c5d2", "surface-dim": "#d4d8f9" }, "borderRadius": { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" }, "spacing": { "space-lg": "1.5rem", "space-md": "1rem", "space-xs": "0.25rem", "gutter": "1.5rem", "margin": "2rem", "space-xl": "2rem", "space-sm": "0.5rem" }, "fontFamily": { "body-sm": [ "Noto Sans" ], "body-lg": [ "Noto Sans" ], "label-md": [ "Noto Sans" ], "body-md": [ "Noto Sans" ], "label-lg": [ "Noto Sans" ], "headline-sm": [ "Bricolage Grotesque" ], "label-sm": [ "Noto Sans" ], "headline-lg": [ "Bricolage Grotesque" ], "display-lg": [ "Bricolage Grotesque" ], "display-card-value": [ "Bricolage Grotesque" ], "headline-md": [ "Bricolage Grotesque" ] }, "fontSize": { "body-sm": [ "12px", { "lineHeight": "16px", "fontWeight": "400" } ], "body-lg": [ "16px", { "lineHeight": "24px", "fontWeight": "400" } ], "label-md": [ "12px", { "lineHeight": "16px", "fontWeight": "600" } ], "body-md": [ "14px", { "lineHeight": "20px", "fontWeight": "400" } ], "label-lg": [ "14px", { "lineHeight": "20px", "fontWeight": "600" } ], "headline-sm": [ "18px", { "lineHeight": "24px", "fontWeight": "600" } ], "label-sm": [ "11px", { "lineHeight": "14px", "fontWeight": "500" } ], "headline-lg": [ "28px", { "lineHeight": "36px", "letterSpacing": "-0.01em", "fontWeight": "700" } ], "display-lg": [ "40px", { "lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "700" } ], "display-card-value": [ "32px", { "lineHeight": "36px", "letterSpacing": "-0.01em", "fontWeight": "700" } ], "headline-md": [ "22px", { "lineHeight": "28px", "fontWeight": "600" } ] } } } };</script></head><body class="min-h-screen bg-surface-container-low font-body-md text-on-surface"><header class="fixed top-0 left-0 right-0 z-50 bg-surface-container-lowest border-b border-outline-variant"><div class="h-16 max-w-[1440px] mx-auto px-margin flex items-center justify-between"><div class="flex items-center gap-space-md"><a class="flex items-center gap-space-sm hover:opacity-90 transition-opacity" data-path="bravynix-scrum-poker-landing-page" href="#"><span class="font-headline-sm text-headline-sm text-primary font-bold tracking-tight">Bravynix</span></a><span class="h-4 w-px bg-outline-variant"></span><span class="font-label-lg text-label-lg text-on-surface font-semibold">Checkout revamp</span></div><div class="flex items-center gap-space-md"><nav class="flex items-center gap-space-xs bg-surface-container-low p-1 rounded-lg border border-outline-variant" data-active-classes="bg-surface-container-lowest text-primary shadow-sm font-semibold"><a class="px-3 py-1 rounded text-on-surface-variant font-label-md text-label-md transition-colors hover:text-on-surface" data-path="room-host-discuss" href="#">Stories</a><a class="px-3 py-1 rounded text-on-surface-variant font-label-md text-label-md transition-colors hover:text-on-surface" data-path="room-host-history-drawer" href="#">History</a></nav><div class="flex items-center gap-space-xs px-space-sm py-1 rounded-full bg-surface-container border border-outline-variant"><span class="material-symbols-outlined text-on-surface-variant text-[16px]">timer</span><span class="font-label-sm text-label-sm text-on-surface font-medium">01:24</span></div><button class="flex items-center gap-space-xs px-3 py-1.5 rounded-lg bg-surface-container-lowest border border-outline-variant hover:bg-surface-container-low text-on-surface transition-colors cursor-pointer"><span class="material-symbols-outlined text-[16px] text-primary">share</span><span class="font-label-md text-label-md font-semibold">Invite</span></button><div class="flex items-center gap-1.5 px-space-sm py-1"><span class="w-2 h-2 rounded-full bg-[#1E7A4C]"></span><span class="font-label-sm text-label-sm text-[#1E7A4C] font-semibold">Connected</span></div><div class="h-5 w-px bg-outline-variant"></div><div class="flex items-center gap-space-sm"><div class="w-8 h-8 rounded-full bg-surface-container-high border border-outline-variant flex items-center justify-center shrink-0 text-[16px]">🐼</div><div class="flex items-center gap-1"><span class="font-label-md text-label-md text-on-surface font-medium">Priya</span><span class="font-label-sm text-label-sm text-secondary font-semibold">★ (Host)</span></div></div></div></div></header><main class="w-full max-w-[1440px] mx-auto pt-16 bg-surface-container-low min-h-screen"><div class="flex flex-col w-full">
+<!-- Dynamic participant banner overrides profile in shell via client JS for seamless consistency -->
+<script>
+    (function() {
+      // Update top header avatar & title context to reflect participant Arjun (Tiger)
+      const userSlot = document.querySelector('header .w-8.h-8');
+      if (userSlot) {
+        userSlot.textContent = '🐯';
+        userSlot.className = 'w-8 h-8 rounded-full bg-secondary-fixed flex items-center justify-center shrink-0 text-[16px] shadow-sm';
+      }
+      const userNameSlot = document.querySelector('header span.text-on-surface.font-medium');
+      if (userNameSlot) userNameSlot.textContent = 'Arjun';
+      const hostStar = document.querySelector('header span.text-secondary.font-semibold');
+      if (hostStar) hostStar.remove();
+    })();
+  </script>
+<!-- Workspace Container: 1440px target, strictly adhering to structural layout & spacing -->
+<div class="w-full max-w-[1392px] mx-auto px-margin py-space-lg flex flex-col gap-space-xl min-h-[calc(100vh-8rem)] justify-between">
+<!-- Top Phase Row & Status Tracker -->
+<div class="flex flex-col items-center justify-center gap-space-sm w-full">
+<div class="inline-flex items-center p-1 rounded-full bg-surface-container shadow-sm">
+<div class="px-space-md py-1 rounded-full text-on-surface-variant font-label-md text-label-md transition-colors">
+          Discuss
+        </div>
+<div class="px-space-lg py-1 rounded-full bg-primary-container text-on-primary font-label-md text-label-md shadow-sm flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-secondary-container animate-pulse"></span>
+          Estimate
+        </div>
+<div class="px-space-md py-1 rounded-full text-on-surface-variant font-label-md text-label-md transition-colors">
+          Review
+        </div>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant text-center tracking-normal">
+        Your vote is recorded. You can change it until the host reveals.
+      </p>
+</div>
+<!-- Active Story Panel (Participant View - No Host Controls, stacked visual cue) -->
+<div class="relative w-full max-w-[840px] mx-auto">
+<!-- Background stacked card edges peeking right -->
+<div class="absolute -right-3 top-3 w-full h-full bg-surface-container-high rounded-xl -z-10 shadow-sm opacity-60"></div>
+<div class="absolute -right-1.5 top-1.5 w-full h-full bg-surface-container rounded-xl -z-5 shadow-sm opacity-80"></div>
+<!-- Foreground Story Card -->
+<div class="relative w-full bg-surface-container-lowest rounded-xl p-space-xl shadow-sm flex flex-col gap-space-md">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<span class="px-2.5 py-1 rounded-full bg-surface-container font-label-sm text-label-sm text-primary font-semibold tracking-wide">
+              Story 3 of 5
+            </span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">
+              · Ticket CK-842
+            </span>
+</div>
+<span class="inline-flex items-center gap-1 font-label-sm text-label-sm text-on-surface-variant bg-surface-container-low px-2 py-0.5 rounded">
+<span class="material-symbols-outlined text-[14px]">lock</span>
+            Participant mode
+          </span>
+</div>
+<div class="space-y-space-xs">
+<h1 class="font-headline-lg text-headline-lg text-on-surface tracking-tight">
+            Show delivery ETA on the order page
+          </h1>
+<p class="font-body-md text-body-md text-on-surface-variant leading-relaxed max-w-[680px]">
+            Display estimated dynamic delivery window range calculated from regional warehouse capacity directly on checkout confirmation.
+          </p>
+</div>
+<!-- Inline story metrics & context pill -->
+<div class="pt-space-xs flex items-center gap-space-lg text-on-surface-variant">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[16px] text-primary">groups</span>
+<span class="font-label-sm text-label-sm">6 of 8 submitted</span>
+</div>
+<div class="w-1 h-1 rounded-full bg-outline-variant"></div>
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[16px] text-secondary">hourglass_bottom</span>
+<span class="font-label-sm text-label-sm">Host will reveal soon</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Seats Row: 8 Participants (6 submitted, 2 thinking) -->
+<div class="w-full flex flex-col items-center gap-space-md">
+<div class="w-full flex items-center justify-between px-space-xs max-w-[1140px]">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider font-semibold">
+          Estimation Table (8 Seats)
+        </span>
+<span class="font-label-sm text-label-sm text-primary font-medium">
+          Waiting for Priya (Host) to reveal
+        </span>
+</div>
+<div class="grid grid-cols-8 gap-space-md w-full max-w-[1140px] items-end justify-center">
+<!-- 1. Priya (Host) - Voted -->
+<div class="flex flex-col items-center gap-space-sm group">
+<div class="relative w-[104px] h-[140px] rounded-xl bg-tertiary shadow-md flex items-center justify-center overflow-hidden transition-transform duration-200 group-hover:-translate-y-1">
+<!-- Fine Marigold Golden Spiral Graphic -->
+<svg class="w-16 h-16 text-secondary-container opacity-80" fill="none" stroke="currentColor" stroke-width="1.8" viewbox="0 0 100 100">
+<path d="M 50,50 A 4,4 0 0,0 46,46 A 8,8 0 0,0 54,38 A 16,16 0 0,0 38,54 A 28,28 0 0,0 66,82 A 48,48 0 0,0 18,34"></path>
+</svg>
+<div class="absolute inset-1 rounded-lg border border-primary-container opacity-40 pointer-events-none"></div>
+<!-- Checkmark badge top-right -->
+<div class="absolute top-2 right-2 w-5 h-5 rounded-full bg-secondary-container text-on-secondary flex items-center justify-center shadow-sm">
+<span class="material-symbols-outlined text-[14px] font-bold">check</span>
+</div>
+</div>
+<div class="flex flex-col items-center">
+<div class="flex items-center gap-1">
+<span class="text-[14px]">🐼</span>
+<span class="font-label-md text-label-md text-on-surface font-semibold">Priya</span>
+<span class="font-label-sm text-label-sm text-secondary font-bold">★</span>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant text-[10px]">Host</span>
+</div>
+</div>
+<!-- 2. Arjun (Viewer / You) - Voted -->
+<div class="flex flex-col items-center gap-space-sm group">
+<div class="relative w-[104px] h-[140px] rounded-xl bg-tertiary shadow-md flex items-center justify-center overflow-hidden transition-transform duration-200 group-hover:-translate-y-1 ring-2 ring-primary">
+<svg class="w-16 h-16 text-secondary-container opacity-80" fill="none" stroke="currentColor" stroke-width="1.8" viewbox="0 0 100 100">
+<path d="M 50,50 A 4,4 0 0,0 46,46 A 8,8 0 0,0 54,38 A 16,16 0 0,0 38,54 A 28,28 0 0,0 66,82 A 48,48 0 0,0 18,34"></path>
+</svg>
+<div class="absolute inset-1 rounded-lg border border-primary-container opacity-40 pointer-events-none"></div>
+<div class="absolute top-2 right-2 w-5 h-5 rounded-full bg-secondary-container text-on-secondary flex items-center justify-center shadow-sm">
+<span class="material-symbols-outlined text-[14px] font-bold">check</span>
+</div>
+</div>
+<div class="flex flex-col items-center">
+<div class="flex items-center gap-1">
+<span class="text-[14px]">🐯</span>
+<span class="font-label-md text-label-md text-primary font-bold">Arjun</span>
+</div>
+<span class="font-label-sm text-label-sm text-primary font-semibold text-[10px]">(You)</span>
+</div>
+</div>
+<!-- 3. Meera - Voted -->
+<div class="flex flex-col items-center gap-space-sm group">
+<div class="relative w-[104px] h-[140px] rounded-xl bg-tertiary shadow-md flex items-center justify-center overflow-hidden transition-transform duration-200 group-hover:-translate-y-1">
+<svg class="w-16 h-16 text-secondary-container opacity-80" fill="none" stroke="currentColor" stroke-width="1.8" viewbox="0 0 100 100">
+<path d="M 50,50 A 4,4 0 0,0 46,46 A 8,8 0 0,0 54,38 A 16,16 0 0,0 38,54 A 28,28 0 0,0 66,82 A 48,48 0 0,0 18,34"></path>
+</svg>
+<div class="absolute inset-1 rounded-lg border border-primary-container opacity-40 pointer-events-none"></div>
+<div class="absolute top-2 right-2 w-5 h-5 rounded-full bg-secondary-container text-on-secondary flex items-center justify-center shadow-sm">
+<span class="material-symbols-outlined text-[14px] font-bold">check</span>
+</div>
+</div>
+<div class="flex flex-col items-center">
+<div class="flex items-center gap-1">
+<span class="text-[14px]">🦊</span>
+<span class="font-label-md text-label-md text-on-surface font-semibold">Meera</span>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant text-[10px]">Voted</span>
+</div>
+</div>
+<!-- 4. Rahul - Voted -->
+<div class="flex flex-col items-center gap-space-sm group">
+<div class="relative w-[104px] h-[140px] rounded-xl bg-tertiary shadow-md flex items-center justify-center overflow-hidden transition-transform duration-200 group-hover:-translate-y-1">
+<svg class="w-16 h-16 text-secondary-container opacity-80" fill="none" stroke="currentColor" stroke-width="1.8" viewbox="0 0 100 100">
+<path d="M 50,50 A 4,4 0 0,0 46,46 A 8,8 0 0,0 54,38 A 16,16 0 0,0 38,54 A 28,28 0 0,0 66,82 A 48,48 0 0,0 18,34"></path>
+</svg>
+<div class="absolute inset-1 rounded-lg border border-primary-container opacity-40 pointer-events-none"></div>
+<div class="absolute top-2 right-2 w-5 h-5 rounded-full bg-secondary-container text-on-secondary flex items-center justify-center shadow-sm">
+<span class="material-symbols-outlined text-[14px] font-bold">check</span>
+</div>
+</div>
+<div class="flex flex-col items-center">
+<div class="flex items-center gap-1">
+<span class="text-[14px]">👓</span>
+<span class="font-label-md text-label-md text-on-surface font-semibold">Rahul</span>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant text-[10px]">Voted</span>
+</div>
+</div>
+<!-- 5. Ananya - Voted -->
+<div class="flex flex-col items-center gap-space-sm group">
+<div class="relative w-[104px] h-[140px] rounded-xl bg-tertiary shadow-md flex items-center justify-center overflow-hidden transition-transform duration-200 group-hover:-translate-y-1">
+<svg class="w-16 h-16 text-secondary-container opacity-80" fill="none" stroke="currentColor" stroke-width="1.8" viewbox="0 0 100 100">
+<path d="M 50,50 A 4,4 0 0,0 46,46 A 8,8 0 0,0 54,38 A 16,16 0 0,0 38,54 A 28,28 0 0,0 66,82 A 48,48 0 0,0 18,34"></path>
+</svg>
+<div class="absolute inset-1 rounded-lg border border-primary-container opacity-40 pointer-events-none"></div>
+<div class="absolute top-2 right-2 w-5 h-5 rounded-full bg-secondary-container text-on-secondary flex items-center justify-center shadow-sm">
+<span class="material-symbols-outlined text-[14px] font-bold">check</span>
+</div>
+</div>
+<div class="flex flex-col items-center">
+<div class="flex items-center gap-1">
+<span class="text-[14px]">🦚</span>
+<span class="font-label-md text-label-md text-on-surface font-semibold">Ananya</span>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant text-[10px]">Voted</span>
+</div>
+</div>
+<!-- 6. Vikram - Voted -->
+<div class="flex flex-col items-center gap-space-sm group">
+<div class="relative w-[104px] h-[140px] rounded-xl bg-tertiary shadow-md flex items-center justify-center overflow-hidden transition-transform duration-200 group-hover:-translate-y-1">
+<svg class="w-16 h-16 text-secondary-container opacity-80" fill="none" stroke="currentColor" stroke-width="1.8" viewbox="0 0 100 100">
+<path d="M 50,50 A 4,4 0 0,0 46,46 A 8,8 0 0,0 54,38 A 16,16 0 0,0 38,54 A 28,28 0 0,0 66,82 A 48,48 0 0,0 18,34"></path>
+</svg>
+<div class="absolute inset-1 rounded-lg border border-primary-container opacity-40 pointer-events-none"></div>
+<div class="absolute top-2 right-2 w-5 h-5 rounded-full bg-secondary-container text-on-secondary flex items-center justify-center shadow-sm">
+<span class="material-symbols-outlined text-[14px] font-bold">check</span>
+</div>
+</div>
+<div class="flex flex-col items-center">
+<div class="flex items-center gap-1">
+<span class="text-[14px]">🧔</span>
+<span class="font-label-md text-label-md text-on-surface font-semibold">Vikram</span>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant text-[10px]">Voted</span>
+</div>
+</div>
+<!-- 7. Sneha - Thinking (Waiting) -->
+<div class="flex flex-col items-center gap-space-sm">
+<div class="relative w-[104px] h-[140px] rounded-xl bg-surface-container flex flex-col items-center justify-center gap-2 p-2 text-center border-2 border-dashed border-outline-variant shadow-inner">
+<span class="material-symbols-outlined text-outline text-[22px] animate-spin" style="animation-duration: 3s;">progress_activity</span>
+<span class="font-label-sm text-label-sm text-outline font-medium">Thinking...</span>
+</div>
+<div class="flex flex-col items-center">
+<div class="flex items-center gap-1">
+<span class="text-[14px]">🦉</span>
+<span class="font-label-md text-label-md text-on-surface-variant font-medium">Sneha</span>
+</div>
+<span class="font-label-sm text-label-sm text-outline text-[10px]">Deciding</span>
+</div>
+</div>
+<!-- 8. Farhan - Thinking (Waiting) -->
+<div class="flex flex-col items-center gap-space-sm">
+<div class="relative w-[104px] h-[140px] rounded-xl bg-surface-container flex flex-col items-center justify-center gap-2 p-2 text-center border-2 border-dashed border-outline-variant shadow-inner">
+<span class="material-symbols-outlined text-outline text-[22px] animate-spin" style="animation-duration: 3.5s;">progress_activity</span>
+<span class="font-label-sm text-label-sm text-outline font-medium">Thinking...</span>
+</div>
+<div class="flex flex-col items-center">
+<div class="flex items-center gap-1">
+<span class="text-[14px]">🐘</span>
+<span class="font-label-md text-label-md text-on-surface-variant font-medium">Farhan</span>
+</div>
+<span class="font-label-sm text-label-sm text-outline text-[10px]">Deciding</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Docked Deck Tray at Bottom (10 cards: 0, ½, 1, 2, 3, 5, 8, 13, 20, ?) -->
+<!-- Arjun has selected card 8: raised 28px, ring highlight, 'Your vote' pill tag -->
+<div class="w-full pt-space-lg pb-space-sm flex flex-col items-center">
+<div class="w-full max-w-[960px] bg-surface-container-lowest/80 backdrop-blur rounded-2xl p-space-md shadow-sm">
+<div class="flex items-center justify-between mb-space-sm px-space-xs">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider font-semibold">
+            Your hand · Fibonacci scale
+          </span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">
+            Click any card to change estimate
+          </span>
+</div>
+<div class="flex items-end justify-between gap-space-xs relative h-[140px] px-2" id="cards-tray">
+<!-- Card 0 -->
+<button class="relative w-[72px] h-[104px] rounded-xl bg-surface-container-lowest shadow-sm flex flex-col justify-between p-2.5 transition-all duration-200 hover:-translate-y-2 cursor-pointer group" onclick="selectCard(this, '0')">
+<span class="font-display-card-value text-body-sm text-on-surface-variant text-left leading-none font-bold">0</span>
+<span class="font-display-card-value text-display-card-value text-primary leading-none text-center">0</span>
+<span class="font-display-card-value text-body-sm text-on-surface-variant text-right leading-none font-bold">0</span>
+</button>
+<!-- Card ½ -->
+<button class="relative w-[72px] h-[104px] rounded-xl bg-surface-container-lowest shadow-sm flex flex-col justify-between p-2.5 transition-all duration-200 hover:-translate-y-2 cursor-pointer group" onclick="selectCard(this, '½')">
+<span class="font-display-card-value text-body-sm text-on-surface-variant text-left leading-none font-bold">½</span>
+<span class="font-display-card-value text-headline-lg text-primary leading-none text-center">½</span>
+<span class="font-display-card-value text-body-sm text-on-surface-variant text-right leading-none font-bold">½</span>
+</button>
+<!-- Card 1 -->
+<button class="relative w-[72px] h-[104px] rounded-xl bg-surface-container-lowest shadow-sm flex flex-col justify-between p-2.5 transition-all duration-200 hover:-translate-y-2 cursor-pointer group" onclick="selectCard(this, '1')">
+<span class="font-display-card-value text-body-sm text-on-surface-variant text-left leading-none font-bold">1</span>
+<span class="font-display-card-value text-display-card-value text-primary leading-none text-center">1</span>
+<span class="font-display-card-value text-body-sm text-on-surface-variant text-right leading-none font-bold">1</span>
+</button>
+<!-- Card 2 -->
+<button class="relative w-[72px] h-[104px] rounded-xl bg-surface-container-lowest shadow-sm flex flex-col justify-between p-2.5 transition-all duration-200 hover:-translate-y-2 cursor-pointer group" onclick="selectCard(this, '2')">
+<span class="font-display-card-value text-body-sm text-on-surface-variant text-left leading-none font-bold">2</span>
+<span class="font-display-card-value text-display-card-value text-primary leading-none text-center">2</span>
+<span class="font-display-card-value text-body-sm text-on-surface-variant text-right leading-none font-bold">2</span>
+</button>
+<!-- Card 3 -->
+<button class="relative w-[72px] h-[104px] rounded-xl bg-surface-container-lowest shadow-sm flex flex-col justify-between p-2.5 transition-all duration-200 hover:-translate-y-2 cursor-pointer group" onclick="selectCard(this, '3')">
+<span class="font-display-card-value text-body-sm text-on-surface-variant text-left leading-none font-bold">3</span>
+<span class="font-display-card-value text-display-card-value text-primary leading-none text-center">3</span>
+<span class="font-display-card-value text-body-sm text-on-surface-variant text-right leading-none font-bold">3</span>
+</button>
+<!-- Card 5 -->
+<button class="relative w-[72px] h-[104px] rounded-xl bg-surface-container-lowest shadow-sm flex flex-col justify-between p-2.5 transition-all duration-200 hover:-translate-y-2 cursor-pointer group" onclick="selectCard(this, '5')">
+<span class="font-display-card-value text-body-sm text-on-surface-variant text-left leading-none font-bold">5</span>
+<span class="font-display-card-value text-display-card-value text-primary leading-none text-center">5</span>
+<span class="font-display-card-value text-body-sm text-on-surface-variant text-right leading-none font-bold">5</span>
+</button>
+<!-- Card 8: SELECTED by Arjun - Raised 28px (-translate-y-7), ring-3 ring-on-surface, floating 'Your vote' pill badge -->
+<div class="relative -translate-y-7 flex flex-col items-center z-20 transition-all duration-200">
+<!-- Floating Pill Badge -->
+<div class="mb-1.5 px-2.5 py-0.5 rounded-full bg-surface-container-lowest text-primary font-label-sm text-label-sm font-bold shadow-md flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-primary"></span>
+              Your vote
+            </div>
+<!-- Card 8 Face -->
+<button class="relative w-[74px] h-[106px] rounded-xl bg-primary-container text-on-primary ring-4 ring-on-surface shadow-xl flex flex-col justify-between p-2.5 cursor-pointer" onclick="selectCard(this, '8')">
+<span class="font-display-card-value text-body-sm text-on-primary text-left leading-none font-bold">8</span>
+<span class="font-display-card-value text-display-card-value text-on-primary leading-none text-center font-bold">8</span>
+<span class="font-display-card-value text-body-sm text-on-primary text-right leading-none font-bold">8</span>
+</button>
+</div>
+<!-- Card 13 -->
+<button class="relative w-[72px] h-[104px] rounded-xl bg-surface-container-lowest shadow-sm flex flex-col justify-between p-2.5 transition-all duration-200 hover:-translate-y-2 cursor-pointer group" onclick="selectCard(this, '13')">
+<span class="font-display-card-value text-body-sm text-on-surface-variant text-left leading-none font-bold">13</span>
+<span class="font-display-card-value text-display-card-value text-primary leading-none text-center">13</span>
+<span class="font-display-card-value text-body-sm text-on-surface-variant text-right leading-none font-bold">13</span>
+</button>
+<!-- Card 20 -->
+<button class="relative w-[72px] h-[104px] rounded-xl bg-surface-container-lowest shadow-sm flex flex-col justify-between p-2.5 transition-all duration-200 hover:-translate-y-2 cursor-pointer group" onclick="selectCard(this, '20')">
+<span class="font-display-card-value text-body-sm text-on-surface-variant text-left leading-none font-bold">20</span>
+<span class="font-display-card-value text-display-card-value text-primary leading-none text-center">20</span>
+<span class="font-display-card-value text-body-sm text-on-surface-variant text-right leading-none font-bold">20</span>
+</button>
+<!-- Card ? (Uncertainty) -->
+<button class="relative w-[72px] h-[104px] rounded-xl bg-surface-container-lowest shadow-sm flex flex-col justify-between p-2.5 transition-all duration-200 hover:-translate-y-2 cursor-pointer group" onclick="selectCard(this, '?')">
+<span class="font-display-card-value text-body-sm text-on-surface-variant text-left leading-none font-bold">?</span>
+<span class="font-display-card-value text-display-card-value text-secondary leading-none text-center">?</span>
+<span class="font-display-card-value text-body-sm text-on-surface-variant text-right leading-none font-bold">?</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<script>
+    // Micro-interaction for changing Arjun's vote card
+    function selectCard(elem, value) {
+      console.log('Arjun updated estimate to:', value);
+    }
+  </script>
+</div></main><footer class="w-full bg-surface-container-lowest border-t border-outline-variant mt-auto"><div class="h-12 max-w-[1440px] mx-auto px-margin flex items-center justify-between"><div class="flex items-center gap-space-md"><span class="font-headline-sm text-headline-sm text-primary tracking-tight text-[15px]">Bravynix</span><span class="font-body-sm text-body-sm text-on-surface-variant">Room #CK-9204 · Ephemeral estimation session</span></div><div class="flex items-center gap-space-lg"><span class="inline-flex items-center gap-space-xs font-body-sm text-body-sm text-on-surface-variant"><span class="w-1.5 h-1.5 rounded-full bg-[#1E7A4C]"></span>End-to-end synced</span><span class="font-body-sm text-body-sm text-on-surface-variant">No account required</span></div></div></footer></body></html>

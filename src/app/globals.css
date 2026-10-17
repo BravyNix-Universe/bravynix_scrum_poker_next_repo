@@ -1,0 +1,99 @@
+@import "tailwindcss";
+
+/*
+ * Design tokens from the Bravynix Scrum Poker design system (design/DESIGN.md).
+ * The default Tailwind palette is removed so only these tokens can be used.
+ */
+@theme {
+  --color-*: initial;
+
+  --color-white: #ffffff;
+  --color-black: #000000;
+
+  /* Surfaces */
+  --color-canvas: #fbf8ff;
+  --color-canvas-sunken: #f3f2ff;
+  --color-surface: #ffffff;
+  --color-surface-muted: #eceef5;
+  --color-line: #daddea;
+  --color-line-strong: #7c82a0;
+
+  /* Text */
+  --color-ink: #161b33;
+  --color-ink-muted: #454651;
+  --color-ink-subtle: #5f6585;
+
+  /* Brand (indigo) */
+  --color-primary: #2f3c86;
+  --color-primary-hover: #26316f;
+  --color-primary-strong: #16246f;
+  --color-primary-soft: #eef0fa;
+  --color-primary-tint: #dee0ff;
+  --color-night: #202955;
+  --color-night-line: #37406c;
+  --color-night-ink: #dde1ff;
+
+  /* Accent (marigold) */
+  --color-accent: #f4a62a;
+  --color-accent-hover: #e0931b;
+  --color-accent-soft: #fff4e2;
+  --color-accent-ink: #835400;
+
+  /* Status */
+  --color-success: #1e7a4c;
+  --color-success-soft: #e6f4ec;
+  --color-danger: #ba1a1a;
+  --color-danger-soft: #ffdad6;
+
+  /* Card faces, one per deck value (PRD 11.1) */
+  --color-vote-0: #2f3c86;
+  --color-vote-half: #2a4c9c;
+  --color-vote-1: #235da3;
+  --color-vote-2: #1a6e9e;
+  --color-vote-3: #137480;
+  --color-vote-5: #16735f;
+  --color-vote-8: #3b7a2a;
+  --color-vote-13: #f2c14e;
+  --color-vote-20: #f4a62a;
+  --color-vote-unsure: #161b33;
+  --color-card-back: #1e2752;
+
+  /* Pastel avatar backgrounds */
+  --color-avatar-mint: #ddf1e6;
+  --color-avatar-peach: #fce7d2;
+  --color-avatar-periwinkle: #e3e7fb;
+  --color-avatar-rose: #f7dde4;
+  --color-avatar-lilac: #e9e2f6;
+
+  /* Typography */
+  --font-sans: "Noto Sans Variable", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Bricolage Grotesque Variable", ui-sans-serif, system-ui, sans-serif;
+  --text-2xs: 0.6875rem;
+  --text-2xs--line-height: 0.875rem;
+
+  /* Elevation: flat tonal layers and crisp contact shadows, never soft glows */
+  --shadow-card: 0 2px 0 0 #daddea;
+  --shadow-card-raised: 0 6px 0 0 #daddea;
+  --shadow-overlay: 0 8px 24px -4px rgb(22 27 51 / 0.08);
+  --shadow-panel: 0 20px 40px -12px rgb(22 27 51 / 0.35);
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
+
+  body {
+    @apply bg-canvas font-sans text-ink antialiased;
+  }
+
+  :focus-visible {
+    @apply outline-2 outline-offset-2 outline-primary;
+  }
+}

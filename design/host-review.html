@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_standard" name="shell-type"/><title>Bravynix Scrum Poker</title><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;700&amp;family=Noto+Sans:wght@400;500;600&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base { html, body { margin: 0; padding: 0; } body { overscroll-behavior: none; } main > :first-child { margin-top: 0 !important; } main > :last-child { margin-bottom: 0 !important; } } ::-webkit-scrollbar { display: none; }</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { "colors": { "on-surface-variant": "#454651", "outline": "#767682", "secondary-fixed-dim": "#ffb956", "surface-container-low": "#f3f2ff", "primary": "#16246f", "secondary": "#835400", "primary-container": "#2f3c86", "background": "#fbf8ff", "on-tertiary-fixed-variant": "#3b4470", "on-secondary-fixed-variant": "#643f00", "tertiary-fixed": "#dee1ff", "tertiary": "#202955", "on-error": "#ffffff", "on-primary-fixed-variant": "#33408a", "on-tertiary": "#ffffff", "primary-fixed-dim": "#bbc3ff", "on-primary-container": "#9eaafc", "on-error-container": "#93000a", "on-secondary-fixed": "#2a1800", "error": "#ba1a1a", "surface-variant": "#dde1ff", "secondary-fixed": "#ffddb5", "surface-container-high": "#e5e7ff", "on-primary": "#ffffff", "on-secondary-container": "#6c4500", "inverse-surface": "#2a2f48", "on-primary-fixed": "#000f5c", "on-tertiary-fixed": "#0e1842", "error-container": "#ffdad6", "surface-container-highest": "#dde1ff", "inverse-primary": "#bbc3ff", "surface": "#fbf8ff", "surface-tint": "#4c58a4", "surface-container-lowest": "#ffffff", "secondary-container": "#feae32", "on-secondary": "#ffffff", "primary-fixed": "#dee0ff", "surface-bright": "#fbf8ff", "on-tertiary-container": "#a4ade0", "inverse-on-surface": "#f0efff", "tertiary-container": "#37406c", "tertiary-fixed-dim": "#bbc4f8", "on-background": "#151a32", "surface-container": "#ececff", "on-surface": "#151a32", "outline-variant": "#c6c5d2", "surface-dim": "#d4d8f9" }, "borderRadius": { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" }, "spacing": { "space-lg": "1.5rem", "space-md": "1rem", "space-xs": "0.25rem", "gutter": "1.5rem", "margin": "2rem", "space-xl": "2rem", "space-sm": "0.5rem" }, "fontFamily": { "body-sm": [ "Noto Sans" ], "body-lg": [ "Noto Sans" ], "label-md": [ "Noto Sans" ], "body-md": [ "Noto Sans" ], "label-lg": [ "Noto Sans" ], "headline-sm": [ "Bricolage Grotesque" ], "label-sm": [ "Noto Sans" ], "headline-lg": [ "Bricolage Grotesque" ], "display-lg": [ "Bricolage Grotesque" ], "display-card-value": [ "Bricolage Grotesque" ], "headline-md": [ "Bricolage Grotesque" ] }, "fontSize": { "body-sm": [ "12px", { "lineHeight": "16px", "fontWeight": "400" } ], "body-lg": [ "16px", { "lineHeight": "24px", "fontWeight": "400" } ], "label-md": [ "12px", { "lineHeight": "16px", "fontWeight": "600" } ], "body-md": [ "14px", { "lineHeight": "20px", "fontWeight": "400" } ], "label-lg": [ "14px", { "lineHeight": "20px", "fontWeight": "600" } ], "headline-sm": [ "18px", { "lineHeight": "24px", "fontWeight": "600" } ], "label-sm": [ "11px", { "lineHeight": "14px", "fontWeight": "500" } ], "headline-lg": [ "28px", { "lineHeight": "36px", "letterSpacing": "-0.01em", "fontWeight": "700" } ], "display-lg": [ "40px", { "lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "700" } ], "display-card-value": [ "32px", { "lineHeight": "36px", "letterSpacing": "-0.01em", "fontWeight": "700" } ], "headline-md": [ "22px", { "lineHeight": "28px", "fontWeight": "600" } ] } } } };</script></head><body class="min-h-screen bg-surface-container-low font-body-md text-on-surface"><header class="fixed top-0 left-0 right-0 z-50 bg-surface-container-lowest border-b border-outline-variant"><div class="h-16 max-w-[1440px] mx-auto px-margin flex items-center justify-between"><div class="flex items-center gap-space-md"><a class="flex items-center gap-space-sm hover:opacity-90 transition-opacity" data-path="bravynix-scrum-poker-landing-page" href="#"><span class="font-headline-sm text-headline-sm text-primary font-bold tracking-tight">Bravynix</span></a><span class="h-4 w-px bg-outline-variant"></span><span class="font-label-lg text-label-lg text-on-surface font-semibold">Checkout revamp</span></div><div class="flex items-center gap-space-md"><nav class="flex items-center gap-space-xs bg-surface-container-low p-1 rounded-lg border border-outline-variant" data-active-classes="bg-surface-container-lowest text-primary shadow-sm font-semibold"><a class="px-3 py-1 rounded text-on-surface-variant font-label-md text-label-md transition-colors hover:text-on-surface" data-path="room-host-discuss" href="#">Stories</a><a class="px-3 py-1 rounded text-on-surface-variant font-label-md text-label-md transition-colors hover:text-on-surface" data-path="room-host-history-drawer" href="#">History</a></nav><div class="flex items-center gap-space-xs px-space-sm py-1 rounded-full bg-surface-container border border-outline-variant"><span class="material-symbols-outlined text-on-surface-variant text-[16px]">timer</span><span class="font-label-sm text-label-sm text-on-surface font-medium">01:24</span></div><button class="flex items-center gap-space-xs px-3 py-1.5 rounded-lg bg-surface-container-lowest border border-outline-variant hover:bg-surface-container-low text-on-surface transition-colors cursor-pointer"><span class="material-symbols-outlined text-[16px] text-primary">share</span><span class="font-label-md text-label-md font-semibold">Invite</span></button><div class="flex items-center gap-1.5 px-space-sm py-1"><span class="w-2 h-2 rounded-full bg-[#1E7A4C]"></span><span class="font-label-sm text-label-sm text-[#1E7A4C] font-semibold">Connected</span></div><div class="h-5 w-px bg-outline-variant"></div><div class="flex items-center gap-space-sm"><div class="w-8 h-8 rounded-full bg-surface-container-high border border-outline-variant flex items-center justify-center shrink-0 text-[16px]">🐼</div><div class="flex items-center gap-1"><span class="font-label-md text-label-md text-on-surface font-medium">Priya</span><span class="font-label-sm text-label-sm text-secondary font-semibold">★ (Host)</span></div></div></div></div></header><main class="w-full max-w-[1440px] mx-auto pt-16 bg-surface-container-low min-h-screen"><div class="flex flex-col w-full pb-16">
+<!-- Top Session Secondary Utility Sub-Bar -->
+<div class="w-full max-w-[1392px] mx-auto px-margin pt-space-md pb-space-sm flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-outline">Session Scope</span>
+<span class="w-1 h-1 rounded-full bg-outline-variant"></span>
+<span class="font-label-md text-label-md text-on-surface font-semibold">Sprint 42 Backlog · 8 Participants</span>
+<span class="px-2 py-0.5 rounded-full bg-secondary-fixed text-on-secondary-fixed font-label-sm text-label-sm font-semibold">Consensus check</span>
+</div>
+<div class="flex items-center gap-space-md">
+<div class="flex items-center gap-1.5 text-on-surface-variant font-label-md text-label-md">
+<span class="material-symbols-outlined text-[16px] text-primary">groups</span>
+<span>6/8 Voted</span>
+</div>
+<div class="h-3.5 w-px bg-outline-variant"></div>
+<button class="flex items-center gap-1 text-primary hover:text-primary-container font-label-md text-label-md font-semibold cursor-pointer transition-colors">
+<span class="material-symbols-outlined text-[16px]">file_download</span>
+        Export round
+      </button>
+</div>
+</div>
+<!-- Workspace Container: Phase Tracker & Story Workspace -->
+<div class="w-full max-w-[1392px] mx-auto px-margin flex flex-col gap-space-lg">
+<!-- Phase Row & Controls -->
+<div class="flex flex-col items-center gap-space-xs pt-space-xs">
+<div class="w-full flex items-center justify-between">
+<!-- Story Navigation Prev -->
+<button class="flex items-center gap-1 px-3 py-2 rounded-lg bg-surface-container-lowest text-on-surface hover:bg-surface-container transition-all shadow-sm cursor-pointer" title="Previous story">
+<span class="material-symbols-outlined text-[18px]">arrow_back</span>
+<span class="font-label-md text-label-md font-semibold">Prev story</span>
+</button>
+<!-- Centered Phase Indicator & Primary Actions -->
+<div class="flex items-center gap-space-lg">
+<!-- Segmented Phase Pill -->
+<div class="inline-flex items-center p-1 rounded-full bg-surface-container-high">
+<span class="px-3.5 py-1.5 rounded-full text-on-surface-variant font-label-sm text-label-sm font-medium">1. Vote</span>
+<span class="px-3.5 py-1.5 rounded-full text-on-surface-variant font-label-sm text-label-sm font-medium">2. Reveal</span>
+<span class="px-4 py-1.5 rounded-full bg-primary-container text-on-primary font-label-md text-label-md font-semibold shadow-sm flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary-fixed-dim"></span>
+              3. Review
+            </span>
+</div>
+<!-- Action CTA Group -->
+<div class="flex items-center gap-space-sm">
+<button class="h-12 px-6 rounded-lg bg-primary-container text-on-primary hover:bg-primary font-label-lg text-label-lg font-semibold flex items-center gap-space-xs transition-all shadow-sm active:translate-y-0.5 cursor-pointer">
+<span class="material-symbols-outlined text-[18px]">replay</span>
+              Start new round
+            </button>
+<button class="h-12 px-4 rounded-lg text-primary hover:bg-surface-container font-label-lg text-label-lg font-semibold flex items-center gap-space-xs transition-colors cursor-pointer">
+<span>Next story</span>
+<span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+</button>
+</div>
+</div>
+<!-- Story Navigation Next -->
+<button class="flex items-center gap-1 px-3 py-2 rounded-lg bg-surface-container-lowest text-on-surface hover:bg-surface-container transition-all shadow-sm cursor-pointer" title="Next story">
+<span class="font-label-md text-label-md font-semibold">Story 4</span>
+<span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+</button>
+</div>
+<!-- Instruction microcopy -->
+<p class="font-body-md text-body-md text-on-surface-variant text-center">Review the estimates.</p>
+</div>
+<!-- Central Featured Story Card with Stacked Deck Edge Illusion -->
+<div class="relative w-full max-w-[820px] mx-auto">
+<!-- Peeking card edge layers behind the right border -->
+<div class="absolute top-2 -right-2 bottom-2 w-6 bg-surface-container-high rounded-r-xl pointer-events-none -z-10 shadow-sm"></div>
+<div class="absolute top-4 -right-3.5 bottom-4 w-6 bg-surface-container rounded-r-xl pointer-events-none -z-20"></div>
+<!-- Main Story Container -->
+<div class="w-full bg-surface-container-lowest rounded-xl p-space-lg shadow-sm flex flex-col gap-space-lg">
+<!-- Story Header Meta -->
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<span class="px-2.5 py-1 rounded bg-surface-container font-label-sm text-label-sm text-primary font-semibold">Story 3 of 5</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Ticket #CR-1084</span>
+</div>
+<div class="flex items-center gap-space-xs">
+<button class="px-2.5 py-1 rounded text-on-surface-variant hover:text-primary hover:bg-surface-container-low font-label-sm text-label-sm transition-colors cursor-pointer flex items-center gap-1">
+<span class="material-symbols-outlined text-[15px]">edit</span>
+              Rename
+            </button>
+<span class="text-outline-variant">·</span>
+<button class="px-2.5 py-1 rounded text-error hover:bg-error-container font-label-sm text-label-sm transition-colors cursor-pointer flex items-center gap-1">
+<span class="material-symbols-outlined text-[15px]">delete</span>
+              Delete
+            </button>
+</div>
+</div>
+<!-- Story Title -->
+<div class="flex flex-col gap-1">
+<h1 class="font-headline-lg text-headline-lg text-on-surface font-bold tracking-tight">Show delivery ETA on the order page</h1>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Calculate guaranteed transit date at dynamic checkout step with warehouse lookup cache.</p>
+</div>
+<!-- Result Block with 3 Integrated Structural Panels -->
+<div class="w-full rounded-xl bg-surface-container-low p-space-md flex flex-col md:flex-row items-stretch gap-space-md">
+<!-- Section 1: Average Metric -->
+<div class="flex flex-col justify-between p-space-sm md:w-[170px] shrink-0 bg-surface-container-lowest rounded-lg">
+<div class="flex items-center justify-between">
+<span class="font-body-md text-body-md text-on-surface-variant font-medium">Average</span>
+<span class="material-symbols-outlined text-[16px] text-outline">analytics</span>
+</div>
+<div class="py-2">
+<span class="font-display-lg text-[68px] leading-[72px] font-bold text-on-surface tracking-tight">4.6</span>
+</div>
+<div class="inline-flex items-center gap-1">
+<span class="w-2 h-2 rounded-full bg-secondary-container"></span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Spread: 2 → 8 pts</span>
+</div>
+</div>
+<!-- Section 2: Vote Count 2x2 Grid -->
+<div class="p-space-sm md:w-[220px] shrink-0 bg-surface-container-lowest rounded-lg flex flex-col justify-between">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-outline">Submission audit</span>
+<div class="grid grid-cols-2 gap-x-space-md gap-y-space-sm py-1">
+<div class="flex flex-col">
+<span class="font-display-card-value text-[24px] leading-7 font-bold text-on-surface">5</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Numeric votes</span>
+</div>
+<div class="flex flex-col">
+<span class="font-display-card-value text-[24px] leading-7 font-bold text-on-surface">1</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Question marks</span>
+</div>
+<div class="flex flex-col">
+<span class="font-display-card-value text-[24px] leading-7 font-bold text-outline">2</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Not voted</span>
+</div>
+<div class="flex flex-col">
+<span class="font-display-card-value text-[24px] leading-7 font-bold text-outline">0</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Not revealed</span>
+</div>
+</div>
+<div class="pt-1">
+<span class="font-label-sm text-label-sm text-[#1E7A4C] font-semibold flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">check_circle</span>
+                Quorum reached (75%)
+              </span>
+</div>
+</div>
+<!-- Section 3: Value Distribution Column Chart -->
+<div class="flex-1 p-space-sm bg-surface-container-lowest rounded-lg flex flex-col justify-between">
+<div class="flex items-center justify-between pb-2">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-outline">Distribution (Deck order)</span>
+<span class="px-2 py-0.5 rounded bg-secondary-fixed font-label-sm text-label-sm text-on-secondary-fixed font-semibold">Mode: 5 (2 votes)</span>
+</div>
+<!-- Distribution Bars Flex Container -->
+<div class="h-28 flex items-end justify-between gap-1 pt-4 pb-1">
+<!-- Card: 0 -->
+<div class="flex-1 flex flex-col items-center gap-1.5 h-full justify-end group">
+<span class="h-3 text-[10px] text-transparent leading-none">0</span>
+<div class="w-full max-w-[18px] h-0.5 bg-outline-variant rounded-full"></div>
+<span class="font-label-sm text-label-sm text-on-surface-variant font-medium">0</span>
+</div>
+<!-- Card: ½ -->
+<div class="flex-1 flex flex-col items-center gap-1.5 h-full justify-end group">
+<span class="h-3 text-[10px] text-transparent leading-none">0</span>
+<div class="w-full max-w-[18px] h-0.5 bg-outline-variant rounded-full"></div>
+<span class="font-label-sm text-label-sm text-on-surface-variant font-medium">½</span>
+</div>
+<!-- Card: 1 -->
+<div class="flex-1 flex flex-col items-center gap-1.5 h-full justify-end group">
+<span class="h-3 text-[10px] text-transparent leading-none">0</span>
+<div class="w-full max-w-[18px] h-0.5 bg-outline-variant rounded-full"></div>
+<span class="font-label-sm text-label-sm text-on-surface-variant font-medium">1</span>
+</div>
+<!-- Card: 2 (1 vote) -->
+<div class="flex-1 flex flex-col items-center gap-1 h-full justify-end">
+<span class="font-label-sm text-label-sm text-primary font-bold leading-none">1</span>
+<div class="w-full max-w-[18px] h-[34px] bg-primary-container rounded-t transition-all hover:opacity-90"></div>
+<span class="font-label-sm text-label-sm text-on-surface font-semibold">2</span>
+</div>
+<!-- Card: 3 (1 vote) -->
+<div class="flex-1 flex flex-col items-center gap-1 h-full justify-end">
+<span class="font-label-sm text-label-sm text-primary font-bold leading-none">1</span>
+<div class="w-full max-w-[18px] h-[34px] bg-primary-container rounded-t transition-all hover:opacity-90"></div>
+<span class="font-label-sm text-label-sm text-on-surface font-semibold">3</span>
+</div>
+<!-- Card: 5 (2 votes - HIGHLIGHTED MODE) -->
+<div class="flex-1 flex flex-col items-center gap-1 h-full justify-end">
+<span class="font-label-sm text-label-sm text-secondary font-bold leading-none">2</span>
+<div class="w-full max-w-[18px] h-[68px] bg-secondary-container rounded-t transition-all shadow-sm"></div>
+<span class="font-label-sm text-label-sm text-secondary font-bold">5</span>
+</div>
+<!-- Card: 8 (1 vote) -->
+<div class="flex-1 flex flex-col items-center gap-1 h-full justify-end">
+<span class="font-label-sm text-label-sm text-primary font-bold leading-none">1</span>
+<div class="w-full max-w-[18px] h-[34px] bg-primary-container rounded-t transition-all hover:opacity-90"></div>
+<span class="font-label-sm text-label-sm text-on-surface font-semibold">8</span>
+</div>
+<!-- Card: 13 -->
+<div class="flex-1 flex flex-col items-center gap-1.5 h-full justify-end group">
+<span class="h-3 text-[10px] text-transparent leading-none">0</span>
+<div class="w-full max-w-[18px] h-0.5 bg-outline-variant rounded-full"></div>
+<span class="font-label-sm text-label-sm text-on-surface-variant font-medium">13</span>
+</div>
+<!-- Card: 20 -->
+<div class="flex-1 flex flex-col items-center gap-1.5 h-full justify-end group">
+<span class="h-3 text-[10px] text-transparent leading-none">0</span>
+<div class="w-full max-w-[18px] h-0.5 bg-outline-variant rounded-full"></div>
+<span class="font-label-sm text-label-sm text-on-surface-variant font-medium">20</span>
+</div>
+<!-- Card: ? (1 vote) -->
+<div class="flex-1 flex flex-col items-center gap-1 h-full justify-end">
+<span class="font-label-sm text-label-sm text-primary font-bold leading-none">1</span>
+<div class="w-full max-w-[18px] h-[34px] bg-primary-container rounded-t transition-all hover:opacity-90"></div>
+<span class="font-label-sm text-label-sm text-on-surface font-semibold">?</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Participants Table Grid Section (8 Revealed Seats) -->
+<div class="w-full flex flex-col gap-space-md pt-space-xs">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<span class="font-headline-sm text-headline-sm text-on-surface font-bold">Team Votes</span>
+<span class="px-2 py-0.5 rounded-full bg-surface-container font-label-sm text-label-sm text-on-surface-variant">All 8 seats assigned</span>
+</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Click any participant to request clarification</span>
+</div>
+<!-- 8 Seats in Asymmetric Grid Layout -->
+<div class="grid grid-cols-4 lg:grid-cols-8 gap-space-md">
+<!-- Seat 1: Priya (Host) - Value 5 -->
+<div class="flex flex-col items-center gap-space-sm group">
+<div class="w-[96px] h-[132px] rounded-xl bg-[#16735F] text-on-primary p-2 flex flex-col justify-between shadow-sm transition-transform group-hover:-translate-y-1 select-none">
+<span class="font-headline-md text-[22px] leading-none font-bold text-left">5</span>
+<div class="flex items-center justify-center">
+<span class="text-[28px] opacity-90 drop-shadow-sm">🐼</span>
+</div>
+<span class="font-headline-md text-[22px] leading-none font-bold text-right rotate-180">5</span>
+</div>
+<div class="flex flex-col items-center text-center">
+<span class="font-label-md text-label-md text-on-surface font-semibold leading-tight">Priya (you)</span>
+<span class="font-label-sm text-label-sm text-secondary font-semibold">★ Host</span>
+</div>
+</div>
+<!-- Seat 2: Arjun - Value 3 -->
+<div class="flex flex-col items-center gap-space-sm group">
+<div class="w-[96px] h-[132px] rounded-xl bg-[#137480] text-on-primary p-2 flex flex-col justify-between shadow-sm transition-transform group-hover:-translate-y-1 select-none">
+<span class="font-headline-md text-[22px] leading-none font-bold text-left">3</span>
+<div class="flex items-center justify-center">
+<span class="text-[28px] opacity-90 drop-shadow-sm">🐯</span>
+</div>
+<span class="font-headline-md text-[22px] leading-none font-bold text-right rotate-180">3</span>
+</div>
+<div class="flex flex-col items-center text-center">
+<span class="font-label-md text-label-md text-on-surface font-semibold leading-tight">Arjun</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Frontend</span>
+</div>
+</div>
+<!-- Seat 3: Meera - Value 5 -->
+<div class="flex flex-col items-center gap-space-sm group">
+<div class="w-[96px] h-[132px] rounded-xl bg-[#16735F] text-on-primary p-2 flex flex-col justify-between shadow-sm transition-transform group-hover:-translate-y-1 select-none">
+<span class="font-headline-md text-[22px] leading-none font-bold text-left">5</span>
+<div class="flex items-center justify-center">
+<span class="text-[28px] opacity-90 drop-shadow-sm">🦊</span>
+</div>
+<span class="font-headline-md text-[22px] leading-none font-bold text-right rotate-180">5</span>
+</div>
+<div class="flex flex-col items-center text-center">
+<span class="font-label-md text-label-md text-on-surface font-semibold leading-tight">Meera</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Design</span>
+</div>
+</div>
+<!-- Seat 4: Rahul - Value 2 -->
+<div class="flex flex-col items-center gap-space-sm group">
+<div class="w-[96px] h-[132px] rounded-xl bg-[#1A6E9E] text-on-primary p-2 flex flex-col justify-between shadow-sm transition-transform group-hover:-translate-y-1 select-none">
+<span class="font-headline-md text-[22px] leading-none font-bold text-left">2</span>
+<div class="flex items-center justify-center">
+<span class="text-[28px] opacity-90 drop-shadow-sm">👓</span>
+</div>
+<span class="font-headline-md text-[22px] leading-none font-bold text-right rotate-180">2</span>
+</div>
+<div class="flex flex-col items-center text-center">
+<span class="font-label-md text-label-md text-on-surface font-semibold leading-tight">Rahul</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Backend</span>
+</div>
+</div>
+<!-- Seat 5: Ananya - Value 8 -->
+<div class="flex flex-col items-center gap-space-sm group">
+<div class="w-[96px] h-[132px] rounded-xl bg-[#3B7A2A] text-on-primary p-2 flex flex-col justify-between shadow-sm transition-transform group-hover:-translate-y-1 select-none">
+<span class="font-headline-md text-[22px] leading-none font-bold text-left">8</span>
+<div class="flex items-center justify-center">
+<span class="text-[28px] opacity-90 drop-shadow-sm">🦚</span>
+</div>
+<span class="font-headline-md text-[22px] leading-none font-bold text-right rotate-180">8</span>
+</div>
+<div class="flex flex-col items-center text-center">
+<span class="font-label-md text-label-md text-on-surface font-semibold leading-tight">Ananya</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">QA Lead</span>
+</div>
+</div>
+<!-- Seat 6: Vikram - Value ? -->
+<div class="flex flex-col items-center gap-space-sm group">
+<div class="w-[96px] h-[132px] rounded-xl bg-[#161B33] text-on-primary p-2 flex flex-col justify-between shadow-sm transition-transform group-hover:-translate-y-1 select-none">
+<span class="font-headline-md text-[22px] leading-none font-bold text-left">?</span>
+<div class="flex items-center justify-center">
+<span class="text-[28px] opacity-90 drop-shadow-sm">🧔</span>
+</div>
+<span class="font-headline-md text-[22px] leading-none font-bold text-right rotate-180">?</span>
+</div>
+<div class="flex flex-col items-center text-center">
+<span class="font-label-md text-label-md text-on-surface font-semibold leading-tight">Vikram</span>
+<span class="font-body-sm text-body-sm text-secondary font-medium">Uncertain</span>
+</div>
+</div>
+<!-- Seat 7: Sneha - Not voted -->
+<div class="flex flex-col items-center gap-space-sm group">
+<div class="w-[96px] h-[132px] rounded-xl bg-[#ECEEF5] text-outline p-2 flex flex-col justify-between select-none">
+<span class="font-label-sm text-label-sm font-semibold text-left">--</span>
+<div class="flex flex-col items-center justify-center gap-1">
+<span class="text-[24px] opacity-60">🦉</span>
+<span class="font-label-sm text-[10px] uppercase font-bold tracking-tight text-outline">Not voted</span>
+</div>
+<span class="font-label-sm text-label-sm font-semibold text-right rotate-180">--</span>
+</div>
+<div class="flex flex-col items-center text-center">
+<span class="font-label-md text-label-md text-on-surface font-semibold leading-tight">Sneha</span>
+<span class="font-body-sm text-body-sm text-outline">Spectating</span>
+</div>
+</div>
+<!-- Seat 8: Farhan - Not voted -->
+<div class="flex flex-col items-center gap-space-sm group">
+<div class="w-[96px] h-[132px] rounded-xl bg-[#ECEEF5] text-outline p-2 flex flex-col justify-between select-none">
+<span class="font-label-sm text-label-sm font-semibold text-left">--</span>
+<div class="flex flex-col items-center justify-center gap-1">
+<span class="text-[24px] opacity-60">🐘</span>
+<span class="font-label-sm text-[10px] uppercase font-bold tracking-tight text-outline">Not voted</span>
+</div>
+<span class="font-label-sm text-label-sm font-semibold text-right rotate-180">--</span>
+</div>
+<div class="flex flex-col items-center text-center">
+<span class="font-label-md text-label-md text-on-surface font-semibold leading-tight">Farhan</span>
+<span class="font-body-sm text-body-sm text-outline">Spectating</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Bottom Poker Deck Dock: Lowered at 40% Opacity (Disabled in Review State) -->
+<div class="w-full flex flex-col items-center gap-space-xs pt-space-md opacity-40 pointer-events-none select-none">
+<div class="flex items-center gap-2 mb-1">
+<span class="material-symbols-outlined text-[16px] text-outline">lock</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider font-semibold">Your Hand (Locked during review)</span>
+</div>
+<!-- Static Hand Dock Cards -->
+<div class="flex items-center gap-space-sm p-space-sm bg-surface-container rounded-xl shadow-sm">
+<!-- 0 -->
+<div class="w-[68px] h-[96px] rounded-lg bg-surface-container-lowest flex flex-col justify-between p-2">
+<span class="font-label-md text-label-md font-bold text-on-surface-variant">0</span>
+<span class="font-display-card-value text-display-card-value font-bold text-on-surface text-center">0</span>
+<span class="font-label-md text-label-md font-bold text-on-surface-variant text-right">0</span>
+</div>
+<!-- ½ -->
+<div class="w-[68px] h-[96px] rounded-lg bg-surface-container-lowest flex flex-col justify-between p-2">
+<span class="font-label-md text-label-md font-bold text-on-surface-variant">½</span>
+<span class="font-display-card-value text-display-card-value font-bold text-on-surface text-center">½</span>
+<span class="font-label-md text-label-md font-bold text-on-surface-variant text-right">½</span>
+</div>
+<!-- 1 -->
+<div class="w-[68px] h-[96px] rounded-lg bg-surface-container-lowest flex flex-col justify-between p-2">
+<span class="font-label-md text-label-md font-bold text-on-surface-variant">1</span>
+<span class="font-display-card-value text-display-card-value font-bold text-on-surface text-center">1</span>
+<span class="font-label-md text-label-md font-bold text-on-surface-variant text-right">1</span>
+</div>
+<!-- 2 -->
+<div class="w-[68px] h-[96px] rounded-lg bg-surface-container-lowest flex flex-col justify-between p-2">
+<span class="font-label-md text-label-md font-bold text-on-surface-variant">2</span>
+<span class="font-display-card-value text-display-card-value font-bold text-on-surface text-center">2</span>
+<span class="font-label-md text-label-md font-bold text-on-surface-variant text-right">2</span>
+</div>
+<!-- 3 -->
+<div class="w-[68px] h-[96px] rounded-lg bg-surface-container-lowest flex flex-col justify-between p-2">
+<span class="font-label-md text-label-md font-bold text-on-surface-variant">3</span>
+<span class="font-display-card-value text-display-card-value font-bold text-on-surface text-center">3</span>
+<span class="font-label-md text-label-md font-bold text-on-surface-variant text-right">3</span>
+</div>
+<!-- 5 (Active choice indicator) -->
+<div class="w-[68px] h-[96px] rounded-lg bg-surface-container-lowest flex flex-col justify-between p-2 -translate-y-2 shadow-sm">
+<span class="font-label-md text-label-md font-bold text-primary">5</span>
+<span class="font-display-card-value text-display-card-value font-bold text-primary text-center">5</span>
+<span class="font-label-md text-label-md font-bold text-primary text-right">5</span>
+</div>
+<!-- 8 -->
+<div class="w-[68px] h-[96px] rounded-lg bg-surface-container-lowest flex flex-col justify-between p-2">
+<span class="font-label-md text-label-md font-bold text-on-surface-variant">8</span>
+<span class="font-display-card-value text-display-card-value font-bold text-on-surface text-center">8</span>
+<span class="font-label-md text-label-md font-bold text-on-surface-variant text-right">8</span>
+</div>
+<!-- 13 -->
+<div class="w-[68px] h-[96px] rounded-lg bg-surface-container-lowest flex flex-col justify-between p-2">
+<span class="font-label-md text-label-md font-bold text-on-surface-variant">13</span>
+<span class="font-display-card-value text-display-card-value font-bold text-on-surface text-center">13</span>
+<span class="font-label-md text-label-md font-bold text-on-surface-variant text-right">13</span>
+</div>
+<!-- 20 -->
+<div class="w-[68px] h-[96px] rounded-lg bg-surface-container-lowest flex flex-col justify-between p-2">
+<span class="font-label-md text-label-md font-bold text-on-surface-variant">20</span>
+<span class="font-display-card-value text-display-card-value font-bold text-on-surface text-center">20</span>
+<span class="font-label-md text-label-md font-bold text-on-surface-variant text-right">20</span>
+</div>
+<!-- ? -->
+<div class="w-[68px] h-[96px] rounded-lg bg-surface-container-lowest flex flex-col justify-between p-2">
+<span class="font-label-md text-label-md font-bold text-on-surface-variant">?</span>
+<span class="font-display-card-value text-display-card-value font-bold text-on-surface text-center">?</span>
+<span class="font-label-md text-label-md font-bold text-on-surface-variant text-right">?</span>
+</div>
+<!-- Coffee / Break -->
+<div class="w-[68px] h-[96px] rounded-lg bg-surface-container-lowest flex flex-col justify-between p-2">
+<span class="font-label-md text-label-md font-bold text-on-surface-variant">☕</span>
+<span class="material-symbols-outlined text-center text-on-surface text-[24px]">coffee</span>
+<span class="font-label-md text-label-md font-bold text-on-surface-variant text-right">☕</span>
+</div>
+</div>
+</div>
+</div>
+</div></main><footer class="w-full bg-surface-container-lowest border-t border-outline-variant mt-auto"><div class="h-12 max-w-[1440px] mx-auto px-margin flex items-center justify-between"><div class="flex items-center gap-space-md"><span class="font-headline-sm text-headline-sm text-primary tracking-tight text-[15px]">Bravynix</span><span class="font-body-sm text-body-sm text-on-surface-variant">Room #CK-9204 · Ephemeral estimation session</span></div><div class="flex items-center gap-space-lg"><span class="inline-flex items-center gap-space-xs font-body-sm text-body-sm text-on-surface-variant"><span class="w-1.5 h-1.5 rounded-full bg-[#1E7A4C]"></span>End-to-end synced</span><span class="font-body-sm text-body-sm text-on-surface-variant">No account required</span></div></div></footer></body></html>

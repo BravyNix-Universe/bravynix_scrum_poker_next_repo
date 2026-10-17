@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_standard" name="shell-type"/><title>Bravynix Scrum Poker</title><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;700&amp;family=Noto+Sans:wght@400;500;600&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base { html, body { margin: 0; padding: 0; } body { overscroll-behavior: none; } main > :first-child { margin-top: 0 !important; } main > :last-child { margin-bottom: 0 !important; } } ::-webkit-scrollbar { display: none; }</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { "colors": { "surface-container-high": "#e5e7ff", "primary-fixed-dim": "#bbc3ff", "on-error": "#ffffff", "surface-tint": "#4c58a4", "secondary-container": "#feae32", "surface": "#fbf8ff", "on-tertiary-fixed-variant": "#3b4470", "on-error-container": "#93000a", "on-secondary-container": "#6c4500", "on-secondary-fixed-variant": "#643f00", "on-primary-fixed-variant": "#33408a", "surface-variant": "#dde1ff", "tertiary-container": "#37406c", "outline": "#767682", "surface-bright": "#fbf8ff", "on-secondary-fixed": "#2a1800", "surface-dim": "#d4d8f9", "surface-container-low": "#f3f2ff", "background": "#fbf8ff", "secondary-fixed-dim": "#ffb956", "on-primary-container": "#9eaafc", "tertiary-fixed": "#dee1ff", "on-secondary": "#ffffff", "inverse-primary": "#bbc3ff", "error-container": "#ffdad6", "primary-container": "#2f3c86", "primary": "#16246f", "on-surface": "#151a32", "tertiary": "#202955", "on-surface-variant": "#454651", "on-tertiary-fixed": "#0e1842", "error": "#ba1a1a", "on-primary": "#ffffff", "surface-container": "#ececff", "on-background": "#151a32", "inverse-on-surface": "#f0efff", "on-tertiary": "#ffffff", "surface-container-highest": "#dde1ff", "primary-fixed": "#dee0ff", "surface-container-lowest": "#ffffff", "secondary-fixed": "#ffddb5", "secondary": "#835400", "on-primary-fixed": "#000f5c", "outline-variant": "#c6c5d2", "inverse-surface": "#2a2f48", "on-tertiary-container": "#a4ade0", "tertiary-fixed-dim": "#bbc4f8" }, "borderRadius": { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" }, "spacing": { "space-xl": "2rem", "gutter": "1.5rem", "space-xs": "0.25rem", "margin": "2rem", "space-lg": "1.5rem", "space-sm": "0.5rem", "space-md": "1rem" }, "fontFamily": { "display-card-value": [ "Bricolage Grotesque" ], "body-md": [ "Noto Sans" ], "label-lg": [ "Noto Sans" ], "headline-lg": [ "Bricolage Grotesque" ], "body-sm": [ "Noto Sans" ], "headline-md": [ "Bricolage Grotesque" ], "display-lg": [ "Bricolage Grotesque" ], "body-lg": [ "Noto Sans" ], "headline-sm": [ "Bricolage Grotesque" ], "label-md": [ "Noto Sans" ], "label-sm": [ "Noto Sans" ] }, "fontSize": { "display-card-value": [ "32px", { "lineHeight": "36px", "letterSpacing": "-0.01em", "fontWeight": "700" } ], "body-md": [ "14px", { "lineHeight": "20px", "fontWeight": "400" } ], "label-lg": [ "14px", { "lineHeight": "20px", "fontWeight": "600" } ], "headline-lg": [ "28px", { "lineHeight": "36px", "letterSpacing": "-0.01em", "fontWeight": "700" } ], "body-sm": [ "12px", { "lineHeight": "16px", "fontWeight": "400" } ], "headline-md": [ "22px", { "lineHeight": "28px", "fontWeight": "600" } ], "display-lg": [ "40px", { "lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "700" } ], "body-lg": [ "16px", { "lineHeight": "24px", "fontWeight": "400" } ], "headline-sm": [ "18px", { "lineHeight": "24px", "fontWeight": "600" } ], "label-md": [ "12px", { "lineHeight": "16px", "fontWeight": "600" } ], "label-sm": [ "11px", { "lineHeight": "14px", "fontWeight": "500" } ] } } } };</script></head><body class="min-h-screen flex flex-col bg-surface font-body-md text-on-surface"><header class="fixed top-0 left-0 right-0 z-50 bg-surface-container-lowest border-b border-outline-variant"><div class="h-16 max-w-7xl mx-auto px-margin flex items-center justify-between"><div class="flex items-center gap-space-md"><a class="flex items-center gap-space-sm hover:opacity-90 transition-opacity" data-path="home" href="#"><img alt="Bravynix Logo" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1UMort3k9M92uh6n9VZ7JAzztkRv0dh-t5NQCvKERJtAxpU9fGuunjIRIeBSB4s_VC0-RtsLrZ9mSOb9DuAX0B63IAPS4Uu3A_-GPwwDtJa51X6IXgtr4zC3SQpKPCSxFQrHzM4hfp5HCP_6SLH5Ub-Sh_iBVjeZe9Uf_VWfFXtBDKN18L2Lsi4IZShbUyxybaInnxRwLcgF9W8uQEYMSJu4E4J25n04e8jPO-INZF4"/><span class="font-headline-sm text-headline-sm text-primary tracking-tight">Bravynix</span></a><span class="hidden sm:inline-block h-4 w-px bg-outline-variant"></span><span class="hidden sm:inline-block font-body-sm text-body-sm text-on-surface-variant">Scrum poker</span></div><nav class="flex items-center gap-space-lg" data-active-classes="bg-surface-container text-primary font-label-md"><a class="font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors" data-path="home" href="#">Estimate room</a><a class="font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors" data-path="documentation-guide" href="#">Documentation &amp; guide</a><a class="font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors" data-path="github-open-source" href="#">GitHub &amp; open source</a><span class="hidden md:inline-flex items-center px-space-sm py-space-xs rounded-full bg-surface-container font-label-sm text-label-sm text-on-surface-variant">Free &amp; ephemeral</span><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center shrink-0"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></nav></div></header><main class="flex-1 w-full max-w-7xl mx-auto px-margin pt-16 bg-surface"><div class="flex flex-col w-full relative">
+<!-- Dimmed Background Estimation Board (Desktop 1440px Workspace Context) -->
+<div aria-hidden="true" class="w-full select-none pointer-events-none opacity-45 py-space-md">
+<!-- Top Phase Tracker & Workspace Header -->
+<div class="flex items-center justify-between mb-space-lg">
+<div class="flex items-center gap-space-md">
+<div class="bg-surface-container-high px-space-md py-space-xs rounded-full flex items-center gap-space-sm">
+<span class="w-2 h-2 rounded-full bg-secondary-container"></span>
+<span class="font-label-sm text-label-sm text-primary uppercase tracking-wider">Checkout revamp</span>
+</div>
+<span class="font-headline-md text-headline-md text-primary">Add UPI autopay to subscriptions</span>
+</div>
+<!-- 3-Phase Stepper Tracker -->
+<div class="bg-surface-container-lowest shadow-sm rounded-full p-1.5 flex items-center gap-1">
+<div class="px-space-md py-1 rounded-full bg-primary-container text-on-primary font-label-md text-label-md flex items-center gap-1.5">
+<span class="w-1.5 h-1.5 rounded-full bg-surface-container-lowest"></span>
+          1. Discuss
+        </div>
+<div class="px-space-md py-1 rounded-full text-outline font-label-md text-label-md">
+          2. Estimate
+        </div>
+<div class="px-space-md py-1 rounded-full text-outline font-label-md text-label-md">
+          3. Review
+        </div>
+</div>
+</div>
+<!-- Active Estimation Arena Grid -->
+<div class="grid grid-cols-12 gap-gutter mb-space-xl">
+<!-- Backlog Sidebar Mini -->
+<div class="col-span-3 bg-surface-container-lowest rounded-xl p-space-md shadow-sm space-y-space-md">
+<div class="flex items-center justify-between">
+<span class="font-label-lg text-label-lg text-primary">Grooming list (4)</span>
+<span class="material-symbols-outlined text-outline text-[18px]">playlist_add</span>
+</div>
+<div class="space-y-space-sm">
+<div class="p-space-sm rounded-lg bg-surface-container-high text-primary font-label-md text-label-md flex justify-between items-center">
+<span class="truncate">Add UPI autopay</span>
+<span class="font-label-sm text-label-sm px-2 py-0.5 rounded bg-primary text-on-primary">Active</span>
+</div>
+<div class="p-space-sm rounded-lg bg-surface-container-low text-on-surface-variant font-body-sm text-body-sm">
+            Handle fallback webhooks
+          </div>
+<div class="p-space-sm rounded-lg bg-surface-container-low text-on-surface-variant font-body-sm text-body-sm">
+            Refund SLA edge cases
+          </div>
+<div class="p-space-sm rounded-lg bg-surface-container-low text-on-surface-variant font-body-sm text-body-sm">
+            Merchant split settlement
+          </div>
+</div>
+</div>
+<!-- Arena Center Table & Participant Slots -->
+<div class="col-span-9 bg-surface-container-lowest rounded-xl p-space-xl shadow-sm flex flex-col justify-between min-h-[380px]">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-outline">Meeting poker table · 0 of 8 estimated</span>
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-outline"></span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Waiting for peers to join</span>
+</div>
+</div>
+<!-- Seats Circle/Slots Layout -->
+<div class="grid grid-cols-4 gap-space-lg py-space-md">
+<!-- Host Seat Placeholder -->
+<div class="flex flex-col items-center gap-2">
+<div class="w-20 h-28 rounded-xl bg-surface-container-high flex flex-col items-center justify-center shadow-sm">
+<span class="material-symbols-outlined text-primary text-[28px]">shield_person</span>
+<span class="font-label-sm text-label-sm text-primary mt-1">Host</span>
+</div>
+<span class="font-label-sm text-label-sm text-primary">You (Scrum Master)</span>
+</div>
+<!-- Empty Seat 1 -->
+<div class="flex flex-col items-center gap-2">
+<div class="w-20 h-28 rounded-xl bg-surface-container-low flex flex-col items-center justify-center">
+<span class="material-symbols-outlined text-outline text-[22px]">person_outline</span>
+<span class="font-label-sm text-label-sm text-outline mt-1">Seat 2</span>
+</div>
+<span class="font-body-sm text-body-sm text-outline">Open</span>
+</div>
+<!-- Empty Seat 2 -->
+<div class="flex flex-col items-center gap-2">
+<div class="w-20 h-28 rounded-xl bg-surface-container-low flex flex-col items-center justify-center">
+<span class="material-symbols-outlined text-outline text-[22px]">person_outline</span>
+<span class="font-label-sm text-label-sm text-outline mt-1">Seat 3</span>
+</div>
+<span class="font-body-sm text-body-sm text-outline">Open</span>
+</div>
+<!-- Empty Seat 3 -->
+<div class="flex flex-col items-center gap-2">
+<div class="w-20 h-28 rounded-xl bg-surface-container-low flex flex-col items-center justify-center">
+<span class="material-symbols-outlined text-outline text-[22px]">person_outline</span>
+<span class="font-label-sm text-label-sm text-outline mt-1">Seat 4</span>
+</div>
+<span class="font-body-sm text-body-sm text-outline">Open</span>
+</div>
+</div>
+<div class="flex items-center justify-center">
+<span class="font-label-md text-label-md text-on-surface-variant px-space-md py-1 rounded-full bg-surface-container">Cards will remain hidden until host triggers reveal</span>
+</div>
+</div>
+</div>
+<!-- Hand Cards Dock -->
+<div class="bg-surface-container-lowest rounded-xl p-space-md shadow-sm flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-outline">Deck (Modified Fibonacci):</span>
+</div>
+<div class="flex items-center gap-space-sm">
+<div class="w-16 h-24 rounded-xl bg-surface-container-high flex items-center justify-center font-display-card-value text-display-card-value text-primary shadow-sm">0</div>
+<div class="w-16 h-24 rounded-xl bg-surface-container-high flex items-center justify-center font-display-card-value text-display-card-value text-primary shadow-sm">½</div>
+<div class="w-16 h-24 rounded-xl bg-surface-container-high flex items-center justify-center font-display-card-value text-display-card-value text-primary shadow-sm">1</div>
+<div class="w-16 h-24 rounded-xl bg-surface-container-high flex items-center justify-center font-display-card-value text-display-card-value text-primary shadow-sm">2</div>
+<div class="w-16 h-24 rounded-xl bg-surface-container-high flex items-center justify-center font-display-card-value text-display-card-value text-primary shadow-sm">3</div>
+<div class="w-16 h-24 rounded-xl bg-surface-container-high flex items-center justify-center font-display-card-value text-display-card-value text-primary shadow-sm">5</div>
+<div class="w-16 h-24 rounded-xl bg-surface-container-high flex items-center justify-center font-display-card-value text-display-card-value text-primary shadow-sm">8</div>
+<div class="w-16 h-24 rounded-xl bg-surface-container-high flex items-center justify-center font-display-card-value text-display-card-value text-primary shadow-sm">13</div>
+<div class="w-16 h-24 rounded-xl bg-surface-container-high flex items-center justify-center font-display-card-value text-display-card-value text-primary shadow-sm">☕</div>
+</div>
+<span class="font-label-sm text-label-sm text-outline">Fibonacci scale</span>
+</div>
+</div>
+<!-- Modal Backdrop Overlay (Solid Ink Layer as per Style Guidelines) -->
+<div class="fixed inset-0 z-40 bg-on-surface/40 flex items-center justify-center p-space-md">
+<!-- Centred Dialog Modal Container -->
+<div aria-labelledby="modal-title" aria-modal="true" class="w-full max-w-[520px] bg-surface-container-lowest rounded-2xl shadow-xl overflow-hidden relative z-50 flex flex-col animate-in fade-in zoom-in-95 duration-150" role="dialog">
+<!-- Top Decorative Color Band -->
+<div class="h-1.5 w-full bg-primary-container"></div>
+<!-- Modal Content Body -->
+<div class="p-space-lg flex flex-col space-y-space-lg">
+<!-- Header Section -->
+<div class="flex items-start justify-between">
+<div class="space-y-1">
+<h2 class="font-headline-lg text-headline-lg text-primary tracking-tight" id="modal-title">Your room is ready</h2>
+<p class="font-body-md text-body-md text-on-surface-variant flex items-center gap-1.5">
+<span>Epic: Checkout revamp</span>
+<span class="w-1 h-1 rounded-full bg-outline"></span>
+<span>Room deletes in 24 hours</span>
+</p>
+</div>
+<button aria-label="Close dialog" class="w-8 h-8 rounded-lg bg-surface-container-low hover:bg-surface-container flex items-center justify-center text-on-surface-variant hover:text-primary transition-colors focus:outline-none focus:ring-2 focus:ring-primary-container" type="button">
+<span class="material-symbols-outlined text-[20px]">close</span>
+</button>
+</div>
+<!-- Section 1: Participant Invite Link -->
+<div class="space-y-1.5">
+<label class="font-label-md text-label-md text-primary font-semibold flex items-center gap-1.5" for="participant-url">
+<span class="material-symbols-outlined text-[16px] text-primary">group_add</span>
+            Participant invite link
+          </label>
+<div class="flex items-center gap-space-xs bg-surface-container-low rounded-lg p-1.5 focus-within:ring-2 focus-within:ring-primary-container">
+<input class="flex-1 bg-transparent px-2.5 py-1 font-body-md text-body-md text-on-surface selection:bg-primary-fixed select-all focus:outline-none" id="participant-url" readonly="" type="text" value="bravynix.com/r/k7Qx9mP2vT4w"/>
+<button class="inline-flex items-center gap-1.5 px-space-md py-1.5 rounded-lg bg-surface-container-lowest hover:bg-surface-container text-primary font-label-md text-label-md shadow-sm transition-all active:scale-[0.98]" id="copy-participant-btn" type="button">
+<span class="material-symbols-outlined text-[16px]">content_copy</span>
+<span>Copy invite link</span>
+</button>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant pl-1">Share this link with developers, testers, and product managers.</p>
+</div>
+<!-- Section 2: Host Secret Control Link -->
+<div class="space-y-1.5">
+<label class="font-label-md text-label-md text-primary font-semibold flex items-center gap-1.5" for="host-url">
+<span class="material-symbols-outlined text-[16px] text-secondary">lock</span>
+<span>Host key link (private)</span>
+</label>
+<div class="flex items-center gap-space-xs bg-surface-container-low rounded-lg p-1.5 focus-within:ring-2 focus-within:ring-primary-container">
+<input class="flex-1 bg-transparent px-2.5 py-1 font-body-md text-body-md text-on-surface tracking-wide selection:bg-secondary-fixed select-all focus:outline-none" id="host-url" readonly="" type="text" value="bravynix.com/r/k7Qx9mP2vT4w?host=••••9f8a"/>
+<button class="inline-flex items-center gap-1.5 px-space-md py-1.5 rounded-lg bg-surface-container-lowest hover:bg-surface-container text-primary font-label-md text-label-md shadow-sm transition-all active:scale-[0.98]" id="copy-host-btn" type="button">
+<span class="material-symbols-outlined text-[16px]">content_copy</span>
+<span>Copy host link</span>
+</button>
+</div>
+<!-- Caution Callout (Tonal Alert Box) -->
+<div class="p-space-md rounded-xl bg-secondary-fixed/30 flex items-start gap-space-sm mt-space-sm">
+<span class="material-symbols-outlined text-secondary shrink-0 text-[20px]" style="font-variation-settings: 'FILL' 1;">warning</span>
+<p class="font-body-sm text-body-sm text-on-secondary-fixed-variant leading-relaxed">
+<span class="font-semibold text-secondary">Anyone with this link controls the room.</span> Keep it private. You'll need it to host from another device.
+            </p>
+</div>
+</div>
+<!-- Helpful Notice -->
+<div class="flex items-center gap-space-sm px-1 pt-1 text-outline">
+<span class="material-symbols-outlined text-[18px] shrink-0">info</span>
+<span class="font-body-sm text-body-sm">Keep this tab open during the meeting. For more than 15 people, use a laptop.</span>
+</div>
+<!-- Bottom Action CTA -->
+<div class="pt-space-xs">
+<button class="w-full h-12 rounded-lg bg-primary-container hover:bg-primary text-on-primary font-label-lg text-label-lg flex items-center justify-center gap-space-sm shadow-md transition-colors active:translate-y-0.5" type="button">
+<span>Go to room</span>
+<span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Floating Toast Notification (Copied Feedback) -->
+<div class="fixed bottom-space-lg left-1/2 -translate-x-1/2 z-50 flex items-center gap-space-sm px-space-lg py-space-sm rounded-full bg-primary text-on-primary shadow-xl opacity-0 translate-y-4 pointer-events-none transition-all duration-200 ease-out" id="copy-toast">
+<span class="material-symbols-outlined text-secondary-container text-[18px]" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span class="font-label-md text-label-md">Link copied to clipboard</span>
+</div>
+<!-- Inline Micro-interactions Script -->
+<script>
+    (function () {
+      const toast = document.getElementById('copy-toast');
+      let toastTimeout;
+
+      function triggerToast(message) {
+        if (!toast) return;
+        if (message) {
+          const textEl = toast.querySelector('span:last-child');
+          if (textEl) textEl.textContent = message;
+        }
+        
+        clearTimeout(toastTimeout);
+        toast.classList.remove('opacity-0', 'translate-y-4', 'pointer-events-none');
+        toast.classList.add('opacity-100', 'translate-y-0');
+
+        toastTimeout = setTimeout(() => {
+          toast.classList.add('opacity-0', 'translate-y-4', 'pointer-events-none');
+          toast.classList.remove('opacity-100', 'translate-y-0');
+        }, 2400);
+      }
+
+      const participantBtn = document.getElementById('copy-participant-btn');
+      if (participantBtn) {
+        participantBtn.addEventListener('click', () => {
+          const fullLink = 'https://bravynix.com/r/k7Qx9mP2vT4w';
+          if (navigator.clipboard) {
+            navigator.clipboard.writeText(fullLink).catch(() => {});
+          }
+          triggerToast('Participant invite link copied');
+        });
+      }
+
+      const hostBtn = document.getElementById('copy-host-btn');
+      if (hostBtn) {
+        hostBtn.addEventListener('click', () => {
+          const hostLink = 'https://bravynix.com/r/k7Qx9mP2vT4w?host=sec_9f8a42b109';
+          if (navigator.clipboard) {
+            navigator.clipboard.writeText(hostLink).catch(() => {});
+          }
+          triggerToast('Host control key copied to clipboard');
+        });
+      }
+    })();
+  </script>
+</div></main><footer class="w-full bg-surface-container-lowest border-t border-outline-variant"><div class="h-16 max-w-7xl mx-auto px-margin flex items-center justify-between"><div class="flex items-center gap-space-md"><span class="font-headline-sm text-headline-sm text-primary tracking-tight">Bravynix</span><span class="font-body-sm text-body-sm text-on-surface-variant">© 2026 Bravynix. Ephemeral estimation for agile squads.</span></div><div class="flex items-center gap-space-lg"><a class="font-body-sm text-body-sm text-on-surface-variant hover:text-on-surface transition-colors" data-path="privacy-policy" href="#">Privacy</a><span class="inline-flex items-center gap-space-xs font-body-sm text-body-sm text-on-surface-variant"><span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>No accounts</span></div></div></footer></body></html>

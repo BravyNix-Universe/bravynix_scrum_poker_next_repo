@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_standard" name="shell-type"/><title>Bravynix Scrum Poker</title><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;700&amp;family=Noto+Sans:wght@400;500;600&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base { html, body { margin: 0; padding: 0; } body { overscroll-behavior: none; } main > :first-child { margin-top: 0 !important; } main > :last-child { margin-bottom: 0 !important; } } ::-webkit-scrollbar { display: none; }</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { "colors": { "on-surface-variant": "#454651", "outline": "#767682", "secondary-fixed-dim": "#ffb956", "surface-container-low": "#f3f2ff", "primary": "#16246f", "secondary": "#835400", "primary-container": "#2f3c86", "background": "#fbf8ff", "on-tertiary-fixed-variant": "#3b4470", "on-secondary-fixed-variant": "#643f00", "tertiary-fixed": "#dee1ff", "tertiary": "#202955", "on-error": "#ffffff", "on-primary-fixed-variant": "#33408a", "on-tertiary": "#ffffff", "primary-fixed-dim": "#bbc3ff", "on-primary-container": "#9eaafc", "on-error-container": "#93000a", "on-secondary-fixed": "#2a1800", "error": "#ba1a1a", "surface-variant": "#dde1ff", "secondary-fixed": "#ffddb5", "surface-container-high": "#e5e7ff", "on-primary": "#ffffff", "on-secondary-container": "#6c4500", "inverse-surface": "#2a2f48", "on-primary-fixed": "#000f5c", "on-tertiary-fixed": "#0e1842", "error-container": "#ffdad6", "surface-container-highest": "#dde1ff", "inverse-primary": "#bbc3ff", "surface": "#fbf8ff", "surface-tint": "#4c58a4", "surface-container-lowest": "#ffffff", "secondary-container": "#feae32", "on-secondary": "#ffffff", "primary-fixed": "#dee0ff", "surface-bright": "#fbf8ff", "on-tertiary-container": "#a4ade0", "inverse-on-surface": "#f0efff", "tertiary-container": "#37406c", "tertiary-fixed-dim": "#bbc4f8", "on-background": "#151a32", "surface-container": "#ececff", "on-surface": "#151a32", "outline-variant": "#c6c5d2", "surface-dim": "#d4d8f9" }, "borderRadius": { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" }, "spacing": { "space-lg": "1.5rem", "space-md": "1rem", "space-xs": "0.25rem", "gutter": "1.5rem", "margin": "2rem", "space-xl": "2rem", "space-sm": "0.5rem" }, "fontFamily": { "body-sm": [ "Noto Sans" ], "body-lg": [ "Noto Sans" ], "label-md": [ "Noto Sans" ], "body-md": [ "Noto Sans" ], "label-lg": [ "Noto Sans" ], "headline-sm": [ "Bricolage Grotesque" ], "label-sm": [ "Noto Sans" ], "headline-lg": [ "Bricolage Grotesque" ], "display-lg": [ "Bricolage Grotesque" ], "display-card-value": [ "Bricolage Grotesque" ], "headline-md": [ "Bricolage Grotesque" ] }, "fontSize": { "body-sm": [ "12px", { "lineHeight": "16px", "fontWeight": "400" } ], "body-lg": [ "16px", { "lineHeight": "24px", "fontWeight": "400" } ], "label-md": [ "12px", { "lineHeight": "16px", "fontWeight": "600" } ], "body-md": [ "14px", { "lineHeight": "20px", "fontWeight": "400" } ], "label-lg": [ "14px", { "lineHeight": "20px", "fontWeight": "600" } ], "headline-sm": [ "18px", { "lineHeight": "24px", "fontWeight": "600" } ], "label-sm": [ "11px", { "lineHeight": "14px", "fontWeight": "500" } ], "headline-lg": [ "28px", { "lineHeight": "36px", "letterSpacing": "-0.01em", "fontWeight": "700" } ], "display-lg": [ "40px", { "lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "700" } ], "display-card-value": [ "32px", { "lineHeight": "36px", "letterSpacing": "-0.01em", "fontWeight": "700" } ], "headline-md": [ "22px", { "lineHeight": "28px", "fontWeight": "600" } ] } } } };</script></head><body class="min-h-screen bg-surface-container-low font-body-md text-on-surface"><header class="fixed top-0 left-0 right-0 z-50 bg-surface-container-lowest border-b border-outline-variant"><div class="h-16 max-w-[1440px] mx-auto px-margin flex items-center justify-between"><div class="flex items-center gap-space-md"><a class="flex items-center gap-space-sm hover:opacity-90 transition-opacity" data-path="bravynix-scrum-poker-landing-page" href="#"><span class="font-headline-sm text-headline-sm text-primary font-bold tracking-tight">Bravynix</span></a><span class="h-4 w-px bg-outline-variant"></span><span class="font-label-lg text-label-lg text-on-surface font-semibold">Checkout revamp</span></div><div class="flex items-center gap-space-md"><nav class="flex items-center gap-space-xs bg-surface-container-low p-1 rounded-lg border border-outline-variant" data-active-classes="bg-surface-container-lowest text-primary shadow-sm font-semibold"><a class="px-3 py-1 rounded text-on-surface-variant font-label-md text-label-md transition-colors hover:text-on-surface" data-path="room-host-discuss" href="#">Stories</a><a class="px-3 py-1 rounded text-on-surface-variant font-label-md text-label-md transition-colors hover:text-on-surface" data-path="room-host-history-drawer" href="#">History</a></nav><div class="flex items-center gap-space-xs px-space-sm py-1 rounded-full bg-surface-container border border-outline-variant"><span class="material-symbols-outlined text-on-surface-variant text-[16px]">timer</span><span class="font-label-sm text-label-sm text-on-surface font-medium">01:24</span></div><button class="flex items-center gap-space-xs px-3 py-1.5 rounded-lg bg-surface-container-lowest border border-outline-variant hover:bg-surface-container-low text-on-surface transition-colors cursor-pointer"><span class="material-symbols-outlined text-[16px] text-primary">share</span><span class="font-label-md text-label-md font-semibold">Invite</span></button><div class="flex items-center gap-1.5 px-space-sm py-1"><span class="w-2 h-2 rounded-full bg-[#1E7A4C]"></span><span class="font-label-sm text-label-sm text-[#1E7A4C] font-semibold">Connected</span></div><div class="h-5 w-px bg-outline-variant"></div><div class="flex items-center gap-space-sm"><div class="w-8 h-8 rounded-full bg-surface-container-high border border-outline-variant flex items-center justify-center shrink-0 text-[16px]">🐼</div><div class="flex items-center gap-1"><span class="font-label-md text-label-md text-on-surface font-medium">Priya</span><span class="font-label-sm text-label-sm text-secondary font-semibold">★ (Host)</span></div></div></div></div></header><main class="w-full max-w-[1440px] mx-auto pt-16 bg-surface-container-low min-h-screen"><div class="flex flex-col w-full">
+<!-- Dynamic Reconnecting Status Toast / Alert Banner -->
+<div class="w-full bg-[#FEF0E7] px-margin py-3 shadow-sm flex items-center justify-between">
+<div class="max-w-[1392px] w-full mx-auto flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-[#B54708] animate-spin text-[20px]" id="reconnect-spinner">sync</span>
+<span class="font-label-lg text-label-lg text-[#B54708] font-medium">
+          Reconnecting: your vote isn't recorded yet.
+        </span>
+<span class="hidden md:inline-flex items-center text-body-sm font-body-sm text-[#B54708] opacity-80 pl-2">
+          Sync packet timed out (attempt 2 of 5). Retrying in <span class="font-semibold mx-1" id="countdown">3s</span>...
+        </span>
+</div>
+<div class="flex items-center gap-space-md">
+<button class="px-3 py-1 bg-surface-container-lowest text-[#B54708] rounded-lg font-label-md text-label-md font-semibold hover:bg-[#FCE7D2] transition-colors flex items-center gap-1.5 shadow-sm cursor-pointer" onclick="triggerImmediateRetry()">
+<span class="material-symbols-outlined text-[16px]">refresh</span>
+<span>Retry now</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Workspace Container: 3-column asymmetric layout (Backlog drawer/list: 320px; Room: flex; Summary: 320px) -->
+<div class="w-full max-w-[1392px] mx-auto px-margin py-space-lg flex gap-gutter min-h-[calc(100vh-140px)]">
+<!-- Left Asymmetric Backlog Drawer (320px) -->
+<aside class="w-[300px] shrink-0 flex flex-col gap-space-md">
+<div class="bg-surface-container-lowest rounded-xl p-space-md shadow-sm flex flex-col gap-space-md">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<span class="font-headline-sm text-headline-sm text-on-surface">Backlog queue</span>
+<span class="bg-surface-container-high text-primary px-2 py-0.5 rounded-full font-label-sm text-label-sm font-bold">5 stories</span>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant font-medium">Sprint 42</span>
+</div>
+<!-- Story Listing items -->
+<div class="flex flex-col gap-space-xs">
+<!-- Story 1 (Estimated) -->
+<div class="p-3 bg-surface-container-low rounded-lg flex items-start gap-space-sm opacity-70">
+<span class="material-symbols-outlined text-[18px] text-[#1E7A4C] mt-0.5">check_circle</span>
+<div class="flex-1 min-w-0">
+<p class="font-label-sm text-label-sm text-on-surface-variant">Story 1 · Completed</p>
+<h4 class="font-label-md text-label-md text-on-surface font-semibold truncate">Add Apple Pay / Google Pay sheet</h4>
+</div>
+<span class="px-2 py-0.5 bg-surface-container-highest rounded font-headline-sm text-headline-sm text-primary text-[13px] font-bold">5 SP</span>
+</div>
+<!-- Story 2 (Estimated) -->
+<div class="p-3 bg-surface-container-low rounded-lg flex items-start gap-space-sm opacity-70">
+<span class="material-symbols-outlined text-[18px] text-[#1E7A4C] mt-0.5">check_circle</span>
+<div class="flex-1 min-w-0">
+<p class="font-label-sm text-label-sm text-on-surface-variant">Story 2 · Completed</p>
+<h4 class="font-label-md text-label-md text-on-surface font-semibold truncate">Optimize cart line-item recomputation</h4>
+</div>
+<span class="px-2 py-0.5 bg-surface-container-highest rounded font-headline-sm text-headline-sm text-primary text-[13px] font-bold">3 SP</span>
+</div>
+<!-- Story 3 (Active Item) -->
+<div class="p-3 bg-surface-container-lowest rounded-lg shadow-sm flex items-start gap-space-sm relative overflow-hidden">
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-secondary-container"></div>
+<span class="material-symbols-outlined text-[18px] text-[#B54708] mt-0.5 animate-pulse">radio_button_checked</span>
+<div class="flex-1 min-w-0">
+<span class="font-label-sm text-label-sm text-[#B54708] font-bold uppercase tracking-wider">Voting now</span>
+<h4 class="font-label-md text-label-md text-on-surface font-bold truncate">Show delivery ETA on the order page</h4>
+</div>
+<span class="px-2 py-0.5 bg-[#FEF0E7] text-[#B54708] rounded font-label-sm text-label-sm font-semibold">In sync</span>
+</div>
+<!-- Story 4 (Upcoming) -->
+<div class="p-3 bg-surface-container-low rounded-lg flex items-start gap-space-sm opacity-60">
+<span class="material-symbols-outlined text-[18px] text-outline mt-0.5">pending</span>
+<div class="flex-1 min-w-0">
+<p class="font-label-sm text-label-sm text-on-surface-variant">Story 4 · Up next</p>
+<h4 class="font-label-md text-label-md text-on-surface font-medium truncate">Address validation fallback state</h4>
+</div>
+</div>
+<!-- Story 5 (Upcoming) -->
+<div class="p-3 bg-surface-container-low rounded-lg flex items-start gap-space-sm opacity-60">
+<span class="material-symbols-outlined text-[18px] text-outline mt-0.5">pending</span>
+<div class="flex-1 min-w-0">
+<p class="font-label-sm text-label-sm text-on-surface-variant">Story 5</p>
+<h4 class="font-label-md text-label-md text-on-surface font-medium truncate">International duty calculator banner</h4>
+</div>
+</div>
+</div>
+<!-- Connection telemetry snapshot -->
+<div class="mt-auto pt-space-sm">
+<div class="p-3 bg-surface-container rounded-lg flex flex-col gap-1.5">
+<div class="flex items-center justify-between text-label-sm font-label-sm">
+<span class="text-on-surface-variant">WebSocket Status</span>
+<span class="text-[#B54708] font-bold flex items-center gap-1">
+<span class="w-2 h-2 rounded-full bg-[#B54708] animate-ping"></span>
+                Reconnecting
+              </span>
+</div>
+<div class="flex items-center justify-between text-body-sm font-body-sm text-on-surface-variant">
+<span>Host Heartbeat</span>
+<span class="text-on-surface font-medium">Last seen 12s ago</span>
+</div>
+<div class="w-full bg-surface-container-high h-1.5 rounded-full overflow-hidden mt-1">
+<div class="bg-[#B54708] h-full w-2/5 rounded-full transition-all duration-500" id="reconnect-progress"></div>
+</div>
+</div>
+</div>
+</div>
+</aside>
+<!-- Main Active Room Canvas (Flexible center workspace) -->
+<div class="flex-1 flex flex-col gap-space-lg min-w-0">
+<!-- Story Card Stage & Phase Row -->
+<section class="flex flex-col gap-space-md">
+<!-- Phase row -->
+<div class="flex items-center justify-between bg-surface-container-lowest px-space-md py-2.5 rounded-xl shadow-sm">
+<div class="flex items-center gap-space-sm">
+<div class="flex items-center gap-1 bg-surface-container px-3 py-1 rounded-full">
+<span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
+<span class="font-label-md text-label-md text-primary font-bold">Estimate</span>
+</div>
+<span class="font-body-md text-body-md text-on-surface-variant">·</span>
+<span class="font-body-md text-body-md text-[#B54708] font-medium flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[16px] animate-spin">autorenew</span>
+              Reconnecting to host room...
+            </span>
+</div>
+<div class="flex items-center gap-space-sm">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Session Mode</span>
+<span class="px-2 py-0.5 rounded bg-surface-container text-primary font-label-sm text-label-sm font-semibold">Fibonacci Scale</span>
+</div>
+</div>
+<!-- Story card with stacked effect (Two thin stacked card edges behind on right) -->
+<div class="relative w-full pt-2">
+<!-- Stack card 2 (deepest) -->
+<div class="absolute inset-0 bg-surface-container-high rounded-xl translate-x-3 translate-y-3 shadow-sm opacity-60"></div>
+<!-- Stack card 1 (middle) -->
+<div class="absolute inset-0 bg-surface-container rounded-xl translate-x-1.5 translate-y-1.5 shadow-sm"></div>
+<!-- Primary Top Story Card (Participant View - No Host buttons) -->
+<div class="relative bg-surface-container-lowest rounded-xl p-space-lg shadow-md flex flex-col gap-space-md">
+<div class="flex items-start justify-between">
+<div class="flex items-center gap-space-sm">
+<span class="px-2.5 py-1 bg-primary text-on-primary rounded font-label-sm text-label-sm font-bold tracking-wide">
+                  STORY 3 OF 5
+                </span>
+<span class="text-on-surface-variant font-label-md text-label-md">CK-819</span>
+<span class="w-1.5 h-1.5 rounded-full bg-outline-variant"></span>
+<span class="font-label-sm text-label-sm text-secondary font-medium">Checkout Flow · Logistics</span>
+</div>
+<div class="flex items-center gap-space-xs text-on-surface-variant">
+<span class="material-symbols-outlined text-[18px]">lock</span>
+<span class="font-label-sm text-label-sm">Participant readonly</span>
+</div>
+</div>
+<div>
+<h2 class="font-headline-lg text-headline-lg text-on-surface font-bold tracking-tight">
+                Show delivery ETA on the order page
+              </h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant mt-2 leading-relaxed">
+                Compute high-precision delivery date window based on warehouse postal routing and active carrier pickup SLAs. Requires real-time inventory address check before final payment confirmation.
+              </p>
+</div>
+<!-- Acceptance Criteria Tags -->
+<div class="flex flex-wrap items-center gap-space-sm pt-2">
+<span class="px-2.5 py-1 bg-surface-container-low rounded-md font-body-sm text-body-sm text-on-surface flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px] text-primary">local_shipping</span>
+                FedEx / UPS carrier hooks
+              </span>
+<span class="px-2.5 py-1 bg-surface-container-low rounded-md font-body-sm text-body-sm text-on-surface flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px] text-primary">timer</span>
+                P95 SLA &lt; 140ms
+              </span>
+<span class="px-2.5 py-1 bg-surface-container-low rounded-md font-body-sm text-body-sm text-on-surface flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px] text-primary">pin_drop</span>
+                Zip validation
+              </span>
+</div>
+</div>
+</div>
+</section>
+<!-- Seats Row (Active Participant Table Layout) -->
+<section class="bg-surface-container-lowest rounded-xl p-space-lg shadow-sm flex flex-col gap-space-md">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<span class="font-headline-sm text-headline-sm text-on-surface">Estimators at table</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">(4 of 5 voted)</span>
+</div>
+<div class="flex items-center gap-space-sm text-label-sm font-label-sm text-on-surface-variant">
+<span class="flex items-center gap-1">
+<span class="w-2.5 h-2.5 rounded-sm bg-[#1E2752]"></span> Card hidden
+            </span>
+<span class="flex items-center gap-1 ml-2">
+<span class="w-2.5 h-2.5 rounded-sm bg-[#FEF0E7]"></span> Sync pending
+            </span>
+</div>
+</div>
+<!-- Seats Grid -->
+<div class="grid grid-cols-5 gap-space-md pt-space-xs">
+<!-- Seat 1: Priya (Host) - Voted (Indigo 900 face-down back with golden spiral motif) -->
+<div class="flex flex-col items-center gap-space-xs">
+<div class="w-[84px] h-[116px] rounded-xl bg-[#1E2752] p-1.5 shadow-md flex flex-col justify-between relative overflow-hidden group">
+<!-- Golden spiral geometric vector motif -->
+<div class="w-full h-full rounded-lg bg-[#202955] flex items-center justify-center relative overflow-hidden">
+<svg class="w-12 h-12 text-secondary-container opacity-40" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 100 100">
+<path d="M 50,50 A 5,5 0 0,1 55,50 A 10,10 0 0,1 45,50 A 20,20 0 0,1 65,50 A 35,35 0 0,1 30,50 A 55,55 0 0,1 85,50" stroke-linecap="round"></path>
+</svg>
+<span class="material-symbols-outlined text-secondary-container absolute text-[18px]">lock</span>
+</div>
+</div>
+<div class="flex items-center gap-1 mt-1">
+<span class="text-[14px]">🐼</span>
+<span class="font-label-md text-label-md text-on-surface font-medium">Priya</span>
+<span class="font-label-sm text-label-sm text-secondary font-bold">★</span>
+</div>
+<span class="font-label-sm text-label-sm text-[#1E7A4C] font-semibold flex items-center gap-0.5">
+<span class="material-symbols-outlined text-[12px]">done</span> Voted
+            </span>
+</div>
+<!-- Seat 2: Arjun (Current User - Dimmed & Syncing with Warning Status) -->
+<div class="flex flex-col items-center gap-space-xs">
+<div class="w-[84px] h-[116px] rounded-xl bg-[#FEF0E7] p-2 shadow-sm flex flex-col items-center justify-center relative overflow-hidden ring-2 ring-[#B54708] ring-offset-2">
+<div class="flex flex-col items-center gap-1 text-center">
+<span class="material-symbols-outlined text-[#B54708] text-[24px] animate-spin">sync</span>
+<span class="font-headline-sm text-headline-sm text-[#B54708] font-bold">?</span>
+<span class="font-label-sm text-label-sm text-[#B54708] font-semibold leading-tight">Syncing...</span>
+</div>
+</div>
+<div class="flex items-center gap-1 mt-1">
+<span class="text-[14px]">🐯</span>
+<span class="font-label-md text-label-md text-[#B54708] font-bold">Arjun (You)</span>
+</div>
+<span class="font-label-sm text-label-sm text-[#B54708] font-medium bg-[#FEF0E7] px-2 py-0.5 rounded">
+              Unconfirmed
+            </span>
+</div>
+<!-- Seat 3: Marco - Voted -->
+<div class="flex flex-col items-center gap-space-xs">
+<div class="w-[84px] h-[116px] rounded-xl bg-[#1E2752] p-1.5 shadow-md flex flex-col justify-between relative overflow-hidden">
+<div class="w-full h-full rounded-lg bg-[#202955] flex items-center justify-center relative overflow-hidden">
+<svg class="w-12 h-12 text-secondary-container opacity-40" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 100 100">
+<path d="M 50,50 A 5,5 0 0,1 55,50 A 10,10 0 0,1 45,50 A 20,20 0 0,1 65,50 A 35,35 0 0,1 30,50 A 55,55 0 0,1 85,50" stroke-linecap="round"></path>
+</svg>
+<span class="material-symbols-outlined text-secondary-container absolute text-[18px]">lock</span>
+</div>
+</div>
+<div class="flex items-center gap-1 mt-1">
+<span class="text-[14px]">🦊</span>
+<span class="font-label-md text-label-md text-on-surface font-medium">Marco</span>
+</div>
+<span class="font-label-sm text-label-sm text-[#1E7A4C] font-semibold flex items-center gap-0.5">
+<span class="material-symbols-outlined text-[12px]">done</span> Voted
+            </span>
+</div>
+<!-- Seat 4: Sarah - Voted -->
+<div class="flex flex-col items-center gap-space-xs">
+<div class="w-[84px] h-[116px] rounded-xl bg-[#1E2752] p-1.5 shadow-md flex flex-col justify-between relative overflow-hidden">
+<div class="w-full h-full rounded-lg bg-[#202955] flex items-center justify-center relative overflow-hidden">
+<svg class="w-12 h-12 text-secondary-container opacity-40" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 100 100">
+<path d="M 50,50 A 5,5 0 0,1 55,50 A 10,10 0 0,1 45,50 A 20,20 0 0,1 65,50 A 35,35 0 0,1 30,50 A 55,55 0 0,1 85,50" stroke-linecap="round"></path>
+</svg>
+<span class="material-symbols-outlined text-secondary-container absolute text-[18px]">lock</span>
+</div>
+</div>
+<div class="flex items-center gap-1 mt-1">
+<span class="text-[14px]">🐨</span>
+<span class="font-label-md text-label-md text-on-surface font-medium">Sarah</span>
+</div>
+<span class="font-label-sm text-label-sm text-[#1E7A4C] font-semibold flex items-center gap-0.5">
+<span class="material-symbols-outlined text-[12px]">done</span> Voted
+            </span>
+</div>
+<!-- Seat 5: Dave - Thinking -->
+<div class="flex flex-col items-center gap-space-xs">
+<div class="w-[84px] h-[116px] rounded-xl bg-surface-container flex flex-col items-center justify-center text-outline-variant shadow-inner">
+<span class="material-symbols-outlined text-[28px] text-outline">hourglass_top</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant mt-1">Choosing</span>
+</div>
+<div class="flex items-center gap-1 mt-1">
+<span class="text-[14px]">🦉</span>
+<span class="font-label-md text-label-md text-on-surface font-medium">Dave</span>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant font-medium">Thinking</span>
+</div>
+</div>
+</section>
+<!-- Deck Hand Tray (Lowered and disabled at 40% opacity during reconnect) -->
+<section class="mt-auto relative">
+<!-- Floating overlay message informing disabled state -->
+<div class="absolute -top-4 left-1/2 -translate-x-1/2 z-20 bg-[#FEF0E7] text-[#B54708] px-4 py-1 rounded-full shadow-md flex items-center gap-1.5 pointer-events-none">
+<span class="material-symbols-outlined text-[16px]">lock_clock</span>
+<span class="font-label-sm text-label-sm font-bold uppercase tracking-wider">Deck Locked During Reconnection</span>
+</div>
+<div class="bg-surface-container-lowest p-space-md rounded-xl shadow-sm flex flex-col items-center gap-space-sm opacity-40 pointer-events-none select-none filter blur-[0.3px] transition-opacity duration-300">
+<div class="w-full flex items-center justify-between px-2">
+<span class="font-label-md text-label-md text-on-surface-variant font-semibold">Your Hand (Fibonacci values)</span>
+<span class="font-label-sm text-label-sm text-outline">Card selection temporarily paused</span>
+</div>
+<!-- Docked deck cards list: 0, 1, 2, 3, 5, 8, 13, 21, ? -->
+<div class="flex items-center justify-center gap-space-sm w-full py-2 overflow-x-auto">
+<!-- Card 0 -->
+<button class="w-[68px] h-[96px] rounded-xl bg-surface-container-low shadow-sm flex flex-col justify-between p-2" disabled="">
+<span class="font-label-sm text-label-sm text-on-surface-variant font-bold self-start">0</span>
+<span class="font-display-card-value text-display-card-value text-primary font-bold self-center">0</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant font-bold self-end">0</span>
+</button>
+<!-- Card 1 -->
+<button class="w-[68px] h-[96px] rounded-xl bg-surface-container-low shadow-sm flex flex-col justify-between p-2" disabled="">
+<span class="font-label-sm text-label-sm text-on-surface-variant font-bold self-start">1</span>
+<span class="font-display-card-value text-display-card-value text-primary font-bold self-center">1</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant font-bold self-end">1</span>
+</button>
+<!-- Card 2 -->
+<button class="w-[68px] h-[96px] rounded-xl bg-surface-container-low shadow-sm flex flex-col justify-between p-2" disabled="">
+<span class="font-label-sm text-label-sm text-on-surface-variant font-bold self-start">2</span>
+<span class="font-display-card-value text-display-card-value text-primary font-bold self-center">2</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant font-bold self-end">2</span>
+</button>
+<!-- Card 3 -->
+<button class="w-[68px] h-[96px] rounded-xl bg-surface-container-low shadow-sm flex flex-col justify-between p-2" disabled="">
+<span class="font-label-sm text-label-sm text-on-surface-variant font-bold self-start">3</span>
+<span class="font-display-card-value text-display-card-value text-primary font-bold self-center">3</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant font-bold self-end">3</span>
+</button>
+<!-- Card 5 (Last selected by Arjun prior to socket drop) -->
+<button class="w-[68px] h-[96px] rounded-xl bg-surface-container-highest shadow-md flex flex-col justify-between p-2 -translate-y-2 ring-2 ring-[#B54708]" disabled="">
+<span class="font-label-sm text-label-sm text-primary font-bold self-start">5</span>
+<span class="font-display-card-value text-display-card-value text-primary font-bold self-center">5</span>
+<span class="font-label-sm text-label-sm text-primary font-bold self-end">5</span>
+</button>
+<!-- Card 8 -->
+<button class="w-[68px] h-[96px] rounded-xl bg-surface-container-low shadow-sm flex flex-col justify-between p-2" disabled="">
+<span class="font-label-sm text-label-sm text-on-surface-variant font-bold self-start">8</span>
+<span class="font-display-card-value text-display-card-value text-primary font-bold self-center">8</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant font-bold self-end">8</span>
+</button>
+<!-- Card 13 -->
+<button class="w-[68px] h-[96px] rounded-xl bg-surface-container-low shadow-sm flex flex-col justify-between p-2" disabled="">
+<span class="font-label-sm text-label-sm text-on-surface-variant font-bold self-start">13</span>
+<span class="font-display-card-value text-display-card-value text-primary font-bold self-center">13</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant font-bold self-end">13</span>
+</button>
+<!-- Card 21 -->
+<button class="w-[68px] h-[96px] rounded-xl bg-surface-container-low shadow-sm flex flex-col justify-between p-2" disabled="">
+<span class="font-label-sm text-label-sm text-on-surface-variant font-bold self-start">21</span>
+<span class="font-display-card-value text-display-card-value text-primary font-bold self-center">21</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant font-bold self-end">21</span>
+</button>
+<!-- Card ? -->
+<button class="w-[68px] h-[96px] rounded-xl bg-surface-container-low shadow-sm flex flex-col justify-between p-2" disabled="">
+<span class="font-label-sm text-label-sm text-on-surface-variant font-bold self-start">?</span>
+<span class="font-display-card-value text-display-card-value text-primary font-bold self-center">?</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant font-bold self-end">?</span>
+</button>
+<!-- Card Coffee -->
+<button class="w-[68px] h-[96px] rounded-xl bg-surface-container-low shadow-sm flex flex-col justify-between p-2" disabled="">
+<span class="font-label-sm text-label-sm text-on-surface-variant font-bold self-start">☕</span>
+<span class="material-symbols-outlined text-primary text-[28px] self-center">coffee</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant font-bold self-end">☕</span>
+</button>
+</div>
+</div>
+</section>
+<!-- Bottom Status Strip Component -->
+<div class="flex items-center justify-between px-space-md py-2 bg-surface-container rounded-lg font-body-sm text-body-sm text-on-surface-variant">
+<div class="flex items-center gap-space-sm">
+<span class="font-medium text-on-surface">Room #CK-9204</span>
+<span>·</span>
+<span>Ephemeral estimation session</span>
+<span>·</span>
+<span class="text-[#B54708] font-semibold flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">sync_problem</span>
+            Attempting reconnect (attempt 2 of 5)
+          </span>
+</div>
+<div class="flex items-center gap-space-md">
+<span>Latency: -- ms</span>
+<span class="w-1.5 h-1.5 rounded-full bg-[#B54708]"></span>
+<span>Peer sync paused</span>
+</div>
+</div>
+</div>
+<!-- Right Summary Sidebar (320px) -->
+<aside class="w-[300px] shrink-0 flex flex-col gap-space-md">
+<!-- Session Progress & Summary -->
+<div class="bg-surface-container-lowest rounded-xl p-space-md shadow-sm flex flex-col gap-space-md">
+<div class="flex items-center justify-between">
+<span class="font-headline-sm text-headline-sm text-on-surface">Session metrics</span>
+<span class="material-symbols-outlined text-outline text-[20px]">analytics</span>
+</div>
+<!-- Velocity stats donut & key numbers -->
+<div class="p-3 bg-surface-container-low rounded-lg flex items-center justify-between">
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-on-surface-variant">Estimated so far</span>
+<span class="font-display-card-value text-display-card-value text-primary">8 <span class="font-label-md text-label-md text-on-surface-variant">points</span></span>
+</div>
+<div class="w-12 h-12 relative flex items-center justify-center">
+<svg class="w-full h-full transform -rotate-90" viewbox="0 0 36 36">
+<path class="text-surface-container-high" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-width="4"></path>
+<path class="text-primary" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-dasharray="40, 100" stroke-width="4"></path>
+</svg>
+<span class="absolute font-label-sm text-label-sm text-primary font-bold">2/5</span>
+</div>
+</div>
+<!-- Participants List status -->
+<div class="flex flex-col gap-space-xs">
+<span class="font-label-sm text-label-sm text-on-surface-variant font-bold uppercase tracking-wider">Squad Room (5)</span>
+<div class="flex items-center justify-between py-1.5">
+<div class="flex items-center gap-2">
+<span class="text-sm">🐼</span>
+<span class="font-label-md text-label-md text-on-surface font-medium">Priya</span>
+<span class="font-label-sm text-label-sm text-secondary font-semibold">Host</span>
+</div>
+<span class="material-symbols-outlined text-[16px] text-[#1E7A4C]">wifi</span>
+</div>
+<div class="flex items-center justify-between py-1.5 bg-[#FEF0E7] px-2 rounded-lg">
+<div class="flex items-center gap-2">
+<span class="text-sm">🐯</span>
+<span class="font-label-md text-label-md text-[#B54708] font-bold">Arjun</span>
+<span class="font-label-sm text-label-sm text-[#B54708] font-semibold">(You)</span>
+</div>
+<span class="material-symbols-outlined text-[16px] text-[#B54708] animate-spin">sync</span>
+</div>
+<div class="flex items-center justify-between py-1.5">
+<div class="flex items-center gap-2">
+<span class="text-sm">🦊</span>
+<span class="font-label-md text-label-md text-on-surface font-medium">Marco</span>
+</div>
+<span class="material-symbols-outlined text-[16px] text-[#1E7A4C]">wifi</span>
+</div>
+<div class="flex items-center justify-between py-1.5">
+<div class="flex items-center gap-2">
+<span class="text-sm">🐨</span>
+<span class="font-label-md text-label-md text-on-surface font-medium">Sarah</span>
+</div>
+<span class="material-symbols-outlined text-[16px] text-[#1E7A4C]">wifi</span>
+</div>
+<div class="flex items-center justify-between py-1.5">
+<div class="flex items-center gap-2">
+<span class="text-sm">🦉</span>
+<span class="font-label-md text-label-md text-on-surface font-medium">Dave</span>
+</div>
+<span class="material-symbols-outlined text-[16px] text-[#1E7A4C]">wifi</span>
+</div>
+</div>
+<!-- Technical Connection Diagnostic Box -->
+<div class="bg-surface-container-low rounded-lg p-3 flex flex-col gap-2 mt-2">
+<div class="flex items-center gap-1.5 text-on-surface font-label-md text-label-md font-semibold">
+<span class="material-symbols-outlined text-[16px] text-[#B54708]">info</span>
+<span>Network Diagnostic</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed">
+            Your connection encountered an unannounced socket closure. State preserves your last active vote choice locally until handshake acknowledgment is returned.
+          </p>
+</div>
+</div>
+</aside>
+</div>
+</div>
+<script>
+  // Countdown simulation for reconnect attempt
+  (function() {
+    let timeLeft = 3;
+    const countdownEl = document.getElementById('countdown');
+    const progressBar = document.getElementById('reconnect-progress');
+    
+    const timer = setInterval(() => {
+      timeLeft -= 1;
+      if (timeLeft <= 0) {
+        timeLeft = 4;
+        if (progressBar) {
+          progressBar.style.width = '75%';
+          setTimeout(() => {
+            progressBar.style.width = '35%';
+          }, 800);
+        }
+      }
+      if (countdownEl) {
+        countdownEl.innerText = timeLeft + 's';
+      }
+    }, 1000);
+  })();
+
+  function triggerImmediateRetry() {
+    const spinner = document.getElementById('reconnect-spinner');
+    const progressBar = document.getElementById('reconnect-progress');
+    if (spinner) {
+      spinner.classList.add('animate-spin');
+    }
+    if (progressBar) {
+      progressBar.style.width = '90%';
+    }
+    setTimeout(() => {
+      if (progressBar) progressBar.style.width = '40%';
+    }, 1200);
+  }
+</script></main><footer class="w-full bg-surface-container-lowest border-t border-outline-variant mt-auto"><div class="h-12 max-w-[1440px] mx-auto px-margin flex items-center justify-between"><div class="flex items-center gap-space-md"><span class="font-headline-sm text-headline-sm text-primary tracking-tight text-[15px]">Bravynix</span><span class="font-body-sm text-body-sm text-on-surface-variant">Room #CK-9204 · Ephemeral estimation session</span></div><div class="flex items-center gap-space-lg"><span class="inline-flex items-center gap-space-xs font-body-sm text-body-sm text-on-surface-variant"><span class="w-1.5 h-1.5 rounded-full bg-[#1E7A4C]"></span>End-to-end synced</span><span class="font-body-sm text-body-sm text-on-surface-variant">No account required</span></div></div></footer></body></html>

@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_standard" name="shell-type"/><title>Bravynix Scrum Poker</title><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;700&amp;family=Noto+Sans:wght@400;500;600&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base { html, body { margin: 0; padding: 0; } body { overscroll-behavior: none; } main > :first-child { margin-top: 0 !important; } main > :last-child { margin-bottom: 0 !important; } } ::-webkit-scrollbar { display: none; }</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { "colors": { "on-surface-variant": "#454651", "outline": "#767682", "secondary-fixed-dim": "#ffb956", "surface-container-low": "#f3f2ff", "primary": "#16246f", "secondary": "#835400", "primary-container": "#2f3c86", "background": "#fbf8ff", "on-tertiary-fixed-variant": "#3b4470", "on-secondary-fixed-variant": "#643f00", "tertiary-fixed": "#dee1ff", "tertiary": "#202955", "on-error": "#ffffff", "on-primary-fixed-variant": "#33408a", "on-tertiary": "#ffffff", "primary-fixed-dim": "#bbc3ff", "on-primary-container": "#9eaafc", "on-error-container": "#93000a", "on-secondary-fixed": "#2a1800", "error": "#ba1a1a", "surface-variant": "#dde1ff", "secondary-fixed": "#ffddb5", "surface-container-high": "#e5e7ff", "on-primary": "#ffffff", "on-secondary-container": "#6c4500", "inverse-surface": "#2a2f48", "on-primary-fixed": "#000f5c", "on-tertiary-fixed": "#0e1842", "error-container": "#ffdad6", "surface-container-highest": "#dde1ff", "inverse-primary": "#bbc3ff", "surface": "#fbf8ff", "surface-tint": "#4c58a4", "surface-container-lowest": "#ffffff", "secondary-container": "#feae32", "on-secondary": "#ffffff", "primary-fixed": "#dee0ff", "surface-bright": "#fbf8ff", "on-tertiary-container": "#a4ade0", "inverse-on-surface": "#f0efff", "tertiary-container": "#37406c", "tertiary-fixed-dim": "#bbc4f8", "on-background": "#151a32", "surface-container": "#ececff", "on-surface": "#151a32", "outline-variant": "#c6c5d2", "surface-dim": "#d4d8f9" }, "borderRadius": { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" }, "spacing": { "space-lg": "1.5rem", "space-md": "1rem", "space-xs": "0.25rem", "gutter": "1.5rem", "margin": "2rem", "space-xl": "2rem", "space-sm": "0.5rem" }, "fontFamily": { "body-sm": [ "Noto Sans" ], "body-lg": [ "Noto Sans" ], "label-md": [ "Noto Sans" ], "body-md": [ "Noto Sans" ], "label-lg": [ "Noto Sans" ], "headline-sm": [ "Bricolage Grotesque" ], "label-sm": [ "Noto Sans" ], "headline-lg": [ "Bricolage Grotesque" ], "display-lg": [ "Bricolage Grotesque" ], "display-card-value": [ "Bricolage Grotesque" ], "headline-md": [ "Bricolage Grotesque" ] }, "fontSize": { "body-sm": [ "12px", { "lineHeight": "16px", "fontWeight": "400" } ], "body-lg": [ "16px", { "lineHeight": "24px", "fontWeight": "400" } ], "label-md": [ "12px", { "lineHeight": "16px", "fontWeight": "600" } ], "body-md": [ "14px", { "lineHeight": "20px", "fontWeight": "400" } ], "label-lg": [ "14px", { "lineHeight": "20px", "fontWeight": "600" } ], "headline-sm": [ "18px", { "lineHeight": "24px", "fontWeight": "600" } ], "label-sm": [ "11px", { "lineHeight": "14px", "fontWeight": "500" } ], "headline-lg": [ "28px", { "lineHeight": "36px", "letterSpacing": "-0.01em", "fontWeight": "700" } ], "display-lg": [ "40px", { "lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "700" } ], "display-card-value": [ "32px", { "lineHeight": "36px", "letterSpacing": "-0.01em", "fontWeight": "700" } ], "headline-md": [ "22px", { "lineHeight": "28px", "fontWeight": "600" } ] } } } };</script></head><body class="min-h-screen bg-surface-container-low font-body-md text-on-surface"><header class="fixed top-0 left-0 right-0 z-50 bg-surface-container-lowest border-b border-outline-variant"><div class="h-16 max-w-[1440px] mx-auto px-margin flex items-center justify-between"><div class="flex items-center gap-space-md"><a class="flex items-center gap-space-sm hover:opacity-90 transition-opacity" data-path="bravynix-scrum-poker-landing-page" href="#"><span class="font-headline-sm text-headline-sm text-primary font-bold tracking-tight">Bravynix</span></a><span class="h-4 w-px bg-outline-variant"></span><span class="font-label-lg text-label-lg text-on-surface font-semibold">Checkout revamp</span></div><div class="flex items-center gap-space-md"><nav class="flex items-center gap-space-xs bg-surface-container-low p-1 rounded-lg border border-outline-variant" data-active-classes="bg-surface-container-lowest text-primary shadow-sm font-semibold"><a class="px-3 py-1 rounded text-on-surface-variant font-label-md text-label-md transition-colors hover:text-on-surface" data-path="room-host-discuss" href="#">Stories</a><a class="px-3 py-1 rounded text-on-surface-variant font-label-md text-label-md transition-colors hover:text-on-surface" data-path="room-host-history-drawer" href="#">History</a></nav><div class="flex items-center gap-space-xs px-space-sm py-1 rounded-full bg-surface-container border border-outline-variant"><span class="material-symbols-outlined text-on-surface-variant text-[16px]">timer</span><span class="font-label-sm text-label-sm text-on-surface font-medium">01:24</span></div><button class="flex items-center gap-space-xs px-3 py-1.5 rounded-lg bg-surface-container-lowest border border-outline-variant hover:bg-surface-container-low text-on-surface transition-colors cursor-pointer"><span class="material-symbols-outlined text-[16px] text-primary">share</span><span class="font-label-md text-label-md font-semibold">Invite</span></button><div class="flex items-center gap-1.5 px-space-sm py-1"><span class="w-2 h-2 rounded-full bg-[#1E7A4C]"></span><span class="font-label-sm text-label-sm text-[#1E7A4C] font-semibold">Connected</span></div><div class="h-5 w-px bg-outline-variant"></div><div class="flex items-center gap-space-sm"><div class="w-8 h-8 rounded-full bg-surface-container-high border border-outline-variant flex items-center justify-center shrink-0 text-[16px]">🐼</div><div class="flex items-center gap-1"><span class="font-label-md text-label-md text-on-surface font-medium">Priya</span><span class="font-label-sm text-label-sm text-secondary font-semibold">★ (Host)</span></div></div></div></div></header><main class="w-full max-w-[1440px] mx-auto pt-16 bg-surface-container-low min-h-screen"><div class="flex flex-col w-full relative">
+<!-- Top Phase Tracker & Control Ribbon -->
+<div class="w-full bg-surface-container-lowest shadow-sm px-margin py-3 flex items-center justify-between">
+<div class="flex items-center gap-space-lg">
+<div class="flex items-center gap-2">
+<span class="font-label-sm text-label-sm text-outline uppercase tracking-wider">Phase</span>
+<div class="flex items-center p-1 bg-surface-container-low rounded-lg gap-1">
+<div class="px-3 py-1 rounded text-outline font-label-md text-label-md flex items-center gap-1.5">
+<span class="w-1.5 h-1.5 rounded-full bg-outline"></span>
+            1. Vote
+          </div>
+<div class="px-3 py-1 rounded bg-secondary-container text-on-secondary-container font-label-md text-label-md shadow-sm flex items-center gap-1.5">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+            2. Review
+          </div>
+<div class="px-3 py-1 rounded text-outline font-label-md text-label-md flex items-center gap-1.5">
+<span class="w-1.5 h-1.5 rounded-full bg-outline"></span>
+            3. Finalize
+          </div>
+</div>
+</div>
+<div class="h-4 w-px bg-surface-container-high"></div>
+<div class="flex items-center gap-2">
+<span class="font-label-sm text-label-sm text-outline uppercase tracking-wider">Session</span>
+<span class="font-label-md text-label-md text-on-surface font-medium">Story 3 of 5</span>
+</div>
+</div>
+<div class="flex items-center gap-space-md">
+<button class="px-3 py-1.5 rounded-lg bg-surface-container text-on-surface hover:bg-surface-container-high transition-colors font-label-md text-label-md flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[16px]">restart_alt</span>
+        Revote
+      </button>
+<button class="px-4 py-1.5 rounded-lg bg-primary text-on-primary hover:bg-primary-container transition-colors font-label-md text-label-md shadow-sm flex items-center gap-1.5">
+<span>Accept &amp; Next</span>
+<span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</button>
+</div>
+</div>
+<!-- Workspace 3-Column Layout Base (State C Review) -->
+<div class="w-full px-margin py-space-lg grid grid-cols-12 gap-gutter">
+<!-- Left Column: Mini Backlog (3 cols) -->
+<div class="col-span-3 flex flex-col gap-space-md">
+<div class="bg-surface-container-lowest p-space-md rounded-xl shadow-sm flex flex-col gap-space-sm">
+<div class="flex items-center justify-between">
+<span class="font-label-md text-label-md text-on-surface uppercase tracking-wider font-bold">Session Backlog</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant bg-surface-container-low px-2 py-0.5 rounded-full">3 / 5 Done</span>
+</div>
+<div class="space-y-2 mt-2">
+<!-- Story 1 done -->
+<div class="p-2.5 rounded-lg bg-surface-container-low flex items-start justify-between">
+<div class="min-w-0 pr-2">
+<span class="font-label-sm text-label-sm text-outline block">#CK-101 · Estimated</span>
+<p class="font-body-md text-body-md text-on-surface truncate">Add UPI autopay to subscriptions</p>
+</div>
+<span class="shrink-0 px-2 py-0.5 bg-surface-container text-primary font-headline-sm text-headline-sm rounded">3</span>
+</div>
+<!-- Story 2 done -->
+<div class="p-2.5 rounded-lg bg-surface-container-low flex items-start justify-between">
+<div class="min-w-0 pr-2">
+<span class="font-label-sm text-label-sm text-outline block">#CK-102 · Estimated</span>
+<p class="font-body-md text-body-md text-on-surface truncate">Save cards with network tokens</p>
+</div>
+<span class="shrink-0 px-2 py-0.5 bg-surface-container text-primary font-headline-sm text-headline-sm rounded">5</span>
+</div>
+<!-- Story 3 active review -->
+<div class="p-2.5 rounded-lg bg-surface-container-high shadow-sm flex items-start justify-between">
+<div class="min-w-0 pr-2">
+<span class="font-label-sm text-label-sm text-secondary font-semibold block">#CK-103 · In Review</span>
+<p class="font-body-md text-body-md text-on-surface font-semibold truncate">Show delivery ETA on order page</p>
+</div>
+<span class="shrink-0 px-2 py-0.5 bg-secondary-container text-on-secondary-container font-headline-sm text-headline-sm rounded">4.6</span>
+</div>
+<!-- Story 4 upcoming -->
+<div class="p-2.5 rounded-lg bg-surface-container-lowest opacity-60 flex items-start justify-between">
+<div class="min-w-0 pr-2">
+<span class="font-label-sm text-label-sm text-outline block">#CK-104 · Up Next</span>
+<p class="font-body-md text-body-md text-on-surface truncate">Refund flow instant credit webhook</p>
+</div>
+<span class="shrink-0 px-2 py-0.5 bg-surface-container-low text-outline font-headline-sm text-headline-sm rounded">-</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Center Stage: Active Story & Results Block (6 cols) -->
+<div class="col-span-6 flex flex-col gap-space-lg">
+<!-- Active Story Hero Panel -->
+<div class="bg-surface-container-lowest p-space-lg rounded-xl shadow-sm flex flex-col gap-space-md">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<span class="px-2 py-0.5 rounded bg-surface-container-high text-primary font-label-sm text-label-sm font-semibold">Story 3 of 5</span>
+<span class="font-label-sm text-label-sm text-outline">CK-103</span>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">visibility</span>
+            Votes Revealed
+          </span>
+</div>
+<div>
+<h1 class="font-headline-lg text-headline-lg text-on-surface font-bold">Show delivery ETA on the order page</h1>
+<p class="font-body-md text-body-md text-on-surface-variant mt-1">
+            Surface postal code lookup directly on the initial cart drawer and render carrier-backed dynamic delivery date range.
+          </p>
+</div>
+<!-- Result Consensus Block -->
+<div class="bg-surface-container-lowest rounded-xl shadow-md p-space-lg bg-gradient-to-r from-surface-container-lowest via-surface-container-low to-surface-container-lowest">
+<div class="grid grid-cols-12 gap-space-md items-center">
+<!-- Large Average Stat -->
+<div class="col-span-4 flex flex-col items-start pr-space-md">
+<span class="font-label-sm text-label-sm text-secondary font-bold uppercase tracking-wider">Calculated Mean</span>
+<div class="flex items-baseline gap-1 mt-1">
+<span class="font-display-lg text-display-lg text-on-surface font-bold">4.6</span>
+<span class="font-label-md text-label-md text-on-surface-variant">pts</span>
+</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant mt-1">Consensus: Moderate spread (2 to 8)</span>
+</div>
+<!-- Distribution Column Chart -->
+<div class="col-span-8 flex flex-col gap-2">
+<div class="flex items-center justify-between font-label-sm text-label-sm text-on-surface-variant">
+<span>Vote distribution</span>
+<span>6 active voters</span>
+</div>
+<!-- Mini Bar Breakdown -->
+<div class="h-20 w-full flex items-end gap-3 pt-2">
+<!-- Score 2 -->
+<div class="flex-1 flex flex-col items-center gap-1 h-full justify-end">
+<span class="font-label-sm text-label-sm text-on-surface-variant">1</span>
+<div class="w-full bg-surface-container-high rounded-t" style="height: 25%;"></div>
+<span class="font-label-md text-label-md text-on-surface">2</span>
+</div>
+<!-- Score 3 -->
+<div class="flex-1 flex flex-col items-center gap-1 h-full justify-end">
+<span class="font-label-sm text-label-sm text-on-surface-variant">1</span>
+<div class="w-full bg-surface-container-high rounded-t" style="height: 25%;"></div>
+<span class="font-label-md text-label-md text-on-surface">3</span>
+</div>
+<!-- Score 5 (Highest - Marigold bar) -->
+<div class="flex-1 flex flex-col items-center gap-1 h-full justify-end">
+<span class="font-label-sm text-label-sm font-bold text-secondary">2</span>
+<div class="w-full bg-secondary-container rounded-t shadow-sm" style="height: 60%;"></div>
+<span class="font-label-md text-label-md text-secondary font-bold">5</span>
+</div>
+<!-- Score 8 -->
+<div class="flex-1 flex flex-col items-center gap-1 h-full justify-end">
+<span class="font-label-sm text-label-sm text-on-surface-variant">1</span>
+<div class="w-full bg-surface-container-high rounded-t" style="height: 25%;"></div>
+<span class="font-label-md text-label-md text-on-surface">8</span>
+</div>
+<!-- Score ? -->
+<div class="flex-1 flex flex-col items-center gap-1 h-full justify-end">
+<span class="font-label-sm text-label-sm text-on-surface-variant">1</span>
+<div class="w-full bg-surface-variant rounded-t" style="height: 25%;"></div>
+<span class="font-label-md text-label-md text-outline">?</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Poker Table Layout (Voters Revealed) -->
+<div class="bg-surface-container-lowest p-space-lg rounded-xl shadow-sm flex flex-col gap-space-md">
+<div class="flex items-center justify-between">
+<span class="font-label-md text-label-md text-on-surface uppercase tracking-wider font-semibold">Estimators (8 seated)</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">6 submitted · 2 abstained</span>
+</div>
+<div class="grid grid-cols-4 gap-space-md">
+<!-- Priya (5) -->
+<div class="flex flex-col items-center gap-2">
+<div class="w-20 h-28 rounded-xl bg-surface-container flex flex-col items-center justify-center shadow-md relative">
+<span class="font-display-card-value text-display-card-value font-bold text-[#16735F]">5</span>
+<span class="absolute bottom-1 right-2 font-label-sm text-label-sm text-outline">pts</span>
+</div>
+<div class="flex items-center gap-1">
+<span class="text-xs">🐼</span>
+<span class="font-label-md text-label-md text-on-surface font-semibold truncate max-w-[70px]">Priya</span>
+</div>
+</div>
+<!-- Arjun (3) -->
+<div class="flex flex-col items-center gap-2">
+<div class="w-20 h-28 rounded-xl bg-surface-container flex flex-col items-center justify-center shadow-md relative">
+<span class="font-display-card-value text-display-card-value font-bold text-[#137480]">3</span>
+<span class="absolute bottom-1 right-2 font-label-sm text-label-sm text-outline">pts</span>
+</div>
+<div class="flex items-center gap-1">
+<span class="text-xs">🦊</span>
+<span class="font-label-md text-label-md text-on-surface font-semibold truncate max-w-[70px]">Arjun</span>
+</div>
+</div>
+<!-- Meera (5) -->
+<div class="flex flex-col items-center gap-2">
+<div class="w-20 h-28 rounded-xl bg-surface-container flex flex-col items-center justify-center shadow-md relative">
+<span class="font-display-card-value text-display-card-value font-bold text-[#16735F]">5</span>
+<span class="absolute bottom-1 right-2 font-label-sm text-label-sm text-outline">pts</span>
+</div>
+<div class="flex items-center gap-1">
+<span class="text-xs">🐨</span>
+<span class="font-label-md text-label-md text-on-surface font-semibold truncate max-w-[70px]">Meera</span>
+</div>
+</div>
+<!-- Rahul (2) -->
+<div class="flex flex-col items-center gap-2">
+<div class="w-20 h-28 rounded-xl bg-surface-container flex flex-col items-center justify-center shadow-md relative">
+<span class="font-display-card-value text-display-card-value font-bold text-[#1A6E9E]">2</span>
+<span class="absolute bottom-1 right-2 font-label-sm text-label-sm text-outline">pts</span>
+</div>
+<div class="flex items-center gap-1">
+<span class="text-xs">🐯</span>
+<span class="font-label-md text-label-md text-on-surface font-semibold truncate max-w-[70px]">Rahul</span>
+</div>
+</div>
+<!-- Ananya (8) -->
+<div class="flex flex-col items-center gap-2">
+<div class="w-20 h-28 rounded-xl bg-surface-container flex flex-col items-center justify-center shadow-md relative">
+<span class="font-display-card-value text-display-card-value font-bold text-[#3B7A2A]">8</span>
+<span class="absolute bottom-1 right-2 font-label-sm text-label-sm text-outline">pts</span>
+</div>
+<div class="flex items-center gap-1">
+<span class="text-xs">🦉</span>
+<span class="font-label-md text-label-md text-on-surface font-semibold truncate max-w-[70px]">Ananya</span>
+</div>
+</div>
+<!-- Vikram (?) -->
+<div class="flex flex-col items-center gap-2">
+<div class="w-20 h-28 rounded-xl bg-inverse-surface flex flex-col items-center justify-center shadow-md text-surface relative">
+<span class="font-display-card-value text-display-card-value font-bold">?</span>
+</div>
+<div class="flex items-center gap-1">
+<span class="text-xs">🦁</span>
+<span class="font-label-md text-label-md text-on-surface font-semibold truncate max-w-[70px]">Vikram</span>
+</div>
+</div>
+<!-- Sneha (Not Voted) -->
+<div class="flex flex-col items-center gap-2">
+<div class="w-20 h-28 rounded-xl bg-surface-container-high flex flex-col items-center justify-center text-outline shadow-inner">
+<span class="material-symbols-outlined text-[24px]">hourglass_empty</span>
+<span class="font-label-sm text-label-sm mt-1">Passed</span>
+</div>
+<div class="flex items-center gap-1">
+<span class="text-xs">🦄</span>
+<span class="font-label-md text-label-md text-outline truncate max-w-[70px]">Sneha</span>
+</div>
+</div>
+<!-- Farhan (Not Voted) -->
+<div class="flex flex-col items-center gap-2">
+<div class="w-20 h-28 rounded-xl bg-surface-container-high flex flex-col items-center justify-center text-outline shadow-inner">
+<span class="material-symbols-outlined text-[24px]">hourglass_empty</span>
+<span class="font-label-sm text-label-sm mt-1">Passed</span>
+</div>
+<div class="flex items-center gap-1">
+<span class="text-xs">🐬</span>
+<span class="font-label-md text-label-md text-outline truncate max-w-[70px]">Farhan</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Column Placeholder (Under drawer) -->
+<div class="col-span-3 flex flex-col gap-space-md opacity-40 pointer-events-none">
+<div class="bg-surface-container-lowest p-space-md rounded-xl shadow-sm h-64 flex flex-col justify-between">
+<span class="font-label-md text-label-md text-on-surface font-bold uppercase">Host Controls</span>
+<div class="space-y-2">
+<div class="h-8 bg-surface-container rounded"></div>
+<div class="h-8 bg-surface-container rounded"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- Subtle Dimming Overlay behind Drawer (#161B33 at 30%) -->
+<div class="fixed inset-0 top-16 bg-[#161B33]/30 z-40 transition-opacity backdrop-none" id="drawer-backdrop"></div>
+<!-- State D: History Drawer Open (400px wide, elevated, flush right) -->
+<aside class="fixed top-16 right-0 w-[400px] h-[calc(100vh-4rem)] bg-surface-container-lowest shadow-2xl z-50 flex flex-col overflow-hidden" style="box-shadow: -8px 0px 32px rgba(22, 27, 51, 0.12);">
+<!-- Drawer Header (p-5 / 20px) -->
+<div class="p-5 flex items-start justify-between bg-surface-container-lowest shrink-0 shadow-sm">
+<div class="flex flex-col">
+<div class="flex items-center gap-2">
+<h2 class="font-headline-md text-headline-md text-[#161B33] font-bold">History</h2>
+<span class="px-2 py-0.5 rounded-full bg-surface-container text-primary font-label-sm text-label-sm font-semibold">3 Done</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-0.5">Checkout revamp · 3 stories estimated</p>
+</div>
+<button aria-label="Close history drawer" class="w-8 h-8 rounded-lg flex items-center justify-center text-outline hover:text-on-surface hover:bg-surface-container-high transition-colors" onclick="document.getElementById('drawer-backdrop').classList.add('hidden'); this.closest('aside').classList.add('hidden');">
+<span class="material-symbols-outlined text-[20px]">close</span>
+</button>
+</div>
+<!-- Drawer Content Scroll Area -->
+<div class="flex-1 overflow-y-auto p-5 space-y-4 bg-surface-container-low">
+<!-- Item 1: Story 1 (Collapsed) -->
+<div class="bg-surface-container-lowest p-4 rounded-xl shadow-sm hover:shadow-md transition-shadow cursor-pointer flex flex-col gap-2">
+<div class="flex items-center justify-between">
+<span class="px-2 py-0.5 rounded bg-surface-container text-on-surface-variant font-label-sm text-label-sm">Story 1 of 5</span>
+<span class="px-2 py-0.5 rounded-full bg-[#E6F4EC] text-[#1E7A4C] font-label-sm text-label-sm font-semibold flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-[#1E7A4C]"></span>
+            Consensus high
+          </span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-semibold">Add UPI autopay to subscriptions</h3>
+<div class="flex items-center justify-between pt-1">
+<span class="font-body-lg text-body-lg font-bold text-on-surface">Round 1 · Average 3</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">6 votes · 2 m ago</span>
+</div>
+</div>
+<!-- Item 2: Story 2 (Collapsed) -->
+<div class="bg-surface-container-lowest p-4 rounded-xl shadow-sm hover:shadow-md transition-shadow cursor-pointer flex flex-col gap-2">
+<div class="flex items-center justify-between">
+<span class="px-2 py-0.5 rounded bg-surface-container text-on-surface-variant font-label-sm text-label-sm">Story 2 of 5</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">7 votes · 8 m ago</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-semibold">Save cards with network tokens</h3>
+<div class="flex items-center justify-between pt-1">
+<span class="font-body-lg text-body-lg font-bold text-on-surface">Round 1 · Average 5</span>
+<span class="material-symbols-outlined text-outline text-[18px]">chevron_right</span>
+</div>
+</div>
+<!-- Item 3: Story 3 (EXPANDED Item!) -->
+<div class="bg-surface-container-lowest p-4 rounded-xl shadow-md flex flex-col gap-3 relative">
+<div class="flex items-center justify-between">
+<span class="px-2 py-0.5 rounded bg-secondary-container text-on-secondary-container font-label-sm text-label-sm font-bold">Story 3 of 5 · Current</span>
+<span class="font-label-sm text-label-sm text-secondary font-semibold">In review</span>
+</div>
+<div>
+<h3 class="font-headline-sm text-headline-sm text-[#161B33] font-bold">Show delivery ETA on the order page</h3>
+<p class="font-headline-md text-headline-md text-[#161B33] font-bold mt-1">Round 1 · Average 4.6</p>
+</div>
+<!-- Expanded Individual Breakdown -->
+<div class="pt-2 flex flex-col gap-2">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider font-semibold">Estimators breakdown</span>
+<div class="grid grid-cols-2 gap-2">
+<!-- Priya 5 -->
+<div class="flex items-center justify-between p-2 rounded-lg bg-surface-container-low">
+<span class="font-body-sm text-body-sm text-on-surface font-medium truncate">Priya</span>
+<span class="px-2 py-0.5 rounded text-white font-label-md text-label-md font-bold bg-[#16735F]">5</span>
+</div>
+<!-- Arjun 3 -->
+<div class="flex items-center justify-between p-2 rounded-lg bg-surface-container-low">
+<span class="font-body-sm text-body-sm text-on-surface font-medium truncate">Arjun</span>
+<span class="px-2 py-0.5 rounded text-white font-label-md text-label-md font-bold bg-[#137480]">3</span>
+</div>
+<!-- Meera 5 -->
+<div class="flex items-center justify-between p-2 rounded-lg bg-surface-container-low">
+<span class="font-body-sm text-body-sm text-on-surface font-medium truncate">Meera</span>
+<span class="px-2 py-0.5 rounded text-white font-label-md text-label-md font-bold bg-[#16735F]">5</span>
+</div>
+<!-- Rahul 2 -->
+<div class="flex items-center justify-between p-2 rounded-lg bg-surface-container-low">
+<span class="font-body-sm text-body-sm text-on-surface font-medium truncate">Rahul</span>
+<span class="px-2 py-0.5 rounded text-white font-label-md text-label-md font-bold bg-[#1A6E9E]">2</span>
+</div>
+<!-- Ananya 8 -->
+<div class="flex items-center justify-between p-2 rounded-lg bg-surface-container-low">
+<span class="font-body-sm text-body-sm text-on-surface font-medium truncate">Ananya</span>
+<span class="px-2 py-0.5 rounded text-white font-label-md text-label-md font-bold bg-[#3B7A2A]">8</span>
+</div>
+<!-- Vikram ? -->
+<div class="flex items-center justify-between p-2 rounded-lg bg-surface-container-low">
+<span class="font-body-sm text-body-sm text-on-surface font-medium truncate">Vikram</span>
+<span class="px-2 py-0.5 rounded text-white font-label-md text-label-md font-bold bg-[#161B33]">?</span>
+</div>
+<!-- Sneha (Not voted) -->
+<div class="flex items-center justify-between p-2 rounded-lg bg-surface-container-low">
+<span class="font-body-sm text-body-sm text-outline truncate">Sneha</span>
+<span class="px-1.5 py-0.5 rounded text-outline font-label-sm text-label-sm bg-surface-container">None</span>
+</div>
+<!-- Farhan (Not voted) -->
+<div class="flex items-center justify-between p-2 rounded-lg bg-surface-container-low">
+<span class="font-body-sm text-body-sm text-outline truncate">Farhan</span>
+<span class="px-1.5 py-0.5 rounded text-outline font-label-sm text-label-sm bg-surface-container">None</span>
+</div>
+</div>
+</div>
+<!-- Action inside expanded card -->
+<div class="pt-2 flex items-center justify-between">
+<button class="inline-flex items-center gap-1.5 text-primary hover:text-primary-container font-label-md text-label-md font-semibold">
+<span class="material-symbols-outlined text-[16px]">content_copy</span>
+            Copy summary
+          </button>
+<button class="inline-flex items-center gap-1.5 text-on-surface-variant hover:text-on-surface font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[16px]">file_download</span>
+            Export CSV
+          </button>
+</div>
+</div>
+</div>
+<!-- Drawer Footer Actions -->
+<div class="p-4 bg-surface-container-lowest shrink-0 shadow-lg flex items-center justify-between">
+<span class="font-body-sm text-body-sm text-on-surface-variant">Live synced to Jira / Linear</span>
+<button class="px-3 py-1.5 rounded-lg bg-surface-container-high hover:bg-surface-container text-on-surface font-label-md text-label-md flex items-center gap-1.5 transition-colors">
+<span class="material-symbols-outlined text-[16px]">ios_share</span>
+        Share session recap
+      </button>
+</div>
+</aside>
+</div>
+<script>
+  // Ensure the top App Shell 'History' tab displays the active state
+  document.addEventListener('DOMContentLoaded', () => {
+    const historyNavLinks = document.querySelectorAll('nav a');
+    historyNavLinks.forEach(link => {
+      if (link.textContent.trim().toLowerCase().includes('history')) {
+        link.className = 'px-3 py-1 rounded bg-surface-container-lowest text-primary shadow-sm font-semibold font-label-md text-label-md';
+      } else if (link.textContent.trim().toLowerCase().includes('stories')) {
+        link.className = 'px-3 py-1 rounded text-on-surface-variant font-label-md text-label-md transition-colors hover:text-on-surface';
+      }
+    });
+  });
+</script></main><footer class="w-full bg-surface-container-lowest border-t border-outline-variant mt-auto"><div class="h-12 max-w-[1440px] mx-auto px-margin flex items-center justify-between"><div class="flex items-center gap-space-md"><span class="font-headline-sm text-headline-sm text-primary tracking-tight text-[15px]">Bravynix</span><span class="font-body-sm text-body-sm text-on-surface-variant">Room #CK-9204 · Ephemeral estimation session</span></div><div class="flex items-center gap-space-lg"><span class="inline-flex items-center gap-space-xs font-body-sm text-body-sm text-on-surface-variant"><span class="w-1.5 h-1.5 rounded-full bg-[#1E7A4C]"></span>End-to-end synced</span><span class="font-body-sm text-body-sm text-on-surface-variant">No account required</span></div></div></footer></body></html>
