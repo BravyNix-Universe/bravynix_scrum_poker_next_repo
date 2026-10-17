@@ -19,8 +19,8 @@ export type CreateRoomState =
   | { status: "failed"; message: string };
 
 /**
- * Creates a room in this browser and builds its links (PRD 9.1).
- * The host key stays in memory for now; secure on-device storage arrives with the room screens.
+ * Creates a room in this browser and builds its links (PRD 9.1). The host key is saved on this
+ * device, so "Go to room" opens it as host; the host link is for hosting from elsewhere.
  */
 export function useCreateRoom() {
   const [state, setState] = useState<CreateRoomState>({ status: "idle" });

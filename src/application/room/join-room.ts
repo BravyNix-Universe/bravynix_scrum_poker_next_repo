@@ -1,6 +1,7 @@
 import type { AvatarId } from "@/domain/avatars/avatars";
 import { type Profile, validateDisplayName } from "@/domain/room/profile";
 
+import { listRoom } from "./list-room";
 import type { MyRoomsRepository } from "../ports/my-rooms-repository";
 import type { ProfilePreferences } from "../ports/profile-preferences";
 import type { RoomSession } from "../ports/room-session";
@@ -45,17 +46,16 @@ export function makeJoinRoom({ myRooms, preferences, now }: JoinRoomDependencies
     await session.join(profile);
 
     const { lobby } = state;
-    const listedAsHost = myRooms
-      .list(now())
-      .some((entry) => entry.roomId === lobby.roomId && entry.role === "host");
-    if (!listedAsHost) {
-      myRooms.save({
+    listRoom(
+      myRooms,
+      {
         roomId: lobby.roomId,
         epicTitle: lobby.epicTitle,
         role: lobby.role,
         createdAt: lobby.createdAt,
         expiresAt: lobby.expiresAt,
-      });
-    }
+      },
+      now(),
+    );
   };
 }

@@ -30,11 +30,10 @@ import { REVEAL_DEADLINE_MS } from "@/domain/rules/lifecycle";
 import { crowdTeammates, DEMO_HOST, TEAMMATES, type Teammate } from "./preview-people";
 
 /**
- * A stand-in for the peer-to-peer room session until live connections arrive (Phase 5).
- * It runs the real referee inside this tab and simulates teammates (and, for a participant,
- * the host), so every screen can be reviewed without a network. It implements the same
- * `RoomSession` port the live session will, plus `simulate` for acting out connection
- * problems on request.
+ * A room that runs entirely inside this tab, for reviewing screens without a network
+ * (`NEXT_PUBLIC_ROOM_MODE=preview`). It runs the real referee and simulates teammates (and,
+ * for a participant, the host). It implements the same `RoomSession` port as live rooms, plus
+ * `simulate` for acting out connection problems on request.
  */
 export interface PreviewRoomOptions extends OpenRoomRequest {
   /** This device's "My rooms" entry for the room, if it has one. */
@@ -50,6 +49,12 @@ const DEMO_STORIES = [
   "Apply promo codes at checkout",
   "Retry failed UPI payments automatically",
 ];
+
+/**
+ * Everyone in a preview lives in this tab, so votes need no real seal: one shared placeholder
+ * stands in for every fingerprint. Live rooms seal each vote with SHA-256 and a secret salt.
+ */
+const PREVIEW_SEAL = "preview";
 
 const CONNECT_DELAY_MS = 700;
 /** How long a simulated network drop lasts, and how long a participant waits for the host. */
@@ -129,7 +134,7 @@ export function createPreviewRoomSession({
     };
     const host = DEMO_HOST.id;
     const team = TEAMMATES.slice(0, 4);
-    const vote = (id: ParticipantId) => seed(id, { type: "cast-vote" }, 13);
+    const vote = (id: ParticipantId) => seed(id, { type: "cast-vote", seal: PREVIEW_SEAL }, 13);
 
     seed(host, { type: "join", profile: profileOf(DEMO_HOST), asHost: true }, 16);
     team.forEach((mate) =>
@@ -155,7 +160,9 @@ export function createPreviewRoomSession({
       seed(host, { type: "start-round" }, 14);
       votes.forEach(([id]) => vote(id));
       seed(host, { type: "reveal" }, 12);
-      votes.forEach(([id, card]) => seed(id, { type: "open-vote", card }, 12));
+      votes.forEach(([id, card]) =>
+        seed(id, { type: "open-vote", card, fingerprint: PREVIEW_SEAL }, 12),
+      );
       seed(host, { type: "finish-reveal" }, 12);
     }
 
@@ -165,7 +172,7 @@ export function createPreviewRoomSession({
     seed(host, { type: "start-round" }, 2);
     seed(host, { type: "start-timer", durationMs: 180_000 }, 0.75);
     [team[0]!.id, team[1]!.id].forEach((id) => {
-      seed(id, { type: "cast-vote" }, 1);
+      seed(id, { type: "cast-vote", seal: PREVIEW_SEAL }, 1);
       teammateVotes.set(id, pickCard());
     });
     // The fourth story was set aside earlier; its title stays in the removed list.
@@ -291,7 +298,7 @@ export function createPreviewRoomSession({
       schedule(VOTE_DELAY_MIN_MS + random() * VOTE_DELAY_SPREAD_MS, () => {
         if (!isCurrent(round.id, "voting")) return;
         teammateVotes.set(person.id, pickCard());
-        if (!dispatch(person.id, { type: "cast-vote" })) maybeHostReveals();
+        if (!dispatch(person.id, { type: "cast-vote", seal: PREVIEW_SEAL })) maybeHostReveals();
       });
     }
   }
@@ -302,7 +309,7 @@ export function createPreviewRoomSession({
     if (!round) return;
     const open = (id: ParticipantId, card: CardId | undefined | null) => {
       if (!card || !isCurrent(roundId, "revealing")) return;
-      dispatch(id, { type: "open-vote", card });
+      dispatch(id, { type: "open-vote", card, fingerprint: PREVIEW_SEAL });
       if (isRevealComplete(room)) finishReveal(roundId);
     };
     for (const id of round.votedIds) {
@@ -445,6 +452,12 @@ export function createPreviewRoomSession({
     if (refusal) refuse(refusal);
   };
 
+  function close(): void {
+    timers.forEach((timer) => clearTimeout(timer));
+    timers.clear();
+    listeners.clear();
+  }
+
   return {
     getState: () => state,
 
@@ -505,7 +518,12 @@ export function createPreviewRoomSession({
     castVote(card) {
       if (!me || connection !== "connected") return;
       if (!isCardId(card)) return refuse("invalid-card");
-      const result = applyCommand(room, me, { type: "cast-vote" }, { now: now(), newId });
+      const result = applyCommand(
+        room,
+        me,
+        { type: "cast-vote", seal: PREVIEW_SEAL },
+        { now: now(), newId },
+      );
       if (!result.ok) return refuse(result.refusal);
       room = result.state;
       myVote = card;
@@ -513,10 +531,12 @@ export function createPreviewRoomSession({
       maybeHostReveals();
     },
 
-    close() {
-      timers.forEach((timer) => clearTimeout(timer));
-      timers.clear();
-      listeners.clear();
+    close,
+
+    /** The preview keeps nothing on the device, so there is nothing more to delete. */
+    async forget() {
+      if (role === "host" && me && room.status === "active") send({ type: "end-room" });
+      close();
     },
   };
 }

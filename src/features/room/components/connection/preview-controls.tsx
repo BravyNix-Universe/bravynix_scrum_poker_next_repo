@@ -30,7 +30,7 @@ const FAILURES: readonly Scenario[] = [
 
 /**
  * Preview only: acts out connection problems so each screen can be reviewed without a network.
- * Live rooms (Phase 5) don't show this.
+ * Live rooms don't show this.
  */
 export function PreviewControls({
   isHost,

@@ -53,13 +53,28 @@ export interface RoomSession {
 
   /** Leaves the room and releases the connection. */
   close(): void;
+  /**
+   * Closes the session and deletes the room from this device (PRD 13, deletion triggers). A
+   * host ends an active room for everyone first.
+   */
+  forget(): Promise<void>;
 }
 
 /** The state of this device's connection, for support (PRD FR-053, SDD 17). */
 export interface ConnectionDiagnostics {
-  state: "connecting" | "waiting-for-host" | "connected" | "reconnecting" | "host-away" | "failed";
-  /** How messages reach the host: directly, through a relay, or inside this tab (preview). */
-  path: "direct" | "relayed" | "in-tab" | null;
+  state:
+    | "connecting"
+    | "waiting-for-host"
+    | "restoring"
+    | "connected"
+    | "reconnecting"
+    | "host-away"
+    | "failed";
+  /**
+   * How messages reach the host: directly, through a relay, or inside this tab (preview).
+   * `host` when this device is the host.
+   */
+  path: "direct" | "relayed" | "in-tab" | "host" | null;
   /** Whether the connection service answered. `null` when it isn't used or isn't known yet. */
   serviceReachable: boolean | null;
   /** A short code for the last connection error, never a message with room content. */

@@ -92,7 +92,7 @@ export function applyCommand(
     case "start-round":
       return startRound(state, context);
     case "cast-vote":
-      return castVote(state, actor);
+      return castVote(state, actor, command.seal);
     case "reveal":
       return reveal(state);
     case "open-vote":
@@ -313,9 +313,11 @@ function updateCurrentRound(state: RoomState, change: (round: Round) => Round): 
 
 /** A cancelled round's votes are discarded and never revealed; it keeps its number (FR-041). */
 function cancelVotingRound(state: RoomState): RoomState {
-  return updateCurrentRound(state, (round) =>
-    round.status === "voting" ? { ...round, status: "cancelled", votedIds: [] } : round,
-  );
+  if (getCurrentRound(state)?.status !== "voting") return state;
+  return {
+    ...updateCurrentRound(state, (round) => ({ ...round, status: "cancelled", votedIds: [] })),
+    seals: [],
+  };
 }
 
 /** Opens the first or next round for the active story (PRD 9.4, FR-021). */
@@ -344,21 +346,34 @@ function startRound(state: RoomState, context: RefereeContext): RefereeResult {
     rounds: [...next.rounds, round],
     currentRoundId: round.id,
     timer: null,
+    seals: [],
     openings: [],
   });
 }
 
-/** Records that the actor has a sealed vote; changing it keeps one entry (FR-012). */
-function castVote(state: RoomState, actor: Participant): RefereeResult {
+/** Records the actor's sealed vote; changing it replaces the seal, keeping one entry (FR-012). */
+function castVote(state: RoomState, actor: Participant, seal: string): RefereeResult {
   const round = getCurrentRound(state);
   if (round?.status !== "voting") return refuse("round-closed");
-  if (round.votedIds.includes(actor.id)) return accept(state);
-  return accept(
-    updateCurrentRound(state, (current) => ({
+  if (!isSeal(seal)) return refuse("invalid-card");
+
+  const seals = [
+    ...state.seals.filter((item) => item.participantId !== actor.id),
+    { participantId: actor.id, seal },
+  ];
+  if (round.votedIds.includes(actor.id)) return accept({ ...state, seals });
+  return accept({
+    ...updateCurrentRound(state, (current) => ({
       ...current,
       votedIds: [...current.votedIds, actor.id],
     })),
-  );
+    seals,
+  });
+}
+
+/** Seals are SHA-256 digests in base64url; anything else can't be a seal. */
+function isSeal(value: unknown): value is string {
+  return typeof value === "string" && value.length > 0 && value.length <= 128;
 }
 
 /** From this moment no new or changed votes are accepted, and the timer stops (FR-015, 12.5). */
@@ -384,6 +399,8 @@ function openVote(
   }
   if (!isCardId(command.card)) return refuse("invalid-card");
   if (state.openings.some((opening) => opening.participantId === actorId)) return accept(state);
+  const sealed = state.seals.find((item) => item.participantId === actorId);
+  if (sealed?.seal !== command.fingerprint) return refuse("seal-mismatch");
   return accept({
     ...state,
     openings: [...state.openings, { participantId: actorId, card: command.card }],
@@ -423,6 +440,7 @@ function finishReveal(state: RoomState, context: RefereeContext): RefereeResult 
       revealedAt: context.now,
       outcome,
     })),
+    seals: [],
     openings: [],
   });
 }

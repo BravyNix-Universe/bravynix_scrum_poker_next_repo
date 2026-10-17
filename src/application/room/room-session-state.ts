@@ -14,7 +14,9 @@ export type SessionProblem =
   | "host-unverified"
   | "room-full"
   | "open-elsewhere"
-  | "outdated-app";
+  | "outdated-app"
+  /** The browser can't make peer-to-peer connections at all. */
+  | "unsupported-browser";
 
 /** A command of this device's that the room refused (PRD 8.7). `id` tells repeats apart. */
 export interface RoomNotice {
@@ -26,6 +28,11 @@ export type RoomSessionState =
   | { status: "connecting" }
   /** A participant arrived before the host opened the room; retries on its own (PRD 9.2). */
   | { status: "waiting-for-host" }
+  /**
+   * The host opened the host link on a device that doesn't have the room yet. It is rebuilt
+   * from the signed copy of the first participant who connects (SDD 11.6).
+   */
+  | { status: "restoring" }
   | { status: "lobby"; lobby: RoomLobby }
   | {
       status: "joined";

@@ -11,6 +11,7 @@ export interface DiagnosticsContext {
 const STATE_LABELS: Record<ConnectionDiagnostics["state"], string> = {
   connecting: "Connecting",
   "waiting-for-host": "Waiting for the host",
+  restoring: "Restoring the room",
   connected: "Connected",
   reconnecting: "Reconnecting",
   "host-away": "Host away",
@@ -21,6 +22,7 @@ const PATH_LABELS: Record<NonNullable<ConnectionDiagnostics["path"]>, string> = 
   direct: "Direct",
   relayed: "Relayed",
   "in-tab": "In this tab (preview)",
+  host: "This device is the host",
 };
 
 export interface DiagnosticsRow {

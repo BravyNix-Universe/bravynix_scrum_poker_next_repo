@@ -4,6 +4,8 @@ import { type TitleError, validateTitle } from "@/domain/rules/text";
 
 import type { MyRoomsRepository } from "../ports/my-rooms-repository";
 import type { RoomKeyService } from "../ports/room-key-service";
+import type { RoomStore } from "../ports/room-store";
+import { createRoomState } from "../referee/room-state";
 
 export interface CreatedRoom {
   roomId: RoomId;
@@ -24,6 +26,7 @@ export class InvalidEpicTitleError extends Error {
 
 export interface CreateRoomDependencies {
   roomKeys: RoomKeyService;
+  store: RoomStore;
   myRooms: MyRoomsRepository;
   now: () => number;
 }
@@ -31,10 +34,15 @@ export interface CreateRoomDependencies {
 export type CreateRoom = (epicTitle: string) => Promise<CreatedRoom>;
 
 /**
- * Creates a room entirely on this device and lists it under "My rooms" as host (PRD 9.1 step 2).
- * Nothing is sent anywhere.
+ * Creates a room entirely on this device (PRD 9.1 step 2, SDD 11.2): saves its record and host
+ * key, and lists it under "My rooms" as host. Nothing is sent anywhere.
  */
-export function makeCreateRoom({ roomKeys, myRooms, now }: CreateRoomDependencies): CreateRoom {
+export function makeCreateRoom({
+  roomKeys,
+  store,
+  myRooms,
+  now,
+}: CreateRoomDependencies): CreateRoom {
   return async (epicTitle) => {
     const title = validateTitle(epicTitle);
     if (!title.ok) throw new InvalidEpicTitleError(title.error);
@@ -49,6 +57,16 @@ export function makeCreateRoom({ roomKeys, myRooms, now }: CreateRoomDependencie
       hostKey,
     };
 
+    const state = createRoomState({ roomId, epicTitle: room.epicTitle, createdAt });
+    await store.saveHostKey(roomId, hostKey, room.expiresAt);
+    await store.saveRoom({
+      kind: "host",
+      roomId,
+      version: 0,
+      state,
+      tokenHashes: {},
+      expiresAt: room.expiresAt,
+    });
     myRooms.save({
       roomId,
       epicTitle: room.epicTitle,

@@ -1,37 +1,45 @@
+// @vitest-environment node
 import { describe, expect, it } from "vitest";
 
-import type { EncodedHostKey, RoomId } from "@/domain/room/room-identity";
-import { createInMemoryMyRoomsRepository } from "@/test/fakes/in-memory-my-rooms-repository";
+import type { EncodedHostKey } from "@/domain/room/room-identity";
+import { webCryptoRoomCrypto } from "@/infrastructure/crypto/web-crypto-room-crypto";
+import { webCryptoRoomKeys } from "@/infrastructure/crypto/web-crypto-room-keys";
+import { createMemoryRoomStore } from "@/infrastructure/storage/memory-room-store";
 
 import { makeResolveRoomRole } from "./resolve-room-role";
 
 const NOW = Date.UTC(2026, 9, 17, 6, 0, 0);
-const ROOM_ID = "k7Qx9mP2vT4w" as RoomId;
 
-function setup() {
-  const myRooms = createInMemoryMyRoomsRepository();
-  return { myRooms, resolveRole: makeResolveRoomRole({ myRooms, now: () => NOW }) };
+async function setup() {
+  const store = createMemoryRoomStore();
+  const identity = await webCryptoRoomKeys.createIdentity();
+  const resolveRole = makeResolveRoomRole({ store, crypto: webCryptoRoomCrypto, now: () => NOW });
+  return { store, resolveRole, ...identity };
 }
 
-describe("resolveRoomRole", () => {
-  it("hosts when the link carries the host key (PRD 9.7)", () => {
-    const { resolveRole } = setup();
-    expect(resolveRole({ roomId: ROOM_ID, hostKey: "A".repeat(128) as EncodedHostKey })).toBe(
-      "host",
-    );
+describe("resolveRoomRole (PRD FR-045, SDD 11.6)", () => {
+  it("hosts from the host link and keeps the key, so the link can leave the address bar", async () => {
+    const { store, resolveRole, roomId, hostKey } = await setup();
+
+    await expect(resolveRole({ roomId, hostKey })).resolves.toBe("host");
+    await expect(store.getHostKey(roomId)).resolves.toBe(hostKey);
+    // Opened again without the key, the device still hosts.
+    await expect(resolveRole({ roomId, hostKey: null })).resolves.toBe("host");
   });
 
-  it("hosts a room this device created, and joins any other room as a participant", () => {
-    const { myRooms, resolveRole } = setup();
-    expect(resolveRole({ roomId: ROOM_ID, hostKey: null })).toBe("participant");
+  it("joins as a participant without the room's key", async () => {
+    const { resolveRole, roomId } = await setup();
+    await expect(resolveRole({ roomId, hostKey: null })).resolves.toBe("participant");
+  });
 
-    myRooms.save({
-      roomId: ROOM_ID,
-      epicTitle: "Checkout revamp",
-      role: "host",
-      createdAt: NOW,
-      expiresAt: NOW + 1000,
-    });
-    expect(resolveRole({ roomId: ROOM_ID, hostKey: null })).toBe("host");
+  it("ignores a host key that belongs to another room", async () => {
+    const { store, resolveRole, roomId } = await setup();
+    const other = await webCryptoRoomKeys.createIdentity();
+
+    await expect(resolveRole({ roomId, hostKey: other.hostKey })).resolves.toBe("participant");
+    await expect(resolveRole({ roomId, hostKey: "A".repeat(128) as EncodedHostKey })).resolves.toBe(
+      "participant",
+    );
+    await expect(store.getHostKey(roomId)).resolves.toBeNull();
   });
 });

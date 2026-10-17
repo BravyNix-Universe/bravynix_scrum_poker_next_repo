@@ -7,7 +7,7 @@ import { Container } from "@/components/layout/container";
 import { Badge } from "@/components/ui/badge";
 import { buttonStyles } from "@/components/ui/button";
 import { IconButton } from "@/components/ui/icon-button";
-import { getMyRoomsRepository } from "@/composition/services";
+import { getForgetRoom } from "@/composition/services";
 import type { MyRoomEntry } from "@/domain/my-rooms/my-room-entry";
 import { ROOM_PATH } from "@/domain/room/room-links";
 import { cn } from "@/lib/cn";
@@ -88,7 +88,7 @@ export function MyRoomsSection() {
         room={pendingDelete}
         onCancel={() => setPendingDelete(null)}
         onConfirm={(room) => {
-          getMyRoomsRepository().remove(room.roomId);
+          void getForgetRoom()(room.roomId).catch(() => undefined);
           setPendingDelete(null);
         }}
       />

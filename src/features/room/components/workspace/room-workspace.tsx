@@ -115,6 +115,7 @@ export function RoomWorkspace({ view, connection, notice, handle }: RoomWorkspac
                 canHost={canHost}
                 ended={ended}
                 myVote={view.myVote}
+                voteRecorded={view.round?.votedIds.includes(view.me) ?? false}
                 onAddStory={() => setOverlay({ kind: "add-story" })}
                 onRenameStory={() => setOverlay({ kind: "rename-story", storyId: activeStory.id })}
                 onActivateStory={actions.activateStory}

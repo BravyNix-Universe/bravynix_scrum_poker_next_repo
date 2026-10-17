@@ -37,6 +37,8 @@ export interface StoryPanelProps {
   /** An ended room shows where it stopped, with no next step (FR-022). */
   ended: boolean;
   myVote: CardId | null;
+  /** The host has this person's vote, as opposed to it still being on its way (PRD 8.5). */
+  voteRecorded: boolean;
   onAddStory: () => void;
   onRenameStory: () => void;
   onActivateStory: (storyId: StoryId) => void;
@@ -53,6 +55,7 @@ export function StoryPanel({
   canHost,
   ended,
   myVote,
+  voteRecorded,
   onAddStory,
   onRenameStory,
   onActivateStory,
@@ -149,7 +152,13 @@ export function StoryPanel({
               : "The room ended before votes were revealed for this story."}
           </p>
         ) : (
-          <StatusText phase={phase} round={round} canHost={canHost} myVote={myVote} />
+          <StatusText
+            phase={phase}
+            round={round}
+            canHost={canHost}
+            myVote={myVote}
+            voteRecorded={voteRecorded}
+          />
         )}
       </div>
     </section>
@@ -231,7 +240,8 @@ function StatusText({
   round,
   canHost,
   myVote,
-}: Pick<StoryPanelProps, "phase" | "round" | "canHost" | "myVote">) {
+  voteRecorded,
+}: Pick<StoryPanelProps, "phase" | "round" | "canHost" | "myVote" | "voteRecorded">) {
   if (phase === "discuss") {
     return (
       <p className="text-ink-muted">
@@ -272,10 +282,12 @@ function StatusText({
           {progress.waitingOn > 0 ? ` · waiting on ${progress.waitingOn}` : " · everyone has voted"}
         </span>
       </p>
-      {myVote ? (
+      {myVote && voteRecorded ? (
         <p className="text-success">
           Your vote is recorded. You can change it until the host reveals.
         </p>
+      ) : myVote ? (
+        <p className="text-ink-muted">Sending your vote…</p>
       ) : null}
     </>
   );

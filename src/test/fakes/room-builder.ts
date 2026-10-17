@@ -14,9 +14,14 @@ export const joinAs = (displayName: string, asHost = false): RoomCommand => ({
 
 /**
  * A room built the way a real one is: by running commands through the referee. Story and round
- * IDs come out as id1, id2, … in creation order. Any refusal fails the test.
+ * IDs come out as id1, id2, … in creation order. Any refusal fails the test. `onStep` sees the
+ * state after each step.
  */
-export function buildRoom(steps: readonly RoomStep[], now = Date.now()): RoomState {
+export function buildRoom(
+  steps: readonly RoomStep[],
+  now = Date.now(),
+  onStep?: (state: RoomState) => void,
+): RoomState {
   let next = 1;
   const context: RefereeContext = { now, newId: () => `id${next++}` };
   const empty = createRoomState({
@@ -27,6 +32,7 @@ export function buildRoom(steps: readonly RoomStep[], now = Date.now()): RoomSta
   return steps.reduce((state, [actor, command]) => {
     const result = applyCommand(state, actor, command, context);
     if (!result.ok) throw new Error(`${command.type} refused: ${result.refusal}`);
+    onStep?.(result.state);
     return result.state;
   }, empty);
 }

@@ -14,6 +14,7 @@ import { RoomWorkspace } from "./room-workspace";
 const push = vi.fn();
 vi.mock("next/navigation", () => ({ useRouter: () => ({ push }) }));
 
+const SEAL = "c2VhbGVk";
 const HOST = "host" as ParticipantId;
 const ARJUN = "arjun" as ParticipantId;
 const MEERA = "meera" as ParticipantId;
@@ -36,15 +37,15 @@ const VOTING: readonly RoomStep[] = [
   [HOST, { type: "add-story", title: "Saved cards" }],
   [HOST, { type: "add-story", title: "Guest checkout" }],
   [HOST, { type: "start-round" }],
-  [ARJUN, { type: "cast-vote" }],
+  [ARJUN, { type: "cast-vote", seal: SEAL }],
 ];
 
 const REVEALED: readonly RoomStep[] = [
   ...VOTING,
-  [MEERA, { type: "cast-vote" }],
+  [MEERA, { type: "cast-vote", seal: SEAL }],
   [HOST, { type: "reveal" }],
-  [ARJUN, { type: "open-vote", card: "3" }],
-  [MEERA, { type: "open-vote", card: "8" }],
+  [ARJUN, { type: "open-vote", card: "3", fingerprint: SEAL }],
+  [MEERA, { type: "open-vote", card: "8", fingerprint: SEAL }],
   [HOST, { type: "finish-reveal" }],
 ];
 

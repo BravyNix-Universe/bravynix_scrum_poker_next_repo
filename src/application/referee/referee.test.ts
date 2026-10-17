@@ -6,7 +6,10 @@ import type { CardId } from "@/domain/rules/deck";
 
 import { applyCommand, isRevealComplete, type RefereeContext } from "./referee";
 import type { RoomCommand } from "./room-command";
-import { createRoomState, getCurrentRound, type RoomState } from "./room-state";
+import { createRoomState, getCurrentRound, type RoomState, toSharedState } from "./room-state";
+
+/** Any seal will do here; the referee only compares it with the opening's fingerprint. */
+const SEAL = "c2VhbGVk";
 
 const HOST = "host" as ParticipantId;
 const ANA = "ana" as ParticipantId;
@@ -74,7 +77,7 @@ function reveal(state: RoomState, openings: readonly [ParticipantId, CardId][]):
     [HOST, { type: "reveal" }],
     ...openings.map(([id, card]): [ParticipantId, RoomCommand] => [
       id,
-      { type: "open-vote", card },
+      { type: "open-vote", card, fingerprint: SEAL },
     ]),
     [HOST, { type: "finish-reveal" }],
   ]);
@@ -89,7 +92,7 @@ describe("referee: people", () => {
 
   it("refuses host actions from participants (PRD 8.7)", () => {
     expect(refusal(setUp(), ANA, { type: "start-round" })).toBe("not-host");
-    expect(refusal(setUp(), "stranger" as ParticipantId, { type: "cast-vote" })).toBe(
+    expect(refusal(setUp(), "stranger" as ParticipantId, { type: "cast-vote", seal: SEAL })).toBe(
       "not-in-room",
     );
   });
@@ -153,7 +156,7 @@ describe("referee: stories (PRD 12.2)", () => {
   });
 
   it("removes and restores a story with its history kept (FR-032)", () => {
-    let state = reveal(run(votingRoom(), [[ANA, { type: "cast-vote" }]]), [[ANA, "5"]]);
+    let state = reveal(run(votingRoom(), [[ANA, { type: "cast-vote", seal: SEAL }]]), [[ANA, "5"]]);
     const first = storyId(state, 0);
     state = run(state, [
       [HOST, { type: "activate-story", storyId: storyId(state, 1) }],
@@ -173,7 +176,7 @@ describe("referee: stories (PRD 12.2)", () => {
   });
 
   it("cancels a voting round when the host switches story (FR-041)", () => {
-    let state = run(votingRoom(), [[ANA, { type: "cast-vote" }]]);
+    let state = run(votingRoom(), [[ANA, { type: "cast-vote", seal: SEAL }]]);
     const round = getCurrentRound(state)!;
     state = run(state, [[HOST, { type: "activate-story", storyId: storyId(state, 1) }]]);
 
@@ -195,10 +198,43 @@ describe("referee: voting and reveal (PRD 9.3)", () => {
 
   it("records one vote per person, however often they change it (FR-012)", () => {
     const state = run(votingRoom(), [
-      [ANA, { type: "cast-vote" }],
-      [ANA, { type: "cast-vote" }],
+      [ANA, { type: "cast-vote", seal: SEAL }],
+      [ANA, { type: "cast-vote", seal: SEAL }],
     ]);
     expect(getCurrentRound(state)?.votedIds).toEqual([ANA]);
+  });
+
+  it("keeps only the latest seal and opens a vote only when it matches (SDD 11.4)", () => {
+    let state = run(votingRoom(), [
+      [ANA, { type: "cast-vote", seal: "first" }],
+      [ANA, { type: "cast-vote", seal: "second" }],
+      [BEN, { type: "cast-vote", seal: SEAL }],
+      [HOST, { type: "reveal" }],
+    ]);
+    expect(state.seals).toEqual([
+      { participantId: ANA, seal: "second" },
+      { participantId: BEN, seal: SEAL },
+    ]);
+    expect(refusal(state, ANA, { type: "open-vote", card: "5", fingerprint: "first" })).toBe(
+      "seal-mismatch",
+    );
+
+    state = run(state, [
+      [ANA, { type: "open-vote", card: "5", fingerprint: "second" }],
+      [HOST, { type: "finish-reveal" }],
+    ]);
+    const outcome = getCurrentRound(state)!.outcome!;
+    expect(outcome.votes.map((vote) => vote.participantId)).toEqual([ANA]);
+    expect(outcome.notRevealed.map((voter) => voter.participantId)).toEqual([BEN]);
+    expect(state.seals).toEqual([]);
+  });
+
+  it("keeps seals and openings out of the state everyone shares (PRD 14.2)", () => {
+    const state = run(votingRoom(), [[ANA, { type: "cast-vote", seal: SEAL }]]);
+    const shared = toSharedState(state);
+    expect(shared).not.toHaveProperty("seals");
+    expect(shared).not.toHaveProperty("openings");
+    expect(JSON.stringify(shared)).not.toContain(SEAL);
   });
 
   it("refuses to reveal with no votes", () => {
@@ -207,31 +243,33 @@ describe("referee: voting and reveal (PRD 9.3)", () => {
 
   it("accepts no votes once the host reveals (FR-015)", () => {
     const state = run(votingRoom(), [
-      [ANA, { type: "cast-vote" }],
+      [ANA, { type: "cast-vote", seal: SEAL }],
       [HOST, { type: "reveal" }],
     ]);
     expect(getCurrentRound(state)?.status).toBe("revealing");
-    expect(refusal(state, BEN, { type: "cast-vote" })).toBe("round-closed");
-    expect(refusal(state, BEN, { type: "open-vote", card: "5" })).toBe("round-closed");
+    expect(refusal(state, BEN, { type: "cast-vote", seal: SEAL })).toBe("round-closed");
+    expect(refusal(state, BEN, { type: "open-vote", card: "5", fingerprint: SEAL })).toBe(
+      "round-closed",
+    );
   });
 
   it("knows when every sealed vote is open", () => {
     let state = run(votingRoom(), [
-      [ANA, { type: "cast-vote" }],
-      [BEN, { type: "cast-vote" }],
+      [ANA, { type: "cast-vote", seal: SEAL }],
+      [BEN, { type: "cast-vote", seal: SEAL }],
       [HOST, { type: "reveal" }],
-      [ANA, { type: "open-vote", card: "3" }],
+      [ANA, { type: "open-vote", card: "3", fingerprint: SEAL }],
     ]);
     expect(isRevealComplete(state)).toBe(false);
-    state = run(state, [[BEN, { type: "open-vote", card: "5" }]]);
+    state = run(state, [[BEN, { type: "open-vote", card: "5", fingerprint: SEAL }]]);
     expect(isRevealComplete(state)).toBe(true);
   });
 
   it("records votes, not voted and not revealed, with the host counted only if they vote", () => {
     let state = run(votingRoom(), [
-      [HOST, { type: "cast-vote" }],
-      [ANA, { type: "cast-vote" }],
-      [BEN, { type: "cast-vote" }],
+      [HOST, { type: "cast-vote", seal: SEAL }],
+      [ANA, { type: "cast-vote", seal: SEAL }],
+      [BEN, { type: "cast-vote", seal: SEAL }],
     ]);
     state = reveal(state, [
       [HOST, "8"],
@@ -250,7 +288,7 @@ describe("referee: voting and reveal (PRD 9.3)", () => {
   });
 
   it("keeps the name a voter had at reveal (FR-049)", () => {
-    let state = reveal(run(votingRoom(), [[ANA, { type: "cast-vote" }]]), [[ANA, "2"]]);
+    let state = reveal(run(votingRoom(), [[ANA, { type: "cast-vote", seal: SEAL }]]), [[ANA, "2"]]);
     state = run(state, [
       [ANA, { type: "update-profile", profile: { displayName: "Ana", avatarId: null } }],
     ]);
@@ -258,7 +296,7 @@ describe("referee: voting and reveal (PRD 9.3)", () => {
   });
 
   it("starts a new round without touching earlier ones (FR-021)", () => {
-    let state = reveal(run(votingRoom(), [[ANA, { type: "cast-vote" }]]), [[ANA, "2"]]);
+    let state = reveal(run(votingRoom(), [[ANA, { type: "cast-vote", seal: SEAL }]]), [[ANA, "2"]]);
     state = run(state, [[HOST, { type: "start-round" }]]);
     expect(state.rounds.map((round) => [round.number, round.status])).toEqual([
       [1, "revealed"],
@@ -271,7 +309,7 @@ describe("referee: timer (PRD 12.5)", () => {
   it("starts within bounds and stops on reveal", () => {
     let state = run(votingRoom(), [
       [HOST, { type: "start-timer", durationMs: 120_000 }],
-      [ANA, { type: "cast-vote" }],
+      [ANA, { type: "cast-vote", seal: SEAL }],
     ]);
     expect(state.timer).toEqual({ durationMs: 120_000, endsAt: 121_000 });
     state = run(state, [[HOST, { type: "reveal" }]]);
@@ -290,14 +328,14 @@ describe("referee: timer (PRD 12.5)", () => {
 
 describe("referee: ending the room (PRD 9.6)", () => {
   it("cancels a voting round and then accepts only viewing", () => {
-    let state = run(votingRoom(), [[ANA, { type: "cast-vote" }]]);
+    let state = run(votingRoom(), [[ANA, { type: "cast-vote", seal: SEAL }]]);
     state = run(state, [[HOST, { type: "end-room" }]]);
 
     expect(state.status).toBe("ended");
     expect(state.endedAt).toBe(1_000);
     expect(getCurrentRound(state)?.status).toBe("cancelled");
     expect(refusal(state, HOST, { type: "start-round" })).toBe("room-ended");
-    expect(refusal(state, ANA, { type: "cast-vote" })).toBe("room-ended");
+    expect(refusal(state, ANA, { type: "cast-vote", seal: SEAL })).toBe("room-ended");
     expect(applyCommand(state, "late" as ParticipantId, join(), context()).ok).toBe(true);
   });
 });

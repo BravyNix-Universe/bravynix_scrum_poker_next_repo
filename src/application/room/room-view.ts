@@ -11,7 +11,7 @@ import type {
 import type { RoomId } from "@/domain/room/room-identity";
 import type { CardId } from "@/domain/rules/deck";
 
-import { getCurrentRound, type RoomState } from "../referee/room-state";
+import { getCurrentRound, type SharedRoomState } from "../referee/room-state";
 
 /** What a device sees before joining: enough to show the join screen (PRD 9.2 step 3). */
 export interface RoomLobby {
@@ -47,8 +47,12 @@ export interface RoomView {
   myVote: CardId | null;
 }
 
-/** The device's view of a room record. Openings the referee is still collecting stay out. */
-export function toRoomView(state: RoomState, me: ParticipantId, myVote: CardId | null): RoomView {
+/** The device's view of a room. Seals and openings stay with the referee. */
+export function toRoomView(
+  state: SharedRoomState,
+  me: ParticipantId,
+  myVote: CardId | null,
+): RoomView {
   return {
     roomId: state.roomId,
     epicTitle: state.epicTitle,
@@ -67,7 +71,7 @@ export function toRoomView(state: RoomState, me: ParticipantId, myVote: CardId |
   };
 }
 
-export function toRoomLobby(state: RoomState, role: RoomRole): RoomLobby {
+export function toRoomLobby(state: SharedRoomState, role: RoomRole): RoomLobby {
   return {
     roomId: state.roomId,
     epicTitle: state.epicTitle,

@@ -21,6 +21,7 @@ export interface AnnouncedRoom {
   roundStatus: RoundStatus | null;
   /** The revealed result in words, once there is one. */
   result: string | null;
+  /** This person's vote once the host has it, so "recorded" is never said too early. */
   myVote: CardId | null;
 }
 
@@ -36,7 +37,7 @@ export function toAnnouncedRoom(view: RoomView, connection: ConnectionStatus): A
     roundNumber: round?.number ?? null,
     roundStatus: round?.status ?? null,
     result: round?.outcome ? describeResult(round.outcome) : null,
-    myVote: view.myVote,
+    myVote: round?.votedIds.includes(view.me) ? view.myVote : null,
   };
 }
 

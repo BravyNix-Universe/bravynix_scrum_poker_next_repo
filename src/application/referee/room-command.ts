@@ -4,8 +4,8 @@ import type { CardId } from "@/domain/rules/deck";
 
 /**
  * Everything a device can ask of the room. Each command comes from one participant (the
- * actor); host commands are refused from anyone else (PRD FR-003). In Phase 5 these become
- * protocol messages, signed and ordered by the host's referee (SDD 12).
+ * actor); host commands are refused from anyone else (PRD FR-003). Participants' commands
+ * reach the host's referee as protocol messages (SDD 12); host commands never travel.
  */
 export type RoomCommand =
   | { type: "join"; profile: Profile; asHost: boolean }
@@ -19,10 +19,17 @@ export type RoomCommand =
   | { type: "delete-story"; storyId: StoryId }
   | { type: "activate-story"; storyId: StoryId }
   | { type: "start-round" }
-  /** Only that the actor voted travels to the referee, never the card (PRD 11.4). */
-  | { type: "cast-vote" }
+  /**
+   * A sealed vote: only its fingerprint reaches the referee, never the card (PRD 11.4, SDD 11.4).
+   * Casting again replaces the seal.
+   */
+  | { type: "cast-vote"; seal: string }
   | { type: "reveal" }
-  | { type: "open-vote"; card: CardId }
+  /**
+   * The vote opened at reveal. `fingerprint` is the seal recomputed from the card and salt the
+   * voter sent; the referee accepts the card only if it matches the seal cast earlier.
+   */
+  | { type: "open-vote"; card: CardId; fingerprint: string }
   /** Sent by the referee's own session once every vote is open or the deadline passes. */
   | { type: "finish-reveal" }
   | { type: "start-timer"; durationMs: number }
@@ -46,6 +53,8 @@ export type Refusal =
   | "reveal-in-progress"
   | "no-votes"
   | "invalid-card"
+  /** An opening that doesn't match its seal. The vote counts as not revealed. */
+  | "seal-mismatch"
   | "invalid-timer"
   /** Raised by the host's connection layer before the referee sees the command (SDD 12). */
   | "rate-limited";

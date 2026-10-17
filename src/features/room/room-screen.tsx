@@ -1,18 +1,21 @@
 "use client";
 
 import { LoaderCircle } from "lucide-react";
-import { useState } from "react";
 
 import { PageShell } from "@/components/layout/page-shell";
-import { getJoinRoom, getResolveRoomRole } from "@/composition/services";
+import { getJoinRoom } from "@/composition/services";
+import type { RoomRole } from "@/domain/my-rooms/my-room-entry";
+import type { RoomId } from "@/domain/room/room-identity";
 import { parseRoomFragment, type RoomFragment } from "@/domain/room/room-links";
 
+import { RestoringRoomPage } from "./components/connection/restoring-room-page";
 import { SessionProblemPage } from "./components/connection/session-problem-page";
 import { WaitingForHostPage } from "./components/connection/waiting-for-host-page";
 import { JoinScreen } from "./components/join/join-screen";
 import { RoomStatusPage } from "./components/room-status-page";
 import { RoomWorkspace } from "./components/workspace/room-workspace";
 import { useLocationHash } from "./use-location-hash";
+import { useRoomRole } from "./use-room-role";
 import { useRoomSession } from "./use-room-session";
 
 /** The room route: reads the room from the link fragment and shows the matching screen. */
@@ -32,22 +35,20 @@ export function RoomScreen() {
 }
 
 function RoomSessionScreen({ fragment }: { fragment: RoomFragment }) {
-  // The role is fixed when the room opens, so later changes to the address don't switch it.
-  const [role] = useState(() => getResolveRoomRole()(fragment));
-  const { state, handle } = useRoomSession(fragment.roomId, role);
+  const role = useRoomRole(fragment);
+  return role ? <RoomSessionView roomId={fragment.roomId} role={role} /> : <Connecting />;
+}
+
+function RoomSessionView({ roomId, role }: { roomId: RoomId; role: RoomRole }) {
+  const { state, handle } = useRoomSession(roomId, role);
 
   switch (state.status) {
     case "connecting":
+      return <Connecting />;
+    case "restoring":
       return (
         <PageShell>
-          <RoomStatusPage
-            icon={
-              <LoaderCircle aria-hidden className="size-10 text-primary motion-safe:animate-spin" />
-            }
-            title="Connecting to the room…"
-          >
-            <p role="status">This usually takes a moment.</p>
-          </RoomStatusPage>
+          <RestoringRoomPage handle={handle} />
         </PageShell>
       );
     case "waiting-for-host":
@@ -90,6 +91,21 @@ function RoomSessionScreen({ fragment }: { fragment: RoomFragment }) {
         </PageShell>
       );
   }
+}
+
+function Connecting() {
+  return (
+    <PageShell>
+      <RoomStatusPage
+        icon={
+          <LoaderCircle aria-hidden className="size-10 text-primary motion-safe:animate-spin" />
+        }
+        title="Connecting to the room…"
+      >
+        <p role="status">This usually takes a moment.</p>
+      </RoomStatusPage>
+    </PageShell>
+  );
 }
 
 /** Neutral wording that never reveals whether a room existed (PRD FR-034). */

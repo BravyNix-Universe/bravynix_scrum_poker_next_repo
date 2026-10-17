@@ -33,6 +33,7 @@ yarn-error.log*
 
 # Environment files (commit one only if it holds no secrets)
 .env*
+!.env.example
 
 # Secrets and certificates
 *.pem

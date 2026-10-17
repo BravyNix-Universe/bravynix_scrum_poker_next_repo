@@ -46,5 +46,6 @@ export function createFakeRoomSession(
     stopTimer: vi.fn(),
     endRoom: vi.fn(),
     close: vi.fn(),
+    forget: vi.fn(async () => undefined),
   } satisfies RoomSession;
 }

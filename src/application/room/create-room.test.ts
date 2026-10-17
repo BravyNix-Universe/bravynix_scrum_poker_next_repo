@@ -3,6 +3,7 @@ import { describe, expect, it, vi } from "vitest";
 import type { RoomKeyService } from "@/application/ports/room-key-service";
 import type { EncodedHostKey, RoomId } from "@/domain/room/room-identity";
 import { LIMITS } from "@/domain/rules/limits";
+import { createMemoryRoomStore } from "@/infrastructure/storage/memory-room-store";
 import { createInMemoryMyRoomsRepository } from "@/test/fakes/in-memory-my-rooms-repository";
 
 import { InvalidEpicTitleError, makeCreateRoom } from "./create-room";
@@ -16,8 +17,9 @@ const IDENTITY = {
 function setup() {
   const roomKeys: RoomKeyService = { createIdentity: vi.fn(async () => IDENTITY) };
   const myRooms = createInMemoryMyRoomsRepository();
-  const createRoom = makeCreateRoom({ roomKeys, myRooms, now: () => NOW });
-  return { createRoom, myRooms, roomKeys };
+  const store = createMemoryRoomStore();
+  const createRoom = makeCreateRoom({ roomKeys, store, myRooms, now: () => NOW });
+  return { createRoom, myRooms, roomKeys, store };
 }
 
 describe("createRoom", () => {
@@ -46,6 +48,19 @@ describe("createRoom", () => {
         expiresAt: NOW + LIMITS.roomLifetimeMs,
       },
     ]);
+  });
+
+  it("keeps the room and its host key on this device, ready to host (SDD 11.2)", async () => {
+    const { createRoom, store } = setup();
+    await createRoom("Checkout revamp");
+
+    await expect(store.getHostKey(IDENTITY.roomId)).resolves.toBe(IDENTITY.hostKey);
+    await expect(store.getRoom(IDENTITY.roomId)).resolves.toMatchObject({
+      kind: "host",
+      version: 0,
+      state: { epicTitle: "Checkout revamp", participants: [], stories: [] },
+      expiresAt: NOW + LIMITS.roomLifetimeMs,
+    });
   });
 
   it("refuses an invalid Epic title before creating any keys", async () => {

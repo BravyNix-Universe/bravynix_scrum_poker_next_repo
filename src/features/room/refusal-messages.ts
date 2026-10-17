@@ -11,6 +11,7 @@ import { formatTimerDuration } from "@/lib/format/clock";
 export const REFUSAL_MESSAGES: Record<Refusal, string> = {
   "round-closed": "Voting for this round has closed.",
   "invalid-card": "That card isn't available.",
+  "seal-mismatch": "Your vote couldn't be checked, so it wasn't revealed.",
   "not-host": "Only the host can do that.",
   "rate-limited": "You're sending changes too quickly. Please wait a moment.",
   "room-full": `This room is full (${LIMITS.maxParticipants} people).`,

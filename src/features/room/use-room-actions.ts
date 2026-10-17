@@ -5,7 +5,7 @@ import { useState } from "react";
 
 import type { ChangeProfileInput } from "@/application/room/change-profile";
 import type { RoomView } from "@/application/room/room-view";
-import { getChangeProfile, getMyRoomsRepository } from "@/composition/services";
+import { getChangeProfile, getForgetRoom } from "@/composition/services";
 import { getWaitingVoterIds, type ParticipantId, type StoryId } from "@/domain/room/room";
 import type { CardId } from "@/domain/rules/deck";
 
@@ -31,7 +31,6 @@ export function useRoomActions(view: RoomView, handle: RoomSessionHandle) {
   const [pending, setPending] = useState<PendingConfirmation | null>(null);
   const session = () => handle.current();
   const isVoting = view.round?.status === "voting";
-  const isHost = view.participants.some((person) => person.id === view.me && person.isHost);
 
   function run(confirmation: PendingConfirmation): void {
     switch (confirmation.kind) {
@@ -51,10 +50,11 @@ export function useRoomActions(view: RoomView, handle: RoomSessionHandle) {
         session()?.deleteStory(confirmation.storyId);
         return;
       case "forget-room":
-        // A host deleting an open room ends it for everyone first (PRD 13, deletion triggers).
-        if (isHost && view.status === "active") session()?.endRoom();
-        getMyRoomsRepository().remove(view.roomId);
-        router.push("/");
+        // The session ends an open room it hosts for everyone first (PRD 13, deletion triggers).
+        void (session()?.forget() ?? Promise.resolve())
+          .then(() => getForgetRoom()(view.roomId))
+          .catch(() => undefined)
+          .finally(() => router.push("/"));
         return;
     }
   }

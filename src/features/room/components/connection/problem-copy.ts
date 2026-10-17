@@ -52,4 +52,12 @@ export const PROBLEM_COPY: Record<SessionProblem, ProblemCopy> = {
     body: ["Please refresh. Everyone in a room needs the same version of the app."],
     action: "refresh",
   },
+  "unsupported-browser": {
+    title: "This browser can't join live rooms",
+    body: [
+      "Rooms connect browsers to each other directly, and this browser doesn't allow it.",
+      "Open the link in an up-to-date Chrome, Edge, Firefox or Safari.",
+    ],
+    action: "refresh",
+  },
 };

@@ -7,6 +7,7 @@ import {
   RefreshCw,
   RotateCw,
   ShieldAlert,
+  TriangleAlert,
   Users,
   WifiOff,
 } from "lucide-react";
@@ -27,6 +28,7 @@ const ICONS: Record<SessionProblem, LucideIcon> = {
   "room-full": Users,
   "open-elsewhere": MonitorSmartphone,
   "outdated-app": RefreshCw,
+  "unsupported-browser": TriangleAlert,
 };
 
 /** Why this device can't be in the room, and what to try (PRD 8.5, 16). */
