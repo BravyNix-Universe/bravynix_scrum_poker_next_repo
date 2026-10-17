@@ -3,9 +3,10 @@ import userEvent from "@testing-library/user-event";
 import { beforeAll, describe, expect, it, vi } from "vitest";
 
 import type { RoomState } from "@/application/referee/room-state";
+import type { ConnectionStatus, RoomNotice } from "@/application/room/room-session-state";
 import { toRoomView } from "@/application/room/room-view";
 import type { ParticipantId, StoryId } from "@/domain/room/room";
-import { createFakeRoomSession } from "@/test/fakes/fake-room-session";
+import { createFakeRoomSession, FAKE_DIAGNOSTICS } from "@/test/fakes/fake-room-session";
 import { buildRoom, joinAs, type RoomStep } from "@/test/fakes/room-builder";
 
 import { RoomWorkspace } from "./room-workspace";
@@ -47,21 +48,33 @@ const REVEALED: readonly RoomStep[] = [
   [HOST, { type: "finish-reveal" }],
 ];
 
-function renderRoom(state: RoomState, me: ParticipantId) {
+function renderRoom(
+  state: RoomState,
+  me: ParticipantId,
+  {
+    connection = "connected",
+    notice = null,
+  }: { connection?: ConnectionStatus; notice?: RoomNotice | null } = {},
+) {
   const session = createFakeRoomSession();
   const view = toRoomView(state, me, null);
   render(
     <RoomWorkspace
       view={view}
+      connection={connection}
+      notice={notice}
       handle={{
         subscribe: () => () => undefined,
-        getState: () => ({ status: "joined", view }),
+        getState: () => ({ status: "joined", view, connection, notice }),
+        getDiagnostics: () => FAKE_DIAGNOSTICS,
         current: () => session,
       }}
     />,
   );
   return { session, user: userEvent.setup() };
 }
+
+const menuOf = (name: string) => new RegExp(`^${name}.*profile and room options$`);
 
 describe("RoomWorkspace", () => {
   it("asks before revealing early and names who hasn't voted (PRD A-01)", async () => {
@@ -115,7 +128,7 @@ describe("RoomWorkspace", () => {
   it("lets the host end the room after confirming (FR-022)", async () => {
     const { session, user } = renderRoom(buildRoom(VOTING), HOST);
 
-    await user.click(screen.getByRole("button", { name: "Priya: profile and room options" }));
+    await user.click(screen.getByRole("button", { name: menuOf("Priya") }));
     await user.click(screen.getByRole("button", { name: "End room" }));
     const dialog = screen.getByRole("dialog", { name: "End this room?" });
     expect(dialog).toHaveTextContent("the open round is cancelled");
@@ -134,14 +147,14 @@ describe("RoomWorkspace", () => {
     expect(screen.queryByRole("button", { name: "Start new round" })).not.toBeInTheDocument();
     expect(screen.queryByRole("button", { name: "Rename" })).not.toBeInTheDocument();
 
-    await user.click(screen.getByRole("button", { name: "Priya: profile and room options" }));
+    await user.click(screen.getByRole("button", { name: menuOf("Priya") }));
     expect(screen.queryByRole("button", { name: "End room" })).not.toBeInTheDocument();
   });
 
   it("changes name and avatar from the room menu (FR-049)", async () => {
     const { session, user } = renderRoom(buildRoom(VOTING), MEERA);
 
-    await user.click(screen.getByRole("button", { name: "Meera: profile and room options" }));
+    await user.click(screen.getByRole("button", { name: menuOf("Meera") }));
     await user.click(screen.getByRole("button", { name: "Change name and avatar" }));
     const dialog = screen.getByRole("dialog", { name: "Your name and avatar" });
     const name = within(dialog).getByLabelText("Your name (optional)");
@@ -150,5 +163,45 @@ describe("RoomWorkspace", () => {
     await user.click(within(dialog).getByRole("button", { name: "Save" }));
 
     expect(session.updateProfile).toHaveBeenCalledWith({ displayName: "Meera K", avatarId: null });
+  });
+
+  it("disables the deck while reconnecting and says the vote isn't recorded (FR-057)", () => {
+    renderRoom(buildRoom(VOTING), MEERA, { connection: "reconnecting" });
+
+    expect(screen.getByText(/Connection lost\./)).toBeInTheDocument();
+    expect(screen.getByText("Reconnecting: your vote isn't recorded yet.")).toBeInTheDocument();
+    for (const card of screen.getAllByRole("radio")) expect(card).toBeDisabled();
+  });
+
+  it("pauses voting while the host is away, keeping history readable (FR-047)", async () => {
+    const { user } = renderRoom(buildRoom(REVEALED), MEERA, { connection: "host-away" });
+
+    expect(screen.getByText(/Waiting for the host\./)).toBeInTheDocument();
+    const roster = screen.getByRole("region", { name: "People here (2)" });
+    expect(within(roster).getByText("Priya").closest("li")).toHaveTextContent("Away");
+    await user.click(screen.getByRole("button", { name: /History/ }));
+    expect(screen.getByRole("dialog", { name: "History" })).toHaveTextContent("Saved cards");
+  });
+
+  it("says why an action was refused (PRD 8.7, FR-056)", async () => {
+    const { user } = renderRoom(buildRoom(VOTING), MEERA, {
+      notice: { id: 1, refusal: "round-closed" },
+    });
+
+    expect(screen.getByRole("alert")).toHaveTextContent("Voting for this round has closed.");
+    await user.click(screen.getByRole("button", { name: "Dismiss" }));
+    expect(screen.queryByRole("alert")).not.toBeInTheDocument();
+  });
+
+  it("shows connection details from the room menu, without room content (FR-053)", async () => {
+    const { user } = renderRoom(buildRoom(VOTING), MEERA);
+
+    await user.click(screen.getByRole("button", { name: menuOf("Meera") }));
+    await user.click(screen.getByRole("button", { name: "Connection details" }));
+
+    const dialog = screen.getByRole("dialog", { name: "Connection details" });
+    expect(dialog).toHaveTextContent("ConnectionConnected");
+    expect(dialog).toHaveTextContent("Protocol version1");
+    expect(within(dialog).getByRole("button", { name: "Copy diagnostics" })).toBeInTheDocument();
   });
 });

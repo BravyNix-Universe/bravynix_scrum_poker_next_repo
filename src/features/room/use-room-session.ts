@@ -2,17 +2,24 @@
 
 import { useMemo, useSyncExternalStore } from "react";
 
-import type { RoomSession } from "@/application/ports/room-session";
-import type { RoomSessionState } from "@/application/room/room-view";
+import type { ConnectionDiagnostics, RoomSession } from "@/application/ports/room-session";
+import type { RoomSessionState } from "@/application/room/room-session-state";
 import { openRoomSession } from "@/composition/services";
 import type { RoomRole } from "@/domain/my-rooms/my-room-entry";
 import type { RoomId } from "@/domain/room/room-identity";
 
 const CONNECTING: RoomSessionState = { status: "connecting" };
+const CONNECTING_DIAGNOSTICS: ConnectionDiagnostics = {
+  state: "connecting",
+  path: null,
+  serviceReachable: null,
+  lastError: null,
+};
 
 export interface RoomSessionHandle {
   subscribe(listener: () => void): () => void;
   getState(): RoomSessionState;
+  getDiagnostics(): ConnectionDiagnostics;
   /** The open session, once something has subscribed. Use only in event handlers. */
   current(): RoomSession | null;
 }
@@ -40,6 +47,7 @@ export function createRoomSessionHandle(open: () => RoomSession): RoomSessionHan
       };
     },
     getState: () => session?.getState() ?? CONNECTING,
+    getDiagnostics: () => session?.getDiagnostics() ?? CONNECTING_DIAGNOSTICS,
     current: () => session,
   };
 }
@@ -52,4 +60,13 @@ export function useRoomSession(roomId: RoomId, role: RoomRole) {
   );
   const state = useSyncExternalStore(handle.subscribe, handle.getState, () => CONNECTING);
   return { state, handle };
+}
+
+/** The connection details behind the diagnostics panel, kept current (PRD FR-053). */
+export function useConnectionDiagnostics(handle: RoomSessionHandle): ConnectionDiagnostics {
+  return useSyncExternalStore(
+    handle.subscribe,
+    handle.getDiagnostics,
+    () => CONNECTING_DIAGNOSTICS,
+  );
 }

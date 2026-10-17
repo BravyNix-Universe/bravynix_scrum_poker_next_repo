@@ -1,6 +1,7 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import type { RoomSession } from "@/application/ports/room-session";
+import type { RoomSessionSimulation } from "@/application/ports/room-session-simulation";
 import type { RoomView } from "@/application/room/room-view";
 import type { RoomId } from "@/domain/room/room-identity";
 
@@ -9,7 +10,7 @@ import { createPreviewRoomSession } from "./preview-room-session";
 const ROOM_ID = "k7Qx9mP2vT4w" as RoomId;
 const NOW = Date.UTC(2026, 9, 17, 6, 0, 0);
 
-function open(role: "host" | "participant"): RoomSession {
+function open(role: "host" | "participant"): RoomSession & RoomSessionSimulation {
   return createPreviewRoomSession({
     roomId: ROOM_ID,
     role,
@@ -146,6 +147,93 @@ describe("preview room session", () => {
     session.startRound();
     expect(view(session).stories).toEqual(before.stories);
     expect(before.round?.expectedVoterIds).toContain(before.me);
+    expect(session.getState()).toMatchObject({ notice: { id: 2, refusal: "not-host" } });
+    session.close();
+  });
+});
+
+describe("preview connection problems (PRD 8.5)", () => {
+  beforeEach(() => vi.useFakeTimers());
+  afterEach(() => vi.useRealTimers());
+
+  async function joined(role: "host" | "participant") {
+    const session = open(role);
+    vi.advanceTimersByTime(1_000);
+    await session.join({ displayName: null, avatarId: null });
+    return session;
+  }
+
+  it("drops the connection, ignores votes meanwhile and reconnects on its own", async () => {
+    const session = await joined("participant");
+    session.simulate("connection-drop");
+    expect(session.getState()).toMatchObject({ status: "joined", connection: "reconnecting" });
+    expect(session.getDiagnostics()).toMatchObject({
+      state: "reconnecting",
+      path: null,
+      lastError: "connection-lost",
+    });
+
+    session.castVote("5");
+    expect(view(session).myVote).toBeNull();
+
+    vi.advanceTimersByTime(4_000);
+    expect(session.getState()).toMatchObject({ connection: "connected" });
+    expect(session.getDiagnostics()).toMatchObject({ state: "connected", path: "in-tab" });
+    session.close();
+  });
+
+  it("pauses voting while the host is away and resumes when they return (FR-047)", async () => {
+    const session = await joined("participant");
+    const votedBefore = view(session).round!.votedIds.length;
+    session.simulate("host-away");
+    expect(session.getState()).toMatchObject({ connection: "host-away" });
+
+    vi.advanceTimersByTime(30_000);
+    expect(view(session).round!.votedIds).toHaveLength(votedBefore);
+
+    session.simulate("host-back");
+    vi.advanceTimersByTime(15_000);
+    expect(view(session).round!.votedIds.length).toBeGreaterThan(votedBefore);
+    session.close();
+  });
+
+  it("shows a failure until Try again, then returns to the room", async () => {
+    const session = await joined("participant");
+    session.simulate("room-full");
+    expect(session.getState()).toEqual({ status: "failed", problem: "room-full" });
+    expect(session.getDiagnostics()).toMatchObject({ state: "failed", lastError: "room-full" });
+
+    session.retry();
+    expect(session.getState()).toEqual({ status: "connecting" });
+    vi.advanceTimersByTime(1_000);
+    expect(session.getState()).toMatchObject({ status: "joined" });
+    session.close();
+  });
+
+  it("waits for the host, then carries on by itself", async () => {
+    const session = open("participant");
+    vi.advanceTimersByTime(1_000);
+    session.simulate("waiting-for-host");
+    expect(session.getState()).toEqual({ status: "waiting-for-host" });
+    vi.advanceTimersByTime(5_000);
+    expect(session.getState()).toMatchObject({ status: "lobby" });
+    session.close();
+  });
+
+  it("fills the room with a crowd of teammates", async () => {
+    const session = await joined("host");
+    vi.advanceTimersByTime(10_000);
+    const before = view(session).participants.length;
+    session.simulate("crowd");
+    vi.advanceTimersByTime(10_000);
+    expect(view(session).participants.length).toBe(before + 24);
+    session.close();
+  });
+
+  it("refuses a change for sending too quickly, as the host would (PRD 14.3)", async () => {
+    const session = await joined("participant");
+    session.simulate("rate-limited");
+    expect(session.getState()).toMatchObject({ notice: { refusal: "rate-limited" } });
     session.close();
   });
 });

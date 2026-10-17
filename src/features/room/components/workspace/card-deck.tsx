@@ -1,4 +1,4 @@
-import { Lock } from "lucide-react";
+import { Lock, Pause, WifiOff } from "lucide-react";
 
 import { VoteCard } from "@/components/ui/vote-card";
 import { type Card, type CardId, DECK } from "@/domain/rules/deck";
@@ -6,15 +6,20 @@ import { cn } from "@/lib/cn";
 
 /**
  * locked: Discuss, before the host starts estimation. open: VOTING. revealing: the host has
- * revealed and votes are opening. closed: the round is revealed.
+ * revealed and votes are opening. closed: the round is revealed. reconnecting: this device lost
+ * its connection (FR-057). paused: the host is away (FR-047).
  */
-export type DeckMode = "locked" | "open" | "revealing" | "closed";
+export type DeckMode = "locked" | "open" | "revealing" | "closed" | "reconnecting" | "paused";
 
 const HINTS: Record<Exclude<DeckMode, "open">, string> = {
   locked: "Cards unlock when the host starts estimation.",
   revealing: "Voting has closed. Revealing votes…",
   closed: "Voting is closed for this round.",
+  reconnecting: "Reconnecting: your vote isn't recorded yet.",
+  paused: "Voting is paused until the host is back.",
 };
+
+const HINT_ICONS = { reconnecting: WifiOff, paused: Pause } as const;
 
 export interface CardDeckProps {
   mode: DeckMode;
@@ -29,6 +34,7 @@ export interface CardDeckProps {
  */
 export function CardDeck({ mode, selected, onSelect, className }: CardDeckProps) {
   const enabled = mode === "open";
+  const HintIcon = mode === "reconnecting" || mode === "paused" ? HINT_ICONS[mode] : Lock;
   const hint =
     mode !== "open"
       ? HINTS[mode]
@@ -45,8 +51,14 @@ export function CardDeck({ mode, selected, onSelect, className }: CardDeckProps)
         <h2 id="deck-title" className="font-display text-lg font-bold text-primary-strong">
           Your card
         </h2>
-        <p id="deck-hint" className="flex items-center gap-1.5 text-xs text-ink-muted">
-          {!enabled ? <Lock aria-hidden className="size-3.5" /> : null}
+        <p
+          id="deck-hint"
+          className={cn(
+            "flex items-center gap-1.5 text-xs",
+            mode === "reconnecting" ? "font-semibold text-danger" : "text-ink-muted",
+          )}
+        >
+          {!enabled ? <HintIcon aria-hidden className="size-3.5 shrink-0" /> : null}
           {hint}
         </p>
       </div>

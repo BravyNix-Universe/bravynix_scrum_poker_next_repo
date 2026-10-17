@@ -4,7 +4,7 @@ import type { StoryId } from "@/domain/room/room";
 import type { RoomId } from "@/domain/room/room-identity";
 import type { CardId } from "@/domain/rules/deck";
 
-import type { RoomSessionState } from "../room/room-view";
+import type { RoomSessionState } from "../room/room-session-state";
 
 /**
  * A live connection to one room (SDD `room-session` module). The host's device runs the room;
@@ -15,6 +15,13 @@ export interface RoomSession {
   getState(): RoomSessionState;
   /** Calls `listener` after every state change. */
   subscribe(listener: () => void): () => void;
+  /** Connects again after a failure ("Try again"). */
+  retry(): void;
+  /**
+   * What the diagnostics panel shows (PRD FR-053). Never contains room content or keys. Like
+   * `getState`, it returns the same object until the next change.
+   */
+  getDiagnostics(): ConnectionDiagnostics;
   join(profile: Profile): Promise<void>;
   /** Changes this device's name and avatar while the room is active (FR-049). */
   updateProfile(profile: Profile): void;
@@ -46,6 +53,17 @@ export interface RoomSession {
 
   /** Leaves the room and releases the connection. */
   close(): void;
+}
+
+/** The state of this device's connection, for support (PRD FR-053, SDD 17). */
+export interface ConnectionDiagnostics {
+  state: "connecting" | "waiting-for-host" | "connected" | "reconnecting" | "host-away" | "failed";
+  /** How messages reach the host: directly, through a relay, or inside this tab (preview). */
+  path: "direct" | "relayed" | "in-tab" | null;
+  /** Whether the connection service answered. `null` when it isn't used or isn't known yet. */
+  serviceReachable: boolean | null;
+  /** A short code for the last connection error, never a message with room content. */
+  lastError: string | null;
 }
 
 export interface OpenRoomRequest {

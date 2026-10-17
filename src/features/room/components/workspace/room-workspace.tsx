@@ -2,6 +2,8 @@
 
 import { useState } from "react";
 
+import { canSimulate } from "@/application/ports/room-session-simulation";
+import type { ConnectionStatus, RoomNotice } from "@/application/room/room-session-state";
 import type { RoomView } from "@/application/room/room-view";
 import { Container } from "@/components/layout/container";
 import { SiteFooter } from "@/components/layout/site-footer";
@@ -15,10 +17,14 @@ import { CardDeck, type DeckMode } from "./card-deck";
 import { EmptyRoom } from "./empty-room";
 import { EndedBanner } from "./ended-banner";
 import { HistorySheet } from "./history-sheet";
+import { HostAids } from "./host-aids";
 import { PreviewBanner } from "./preview-banner";
+import { RefusalToast } from "./refusal-toast";
 import { RenameStoryDialog } from "./rename-story-dialog";
 import { ResultsPanel } from "./results-panel";
+import { RoomAnnouncer } from "./room-announcer";
 import { RoomConfirmDialog } from "./room-confirm-dialog";
+import { RoomNotices } from "./room-notices";
 import { RoomToolbar } from "./room-toolbar";
 import { RoomTopBar } from "./room-top-bar";
 import { Roster } from "./roster";
@@ -26,10 +32,15 @@ import { StoriesSheet } from "./stories-sheet";
 import { StoryPanel } from "./story-panel";
 import { useRoomActions } from "../../use-room-actions";
 import type { RoomSessionHandle } from "../../use-room-session";
+import { ConnectionBanner } from "../connection/connection-banner";
+import { DiagnosticsDialog } from "../connection/diagnostics-dialog";
 import { ProfileDialog } from "../profile/profile-dialog";
 
 export interface RoomWorkspaceProps {
   view: RoomView;
+  connection: ConnectionStatus;
+  /** The latest refused action, if any (PRD 8.7). */
+  notice: RoomNotice | null;
   handle: RoomSessionHandle;
 }
 
@@ -38,14 +49,15 @@ type Overlay =
   | { kind: "history" }
   | { kind: "add-story" }
   | { kind: "rename-story"; storyId: StoryId }
-  | { kind: "profile" };
+  | { kind: "profile" }
+  | { kind: "diagnostics" };
 
 /**
  * The room once joined (PRD 8.3, 8.4). On phones the deck comes straight after the story so
  * voting stays within reach; on wider screens, and whenever votes are revealed, it sits below
  * the roster. An ended room is read-only: no deck and no host actions (FR-022).
  */
-export function RoomWorkspace({ view, handle }: RoomWorkspaceProps) {
+export function RoomWorkspace({ view, connection, notice, handle }: RoomWorkspaceProps) {
   const actions = useRoomActions(view, handle);
   const [overlay, setOverlay] = useState<Overlay | null>(null);
   const close = () => setOverlay(null);
@@ -62,22 +74,29 @@ export function RoomWorkspace({ view, handle }: RoomWorkspaceProps) {
     overlay?.kind === "rename-story"
       ? (view.stories.find((story) => story.id === overlay.storyId) ?? null)
       : null;
+  const onlineCount = view.participants.filter((person) => person.online).length;
 
   return (
     <>
       <RoomTopBar
         view={view}
         me={me}
+        connection={connection}
         isPreview={IS_PREVIEW_SESSION}
         canHost={canHost}
         onStartTimer={actions.startTimer}
         onStopTimer={actions.stopTimer}
         onChangeProfile={() => setOverlay({ kind: "profile" })}
+        onShowDiagnostics={() => setOverlay({ kind: "diagnostics" })}
         onEndRoom={actions.endRoom}
         onForgetRoom={actions.forgetRoom}
       />
-      {IS_PREVIEW_SESSION ? <PreviewBanner /> : null}
-      {ended ? <EndedBanner expiresAt={view.expiresAt} /> : null}
+      <RoomNotices>
+        {IS_PREVIEW_SESSION ? <PreviewBanner /> : null}
+        {ended ? <EndedBanner expiresAt={view.expiresAt} /> : null}
+        {connection !== "connected" && !ended ? <ConnectionBanner connection={connection} /> : null}
+        {canHost ? <HostAids hosting={canHost} onlineCount={onlineCount} /> : null}
+      </RoomNotices>
 
       <main id={MAIN_CONTENT_ID} className="flex-1">
         <Container className="flex flex-col gap-6 py-6 sm:gap-8 sm:py-8">
@@ -107,7 +126,7 @@ export function RoomWorkspace({ view, handle }: RoomWorkspaceProps) {
               ) : null}
               {ended ? null : (
                 <CardDeck
-                  mode={deckModeOf(view.round)}
+                  mode={deckModeOf(view.round, connection)}
                   selected={view.myVote}
                   onSelect={actions.castVote}
                   className={cn(revealed ? "order-last" : "lg:order-last")}
@@ -123,11 +142,19 @@ export function RoomWorkspace({ view, handle }: RoomWorkspaceProps) {
               onOpenStories={() => setOverlay({ kind: "stories" })}
             />
           )}
-          <Roster participants={view.participants} me={view.me} phase={phase} round={view.round} />
+          <Roster
+            participants={view.participants}
+            me={view.me}
+            phase={phase}
+            round={view.round}
+            hostAway={connection === "host-away"}
+          />
         </Container>
       </main>
 
       <SiteFooter />
+      <RoomAnnouncer view={view} connection={connection} />
+      <RefusalToast notice={notice} />
 
       <StoriesSheet
         open={overlay?.kind === "stories"}
@@ -143,6 +170,22 @@ export function RoomWorkspace({ view, handle }: RoomWorkspaceProps) {
         onDeleteStory={actions.deleteStory}
       />
       <HistorySheet open={overlay?.kind === "history"} onClose={close} view={view} />
+      <DiagnosticsDialog
+        open={overlay?.kind === "diagnostics"}
+        onClose={close}
+        handle={handle}
+        simulation={
+          IS_PREVIEW_SESSION
+            ? {
+                isHost: me.isHost,
+                onSimulate: (scenario) => {
+                  const session = handle.current();
+                  if (session && canSimulate(session)) session.simulate(scenario);
+                },
+              }
+            : undefined
+        }
+      />
       <ProfileDialog
         open={overlay?.kind === "profile"}
         profile={me}
@@ -173,7 +216,9 @@ export function RoomWorkspace({ view, handle }: RoomWorkspaceProps) {
   );
 }
 
-function deckModeOf(round: Round | null): DeckMode {
+function deckModeOf(round: Round | null, connection: ConnectionStatus): DeckMode {
+  if (connection === "reconnecting") return "reconnecting";
+  if (connection === "host-away") return "paused";
   switch (round?.status) {
     case "voting":
       return "open";

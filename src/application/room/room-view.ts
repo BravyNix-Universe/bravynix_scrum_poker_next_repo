@@ -47,12 +47,6 @@ export interface RoomView {
   myVote: CardId | null;
 }
 
-export type RoomSessionState =
-  | { status: "connecting" }
-  | { status: "lobby"; lobby: RoomLobby }
-  | { status: "joined"; view: RoomView }
-  | { status: "unavailable" };
-
 /** The device's view of a room record. Openings the referee is still collecting stay out. */
 export function toRoomView(state: RoomState, me: ParticipantId, myVote: CardId | null): RoomView {
   return {

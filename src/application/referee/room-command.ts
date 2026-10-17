@@ -46,4 +46,6 @@ export type Refusal =
   | "reveal-in-progress"
   | "no-votes"
   | "invalid-card"
-  | "invalid-timer";
+  | "invalid-timer"
+  /** Raised by the host's connection layer before the referee sees the command (SDD 12). */
+  | "rate-limited";

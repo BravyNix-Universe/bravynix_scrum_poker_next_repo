@@ -81,13 +81,14 @@ export function StoryPanel({
         </p>
         {canHost ? (
           <div className="-mr-2 flex items-center gap-1">
-            <Button variant="ghost" size="sm" onClick={onRenameStory}>
+            {/* Icons only on phones, so the story position keeps its line. */}
+            <Button variant="ghost" size="sm" onClick={onRenameStory} title="Rename">
               <Pencil aria-hidden className="size-3.5" />
-              Rename
+              <span className="max-sm:sr-only">Rename</span>
             </Button>
-            <Button variant="ghost" size="sm" onClick={onAddStory}>
+            <Button variant="ghost" size="sm" onClick={onAddStory} title="Add story">
               <Plus aria-hidden className="size-4" />
-              Add story
+              <span className="max-sm:sr-only">Add story</span>
             </Button>
           </div>
         ) : null}
@@ -139,7 +140,8 @@ export function StoryPanel({
         </div>
       )}
 
-      <div aria-live="polite" className="mt-4 flex flex-col gap-1 text-sm">
+      {/* The room announcer reads changes out; this text is for reading at any time. */}
+      <div className="mt-4 flex flex-col gap-1 text-sm">
         {ended ? (
           <p className="text-ink-muted">
             {round?.status === "revealed"

@@ -7,6 +7,8 @@ import { PageShell } from "@/components/layout/page-shell";
 import { getJoinRoom, getResolveRoomRole } from "@/composition/services";
 import { parseRoomFragment, type RoomFragment } from "@/domain/room/room-links";
 
+import { SessionProblemPage } from "./components/connection/session-problem-page";
+import { WaitingForHostPage } from "./components/connection/waiting-for-host-page";
 import { JoinScreen } from "./components/join/join-screen";
 import { RoomStatusPage } from "./components/room-status-page";
 import { RoomWorkspace } from "./components/workspace/room-workspace";
@@ -48,6 +50,12 @@ function RoomSessionScreen({ fragment }: { fragment: RoomFragment }) {
           </RoomStatusPage>
         </PageShell>
       );
+    case "waiting-for-host":
+      return (
+        <PageShell>
+          <WaitingForHostPage handle={handle} />
+        </PageShell>
+      );
     case "lobby":
       return (
         <PageShell>
@@ -61,7 +69,20 @@ function RoomSessionScreen({ fragment }: { fragment: RoomFragment }) {
         </PageShell>
       );
     case "joined":
-      return <RoomWorkspace view={state.view} handle={handle} />;
+      return (
+        <RoomWorkspace
+          view={state.view}
+          connection={state.connection}
+          notice={state.notice}
+          handle={handle}
+        />
+      );
+    case "failed":
+      return (
+        <PageShell>
+          <SessionProblemPage problem={state.problem} handle={handle} />
+        </PageShell>
+      );
     case "unavailable":
       return (
         <PageShell>

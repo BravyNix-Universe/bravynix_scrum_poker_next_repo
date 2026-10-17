@@ -6,6 +6,8 @@ export const LIMITS = {
   displayNameMaxLength: 32,
   /** People online in one room, host included (PRD A-10). */
   maxParticipants: 50,
+  /** Above this many people the host is advised to use a laptop (PRD FR-054). */
+  laptopAdvisedAbove: 15,
   /** Stories in one room (PRD A-10). */
   maxStories: 500,
   /** A room is deleted from every device this long after it was created (PRD FR-023). */

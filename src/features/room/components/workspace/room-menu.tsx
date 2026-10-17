@@ -1,6 +1,6 @@
 "use client";
 
-import { ChevronDown, Clock, Flag, Trash2, UserPen } from "lucide-react";
+import { Activity, ChevronDown, Clock, Flag, Trash2, UserPen } from "lucide-react";
 import type { ComponentProps } from "react";
 
 import { Avatar } from "@/components/ui/avatar";
@@ -18,6 +18,7 @@ export interface RoomMenuProps {
   /** End room shows only for the host of an active room. */
   canEnd: boolean;
   onChangeProfile: () => void;
+  onShowDiagnostics: () => void;
   onEndRoom: () => void;
   onForgetRoom: () => void;
 }
@@ -28,6 +29,7 @@ export function RoomMenu({
   expiresAt,
   canEnd,
   onChangeProfile,
+  onShowDiagnostics,
   onEndRoom,
   onForgetRoom,
 }: RoomMenuProps) {
@@ -41,18 +43,22 @@ export function RoomMenu({
         <button
           type="button"
           {...props}
-          aria-label={`${name}: profile and room options`}
           className="flex h-10 items-center gap-2 rounded-lg px-1.5 hover:bg-surface-muted"
         >
           <Avatar avatarId={me.avatarId} size="sm" />
-          <span className="hidden max-w-32 truncate text-sm font-medium text-ink md:inline">
+          {/* The accessible name starts with the visible text (WCAG 2.5.3). */}
+          <span className="max-w-32 truncate text-sm font-medium text-ink max-md:sr-only">
             {name}
           </span>
           {me.isHost ? (
-            <Badge tone="warning" className="max-sm:hidden">
-              Host
-            </Badge>
+            <>
+              {" "}
+              <Badge tone="warning" className="max-sm:hidden">
+                Host
+              </Badge>
+            </>
           ) : null}
+          <span className="sr-only">: profile and room options</span>
           <ChevronDown aria-hidden className="size-4 text-ink-muted" />
         </button>
       )}
@@ -74,6 +80,10 @@ export function RoomMenu({
             <MenuItem onClick={run(onChangeProfile)}>
               <UserPen aria-hidden className="size-4" />
               Change name and avatar
+            </MenuItem>
+            <MenuItem onClick={run(onShowDiagnostics)}>
+              <Activity aria-hidden className="size-4" />
+              Connection details
             </MenuItem>
 
             <p className="mt-1 flex items-center gap-2 border-t border-line px-3 pt-3 pb-2 text-xs text-ink-muted">

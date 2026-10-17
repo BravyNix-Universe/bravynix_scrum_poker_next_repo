@@ -1,24 +1,40 @@
-import type { OpenRoomRequest, RoomSession } from "@/application/ports/room-session";
+import type {
+  ConnectionDiagnostics,
+  OpenRoomRequest,
+  RoomSession,
+} from "@/application/ports/room-session";
+import type {
+  RoomSessionSimulation,
+  SimulatedScenario,
+} from "@/application/ports/room-session-simulation";
 import { applyCommand, isRevealComplete } from "@/application/referee/referee";
-import type { RoomCommand } from "@/application/referee/room-command";
+import type { Refusal, RoomCommand } from "@/application/referee/room-command";
 import {
   createRoomState,
   getCurrentRound,
   getHost,
   type RoomState,
 } from "@/application/referee/room-state";
-import { type RoomSessionState, toRoomLobby, toRoomView } from "@/application/room/room-view";
-import type { AvatarId } from "@/domain/avatars/avatars";
+import type {
+  ConnectionStatus,
+  RoomNotice,
+  RoomSessionState,
+  SessionProblem,
+} from "@/application/room/room-session-state";
+import { toRoomLobby, toRoomView } from "@/application/room/room-view";
 import type { MyRoomEntry } from "@/domain/my-rooms/my-room-entry";
 import { getNextStory, type ParticipantId, type RoundId } from "@/domain/room/room";
 import { type CardId, DECK, isCardId } from "@/domain/rules/deck";
 import { REVEAL_DEADLINE_MS } from "@/domain/rules/lifecycle";
 
+import { crowdTeammates, DEMO_HOST, TEAMMATES, type Teammate } from "./preview-people";
+
 /**
  * A stand-in for the peer-to-peer room session until live connections arrive (Phase 5).
  * It runs the real referee inside this tab and simulates teammates (and, for a participant,
  * the host), so every screen can be reviewed without a network. It implements the same
- * `RoomSession` port the live session will.
+ * `RoomSession` port the live session will, plus `simulate` for acting out connection
+ * problems on request.
  */
 export interface PreviewRoomOptions extends OpenRoomRequest {
   /** This device's "My rooms" entry for the room, if it has one. */
@@ -27,28 +43,6 @@ export interface PreviewRoomOptions extends OpenRoomRequest {
   random?: () => number;
 }
 
-interface Teammate {
-  id: ParticipantId;
-  displayName: string;
-  avatarId: AvatarId;
-}
-
-const DEMO_HOST: Teammate = {
-  id: "demo-host" as ParticipantId,
-  displayName: "Priya",
-  avatarId: "panda",
-};
-const TEAMMATES: readonly Teammate[] = [
-  { id: "demo-arjun" as ParticipantId, displayName: "Arjun", avatarId: "tiger" },
-  { id: "demo-meera" as ParticipantId, displayName: "Meera", avatarId: "fox" },
-  { id: "demo-rahul" as ParticipantId, displayName: "Rahul", avatarId: "man-beard-medium" },
-  {
-    id: "demo-ananya" as ParticipantId,
-    displayName: "Ananya",
-    avatarId: "woman-curly-hair-medium",
-  },
-  { id: "demo-vikram" as ParticipantId, displayName: "Vikram", avatarId: "owl" },
-];
 const DEMO_EPIC = "Checkout revamp";
 const DEMO_STORIES = [
   "Save cards for faster checkout",
@@ -58,6 +52,13 @@ const DEMO_STORIES = [
 ];
 
 const CONNECT_DELAY_MS = 700;
+/** How long a simulated network drop lasts, and how long a participant waits for the host. */
+const RECONNECT_DELAY_MS = 4_000;
+const WAITING_FOR_HOST_MS = 5_000;
+/** While the room is paused, simulated people check again this often. */
+const PAUSED_RETRY_MS = 1_000;
+const CROWD_SIZE = 24;
+const CROWD_JOIN_INTERVAL_MS = 250;
 const TEAMMATE_JOIN_INTERVAL_MS = 1_200;
 const VOTE_DELAY_MIN_MS = 2_000;
 const VOTE_DELAY_SPREAD_MS = 10_000;
@@ -78,13 +79,20 @@ export function createPreviewRoomSession({
   listed,
   now,
   random = Math.random,
-}: PreviewRoomOptions): RoomSession {
+}: PreviewRoomOptions): RoomSession & RoomSessionSimulation {
   const listeners = new Set<() => void>();
   const timers = new Set<ReturnType<typeof setTimeout>>();
   let nextId = 1;
   const newId = () => `x${nextId++}`;
 
-  let phase: "connecting" | "lobby" | "joined" = "connecting";
+  type Phase = "connecting" | "waiting-for-host" | "lobby" | "joined" | "failed";
+  let phase: Phase = "connecting";
+  /** Where "Try again" or the host's arrival returns to. */
+  let resumePhase: "lobby" | "joined" = "lobby";
+  let problem: SessionProblem | null = null;
+  let connection: ConnectionStatus = "connected";
+  let notice: RoomNotice | null = null;
+  let lastError: string | null = null;
   let me: ParticipantId | null = null;
   let myVote: CardId | null = null;
   /** Cards the simulated teammates chose. In a live room these stay on their own devices. */
@@ -93,6 +101,7 @@ export function createPreviewRoomSession({
   let roundCentre = 3;
   let room: RoomState = role === "host" ? hostRoom() : demoRoom();
   let state: RoomSessionState = { status: "connecting" };
+  let currentDiagnostics = diagnostics();
 
   function hostRoom(): RoomState {
     const base = createRoomState({
@@ -172,27 +181,53 @@ export function createPreviewRoomSession({
 
   function emit(): void {
     state = snapshot();
+    currentDiagnostics = diagnostics();
     listeners.forEach((listener) => listener());
   }
 
   function snapshot(): RoomSessionState {
-    if (phase === "connecting") return { status: "connecting" };
-    if (phase === "lobby" || !me) return { status: "lobby", lobby: toRoomLobby(room, role) };
-    return { status: "joined", view: toRoomView(room, me, myVote) };
+    switch (phase) {
+      case "connecting":
+      case "waiting-for-host":
+        return { status: phase };
+      case "failed":
+        return { status: "failed", problem: problem ?? "host-unreachable" };
+      case "lobby":
+        return { status: "lobby", lobby: toRoomLobby(room, role) };
+      case "joined":
+        return me
+          ? { status: "joined", view: toRoomView(room, me, myVote), connection, notice }
+          : { status: "lobby", lobby: toRoomLobby(room, role) };
+    }
   }
 
   /** Runs a command through the referee; on success reacts to the change and notifies. */
-  function dispatch(actor: ParticipantId, command: RoomCommand): boolean {
+  function dispatch(actor: ParticipantId, command: RoomCommand): Refusal | null {
     const result = applyCommand(room, actor, command, { now: now(), newId });
-    if (!result.ok) return false;
+    if (!result.ok) return result.refusal;
     const before = room;
     room = result.state;
     react(before);
     emit();
-    return true;
+    return null;
   }
 
+  /** Tells this device why the room refused one of its commands (PRD 8.7). */
+  function refuse(refusal: Refusal): void {
+    notice = { id: (notice?.id ?? 0) + 1, refusal };
+    emit();
+  }
+
+  /** People can't reach the host while it's away, the network is down or the room is failing. */
+  const isPaused = () => connection !== "connected" || (phase !== "lobby" && phase !== "joined");
+
+  /** Schedules something a simulated person does. It waits while the room is paused. */
   function schedule(delayMs: number, task: () => void): void {
+    scheduleControl(delayMs, () => (isPaused() ? schedule(PAUSED_RETRY_MS, task) : task()));
+  }
+
+  /** Schedules a change to the connection itself, which never waits. */
+  function scheduleControl(delayMs: number, task: () => void): void {
     const timer = setTimeout(() => {
       timers.delete(timer);
       task();
@@ -256,7 +291,7 @@ export function createPreviewRoomSession({
       schedule(VOTE_DELAY_MIN_MS + random() * VOTE_DELAY_SPREAD_MS, () => {
         if (!isCurrent(round.id, "voting")) return;
         teammateVotes.set(person.id, pickCard());
-        if (dispatch(person.id, { type: "cast-vote" })) maybeHostReveals();
+        if (!dispatch(person.id, { type: "cast-vote" })) maybeHostReveals();
       });
     }
   }
@@ -324,7 +359,79 @@ export function createPreviewRoomSession({
     scheduleTeammateVotes();
   }
 
-  schedule(CONNECT_DELAY_MS, () => {
+  // --- Connection ----------------------------------------------------------------------------
+
+  /** Leaves the room's current phase for a waiting or failed one, remembering where to return. */
+  function interrupt(next: "waiting-for-host" | "failed"): void {
+    if (phase === "lobby" || phase === "joined") resumePhase = phase;
+    phase = next;
+    emit();
+  }
+
+  function resume(): void {
+    phase = resumePhase;
+    problem = null;
+    emit();
+  }
+
+  function simulate(scenario: SimulatedScenario): void {
+    switch (scenario) {
+      case "connection-drop":
+        if (phase !== "joined" || connection !== "connected") return;
+        connection = "reconnecting";
+        lastError = "connection-lost";
+        emit();
+        scheduleControl(RECONNECT_DELAY_MS, () => {
+          if (connection !== "reconnecting") return;
+          connection = "connected";
+          emit();
+        });
+        return;
+      case "host-away":
+        if (phase !== "joined" || role !== "participant") return;
+        connection = "host-away";
+        lastError = "host-disconnected";
+        emit();
+        return;
+      case "host-back":
+        if (connection !== "host-away") return;
+        connection = "connected";
+        emit();
+        return;
+      case "waiting-for-host":
+        if (role !== "participant") return;
+        interrupt("waiting-for-host");
+        scheduleControl(WAITING_FOR_HOST_MS, () => {
+          if (phase === "waiting-for-host") resume();
+        });
+        return;
+      case "rate-limited":
+        if (phase === "joined") refuse("rate-limited");
+        return;
+      case "crowd":
+        crowdTeammates(CROWD_SIZE).forEach((mate, index) =>
+          schedule(CROWD_JOIN_INTERVAL_MS * (index + 1), () => teammateJoins(mate)),
+        );
+        return;
+      default:
+        problem = scenario;
+        lastError = scenario;
+        interrupt("failed");
+    }
+  }
+
+  function diagnostics(): ConnectionDiagnostics {
+    const current = phase;
+    const inRoom = current === "lobby" || current === "joined";
+    return {
+      state: current === "joined" ? connection : current === "lobby" ? "connected" : current,
+      path: inRoom && connection === "connected" ? "in-tab" : null,
+      serviceReachable: problem === "service-unreachable" ? false : null,
+      lastError,
+    };
+  }
+
+  scheduleControl(CONNECT_DELAY_MS, () => {
     phase = "lobby";
     emit();
   });
@@ -333,7 +440,9 @@ export function createPreviewRoomSession({
 
   /** Commands from this device. The referee refuses anything it shouldn't accept. */
   const send = (command: RoomCommand) => {
-    if (me) dispatch(me, command);
+    if (!me) return;
+    const refusal = dispatch(me, command);
+    if (refusal) refuse(refusal);
   };
 
   return {
@@ -343,6 +452,16 @@ export function createPreviewRoomSession({
       listeners.add(listener);
       return () => void listeners.delete(listener);
     },
+
+    retry() {
+      if (phase !== "failed") return;
+      phase = "connecting";
+      emit();
+      scheduleControl(CONNECT_DELAY_MS, resume);
+    },
+
+    getDiagnostics: () => currentDiagnostics,
+    simulate,
 
     async join(profile) {
       if (phase !== "lobby") return;
@@ -384,9 +503,10 @@ export function createPreviewRoomSession({
     endRoom: () => send({ type: "end-room" }),
 
     castVote(card) {
-      if (!me || !isCardId(card)) return;
+      if (!me || connection !== "connected") return;
+      if (!isCardId(card)) return refuse("invalid-card");
       const result = applyCommand(room, me, { type: "cast-vote" }, { now: now(), newId });
-      if (!result.ok) return;
+      if (!result.ok) return refuse(result.refusal);
       room = result.state;
       myVote = card;
       emit();

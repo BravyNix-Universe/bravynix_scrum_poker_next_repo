@@ -60,6 +60,30 @@ Because it has no I/O, the same function runs in the preview session today, in t
 
 Until the PeerJS transport lands (Phase 5), `src/infrastructure/preview/preview-room-session.ts` implements the `RoomSession` port inside the browser tab. It runs every command through the real referee, with simulated teammates who join, vote and open their votes on reveal. When you join as a participant it also simulates the host, who reveals once everyone has voted and moves on to the next story. The UI only sees the port, so swapping in the live session is a change to `src/composition/services.ts` alone.
 
+## Connection states
+
+`RoomSessionState` (`src/application/room/room-session-state.ts`) is everything the room screen can show:
+
+| Status             | Screen                                                                                                 |
+| ------------------ | ------------------------------------------------------------------------------------------------------ |
+| `connecting`       | "Connecting to the room…"                                                                              |
+| `waiting-for-host` | "Waiting for the host to open the room", retried automatically                                         |
+| `lobby`            | The join screen                                                                                        |
+| `joined`           | The room, with `connection` (`connected`, `reconnecting`, `host-away`) and the latest refusal `notice` |
+| `failed`           | A page for the `SessionProblem`, with Try again (`RoomSession.retry`) or Refresh                       |
+| `unavailable`      | The neutral "This room isn't available"                                                                |
+
+- `connection` drives the banner under the top bar and the deck: `reconnecting` disables voting with "Reconnecting: your vote isn't recorded yet" (FR-057), and `host-away` pauses it (FR-047).
+- A refused command sets `notice` (`{ id, refusal }`); `features/room/refusal-messages.ts` maps each `Refusal` to the PRD 8.7 wording, shown as a toast.
+- `RoomSession.getDiagnostics()` feeds the Connection details dialog (FR-053). `formatDiagnostics` builds the "Copy diagnostics" text from connection facts only, never room content or keys.
+- The preview session also implements `RoomSessionSimulation` (`ports/room-session-simulation.ts`) to act out each state on request. The UI checks for it with `canSimulate` and shows the controls only in preview.
+
+## Accessibility
+
+- `RoomAnnouncer` reads room changes to screen readers without moving focus (PRD 8.6). `features/room/announcements.ts` turns two snapshots of the room into words (connection loss and recovery, story and round changes, the revealed result, this device's vote). Vote counts go to a separate live region, throttled to one update every 5 seconds so a full room doesn't flood it. The timer announces its own warnings.
+- Banners under the top bar sit in a labelled "Room notices" region, so every part of the page is inside a landmark.
+- Pages that replace the room after a failure move focus to their heading.
+
 ## Enforcement
 
 `npm run lint` fails when a dependency points the wrong way (`eslint.config.mjs`):

@@ -1,7 +1,9 @@
+import type { ConnectionStatus } from "@/application/room/room-session-state";
 import type { RoomView } from "@/application/room/room-view";
 import { Container } from "@/components/layout/container";
 import { Wordmark } from "@/components/layout/wordmark";
 import type { Participant } from "@/domain/room/room";
+import { cn } from "@/lib/cn";
 
 import { InviteButton } from "./invite-button";
 import { RoomMenu } from "./room-menu";
@@ -10,12 +12,14 @@ import { TimerControl } from "./timer-control";
 export interface RoomTopBarProps {
   view: RoomView;
   me: Participant;
+  connection: ConnectionStatus;
   isPreview: boolean;
   /** True for the host of an active room. */
   canHost: boolean;
   onStartTimer: (durationMs: number) => void;
   onStopTimer: () => void;
   onChangeProfile: () => void;
+  onShowDiagnostics: () => void;
   onEndRoom: () => void;
   onForgetRoom: () => void;
 }
@@ -27,11 +31,13 @@ export interface RoomTopBarProps {
 export function RoomTopBar({
   view,
   me,
+  connection,
   isPreview,
   canHost,
   onStartTimer,
   onStopTimer,
   onChangeProfile,
+  onShowDiagnostics,
   onEndRoom,
   onForgetRoom,
 }: RoomTopBarProps) {
@@ -60,13 +66,18 @@ export function RoomTopBar({
               <InviteButton roomId={view.roomId} />
             </>
           ) : null}
-          <ConnectionStatus isPreview={isPreview} />
+          <ConnectionIndicator
+            connection={connection}
+            isPreview={isPreview}
+            onClick={onShowDiagnostics}
+          />
           <div className="border-l border-line pl-1 sm:pl-2">
             <RoomMenu
               me={me}
               expiresAt={view.expiresAt}
               canEnd={canHost}
               onChangeProfile={onChangeProfile}
+              onShowDiagnostics={onShowDiagnostics}
               onEndRoom={onEndRoom}
               onForgetRoom={onForgetRoom}
             />
@@ -77,14 +88,36 @@ export function RoomTopBar({
   );
 }
 
-function ConnectionStatus({ isPreview }: { isPreview: boolean }) {
+const INDICATOR: Record<ConnectionStatus, { label: string; dot: string }> = {
+  connected: { label: "Connected", dot: "bg-success" },
+  reconnecting: { label: "Reconnecting…", dot: "bg-danger motion-safe:animate-pulse" },
+  "host-away": { label: "Host away", dot: "bg-accent" },
+};
+
+/** The connection at a glance, written out as well as coloured; opens the details (FR-053). */
+function ConnectionIndicator({
+  connection,
+  isPreview,
+  onClick,
+}: {
+  connection: ConnectionStatus;
+  isPreview: boolean;
+  onClick: () => void;
+}) {
+  const { label, dot } =
+    isPreview && connection === "connected"
+      ? { label: "Preview", dot: "bg-accent" }
+      : INDICATOR[connection];
+
   return (
-    <span className="hidden items-center gap-1.5 text-xs font-medium text-ink-muted lg:inline-flex">
-      <span
-        aria-hidden
-        className={isPreview ? "size-2 rounded-full bg-accent" : "size-2 rounded-full bg-success"}
-      />
-      {isPreview ? "Preview" : "Connected"}
-    </span>
+    <button
+      type="button"
+      onClick={onClick}
+      className="hidden h-8 items-center gap-1.5 rounded-lg px-2 text-xs font-medium text-ink-muted hover:bg-surface-muted hover:text-ink lg:inline-flex"
+    >
+      <span aria-hidden className={cn("size-2 rounded-full", dot)} />
+      {label}
+      <span className="sr-only">: connection details</span>
+    </button>
   );
 }

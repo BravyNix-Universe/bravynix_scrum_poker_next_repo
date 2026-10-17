@@ -19,6 +19,8 @@ export interface RosterProps {
   me: ParticipantId;
   phase: RoomPhase;
   round: Round | null;
+  /** While this device can't reach the host, the host shows as away (FR-047). */
+  hostAway?: boolean;
   className?: string;
 }
 
@@ -37,14 +39,29 @@ const STATUS_LABELS: Record<Seat["status"], string> = {
   "not-revealed": "Not revealed",
 };
 
+/** Above this many people the roster switches to smaller seats, so a full room stays scannable. */
+const COMPACT_ABOVE = 12;
+
 /**
  * Everyone in the room with their status (PRD 8.3, FR-027). Before reveal it shows only who has
  * voted, never a value (FR-013); after reveal each card turns face up. Status is written out,
  * not shown by colour alone.
  */
-export function Roster({ participants, me, phase, round, className }: RosterProps) {
-  const online = participants.filter((person) => person.online).length;
-  const seats = participants.map((person) => ({ person, seat: seatOf(person, phase, round) }));
+export function Roster({
+  participants,
+  me,
+  phase,
+  round,
+  hostAway = false,
+  className,
+}: RosterProps) {
+  const present = (person: Participant) => person.online && !(hostAway && person.isHost);
+  const online = participants.filter(present).length;
+  const compact = participants.length > COMPACT_ABOVE;
+  const seats = participants.map((person) => ({
+    person,
+    seat: seatOf(person, present(person), phase, round),
+  }));
   // Revealed cards turn over one after another, in roster order.
   const revealOrder = seats
     .filter(({ seat }) => seat.status === "revealed")
@@ -58,13 +75,21 @@ export function Roster({ participants, me, phase, round, className }: RosterProp
       >
         People here ({online})
       </h2>
-      <ul className="mt-3 grid grid-cols-3 gap-3 sm:grid-cols-4 sm:gap-4 md:grid-cols-6 lg:grid-cols-8">
+      <ul
+        className={cn(
+          "mt-3 grid",
+          compact
+            ? "grid-cols-4 gap-x-2 gap-y-3 sm:grid-cols-6 md:grid-cols-8 lg:grid-cols-12"
+            : "grid-cols-3 gap-3 sm:grid-cols-4 sm:gap-4 md:grid-cols-6 lg:grid-cols-8",
+        )}
+      >
         {seats.map(({ person, seat }) => (
           <SeatView
             key={person.id}
             person={person}
             isMe={person.id === me}
             seat={seat}
+            compact={compact}
             revealIndex={revealOrder.indexOf(person.id)}
           />
         ))}
@@ -73,7 +98,7 @@ export function Roster({ participants, me, phase, round, className }: RosterProp
   );
 }
 
-function seatOf(person: Participant, phase: RoomPhase, round: Round | null): Seat {
+function seatOf(person: Participant, online: boolean, phase: RoomPhase, round: Round | null): Seat {
   if (phase === "review" && round?.outcome) {
     const vote = round.outcome.votes.find((item) => item.participantId === person.id);
     if (vote) return { status: "revealed", card: vote.card };
@@ -84,7 +109,7 @@ function seatOf(person: Participant, phase: RoomPhase, round: Round | null): Sea
       return { status: "not-voted" };
     }
   }
-  if (!person.online) return { status: "away" };
+  if (!online) return { status: "away" };
   if (phase !== "estimate" || !isExpectedVoter(round, person.id)) return { status: "here" };
   const voted = hasVoted(round, person.id);
   if (round?.status === "revealing") return { status: voted ? "revealing" : "not-voted" };
@@ -95,23 +120,30 @@ function SeatView({
   person,
   isMe,
   seat,
+  compact,
   revealIndex,
 }: {
   person: Participant;
   isMe: boolean;
   seat: Seat;
+  compact: boolean;
   revealIndex: number;
 }) {
   const name = displayNameOf(person);
   const showsCard = ["voted", "revealing", "revealed"].includes(seat.status);
 
   return (
-    <li className="flex min-w-0 flex-col items-center gap-2 text-center">
-      <div className="relative aspect-[3/4] w-full max-w-24">
+    <li
+      className={cn("flex min-w-0 flex-col items-center text-center", compact ? "gap-1" : "gap-2")}
+    >
+      <div className={cn("relative aspect-[3/4] w-full", compact ? "max-w-16" : "max-w-24")}>
         {seat.status === "revealed" ? (
           <VoteCard
             card={seat.card}
-            className="size-full p-2.5 motion-safe:animate-card-flip [&>span]:text-2xl"
+            className={cn(
+              "size-full motion-safe:animate-card-flip",
+              compact ? "p-1.5 [&>span]:text-lg" : "p-2.5 [&>span]:text-2xl",
+            )}
             style={{ animationDelay: `${revealIndex * 70}ms` }}
           />
         ) : showsCard ? (
@@ -119,7 +151,10 @@ function SeatView({
             <VoteCard card={null} className="size-full" />
             <span
               aria-hidden
-              className="absolute -top-1.5 -right-1.5 flex size-6 items-center justify-center rounded-full bg-success text-white ring-2 ring-canvas"
+              className={cn(
+                "absolute -top-1.5 -right-1.5 flex items-center justify-center rounded-full bg-success text-white ring-2 ring-canvas",
+                compact ? "size-5" : "size-6",
+              )}
             >
               {seat.status === "revealing" ? (
                 <LoaderCircle className="size-3.5 motion-safe:animate-spin" strokeWidth={3} />
@@ -129,13 +164,18 @@ function SeatView({
             </span>
           </>
         ) : (
-          <EmptySeat person={person} isMe={isMe} seat={seat} />
+          <EmptySeat person={person} isMe={isMe} seat={seat} compact={compact} />
         )}
       </div>
 
       <div className="flex w-full min-w-0 flex-col items-center gap-0.5">
-        <span className="flex max-w-full items-center gap-1 text-sm font-medium text-ink">
-          {showsCard || seat.status === "thinking" ? (
+        <span
+          className={cn(
+            "flex max-w-full items-center gap-1 font-medium text-ink",
+            compact ? "text-xs" : "text-sm",
+          )}
+        >
+          {!compact && (showsCard || seat.status === "thinking") ? (
             <Avatar avatarId={person.avatarId} size="xs" />
           ) : null}
           {person.isHost ? (
@@ -148,7 +188,12 @@ function SeatView({
             {name}
           </span>
         </span>
-        <span className="inline-flex items-center gap-1 text-xs text-ink-muted">
+        <span
+          className={cn(
+            "inline-flex items-center gap-1 text-ink-muted",
+            compact ? "text-2xs" : "text-xs",
+          )}
+        >
           {isMe ? (
             <>
               <span className="font-semibold text-primary">You</span>
@@ -173,7 +218,17 @@ function SeatView({
   );
 }
 
-function EmptySeat({ person, isMe, seat }: { person: Participant; isMe: boolean; seat: Seat }) {
+function EmptySeat({
+  person,
+  isMe,
+  seat,
+  compact,
+}: {
+  person: Participant;
+  isMe: boolean;
+  seat: Seat;
+  compact: boolean;
+}) {
   const dashed = seat.status === "thinking" || seat.status === "not-voted";
   return (
     <div
@@ -199,7 +254,7 @@ function EmptySeat({ person, isMe, seat }: { person: Participant; isMe: boolean;
       ) : seat.status === "not-revealed" ? (
         <EyeOff aria-hidden className="size-6 text-ink-subtle" />
       ) : (
-        <Avatar avatarId={person.avatarId} size="lg" />
+        <Avatar avatarId={person.avatarId} size={compact ? "md" : "lg"} />
       )}
     </div>
   );
