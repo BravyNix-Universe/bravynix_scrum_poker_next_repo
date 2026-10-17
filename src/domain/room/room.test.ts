@@ -1,13 +1,18 @@
 import { describe, expect, it } from "vitest";
 
 import {
+  canDeleteStory,
+  getNextStory,
   getRoomPhase,
   getStoryPosition,
   getVoteProgress,
+  getWaitingVoterIds,
   hasVoted,
   isExpectedVoter,
+  latestRevealedRound,
   type ParticipantId,
   type Round,
+  type RoundId,
   type Story,
   type StoryId,
 } from "./room";
@@ -21,11 +26,15 @@ const person = (id: string) => id as ParticipantId;
 
 function round(overrides: Partial<Round> = {}): Round {
   return {
+    id: "r1" as RoundId,
     storyId: "s1" as StoryId,
     number: 1,
     status: "voting",
+    startedAt: 0,
     expectedVoterIds: [person("a"), person("b"), person("c")],
     votedIds: [],
+    revealedAt: null,
+    outcome: null,
     ...overrides,
   };
 }
@@ -77,5 +86,49 @@ describe("vote progress (PRD 12.4)", () => {
     expect(isExpectedVoter(round(), person("host"))).toBe(false);
     expect(isExpectedVoter(round({ votedIds: [person("host")] }), person("host"))).toBe(true);
     expect(isExpectedVoter(null, person("a"))).toBe(false);
+  });
+});
+
+describe("story queue (PRD 12.2)", () => {
+  const queue = [
+    story("s1", "estimated"),
+    story("s2", "active"),
+    story("s3", "estimated"),
+    story("s4", "removed"),
+    story("s5", "queued"),
+  ];
+
+  it("moves on to the next story that still needs an estimate", () => {
+    expect(getNextStory(queue, "s2" as StoryId)?.id).toBe("s5");
+    expect(getNextStory(queue, "s5" as StoryId)).toBeNull();
+  });
+
+  it("falls back to the next visible story when all are estimated", () => {
+    expect(getNextStory(queue.slice(0, 3), "s1" as StoryId)?.id).toBe("s2");
+  });
+
+  it("finds a story's latest revealed round", () => {
+    const rounds = [
+      round({ id: "r1" as RoundId, number: 1, status: "revealed" }),
+      round({ id: "r2" as RoundId, number: 2, status: "revealed" }),
+      round({ id: "r3" as RoundId, number: 3, status: "cancelled" }),
+    ];
+    expect(latestRevealedRound(rounds, "s1" as StoryId)?.number).toBe(2);
+    expect(latestRevealedRound(rounds, "s2" as StoryId)).toBeNull();
+  });
+
+  it("allows deleting only stories without rounds (FR-032, FR-039)", () => {
+    const rounds = [round({ status: "cancelled" })];
+    expect(canDeleteStory(rounds, "s1" as StoryId)).toBe(false);
+    expect(canDeleteStory(rounds, "s2" as StoryId)).toBe(true);
+  });
+});
+
+describe("waiting voters (PRD A-01)", () => {
+  it("lists expected voters without a vote", () => {
+    expect(getWaitingVoterIds(round({ votedIds: [person("b"), person("host")] }))).toEqual([
+      person("a"),
+      person("c"),
+    ]);
   });
 });

@@ -1,21 +1,17 @@
 "use client";
 
 import { ArrowRight, LockKeyhole } from "lucide-react";
-import { type FormEvent, useId, useState } from "react";
+import { type FormEvent, useState } from "react";
 
 import type { JoinRoomInput } from "@/application/room/join-room";
 import type { RoomLobby } from "@/application/room/room-view";
 import { Button } from "@/components/ui/button";
-import { Input, Label } from "@/components/ui/input";
 import type { AvatarId } from "@/domain/avatars/avatars";
 import type { Profile } from "@/domain/room/profile";
 import { validateDisplayName } from "@/domain/room/profile";
-import { LIMITS } from "@/domain/rules/limits";
-import { cn } from "@/lib/cn";
 
-import { AvatarPicker } from "./avatar-picker";
-
-const NAME_TOO_LONG = `Keep your name to ${LIMITS.displayNameMaxLength} characters or fewer.`;
+import { AvatarPicker } from "../profile/avatar-picker";
+import { DisplayNameField, NAME_TOO_LONG } from "../profile/display-name-field";
 
 export interface JoinFormProps {
   lobby: RoomLobby;
@@ -26,9 +22,6 @@ export interface JoinFormProps {
 
 /** Optional name and avatar, then join (PRD 9.2 step 3, FR-005). */
 export function JoinForm({ lobby, remembered, onJoin }: JoinFormProps) {
-  const nameId = useId();
-  const nameHintId = useId();
-  const nameErrorId = useId();
   const [displayName, setDisplayName] = useState(remembered?.displayName ?? "");
   const [avatarId, setAvatarId] = useState<AvatarId | null>(remembered?.avatarId ?? null);
   const [remember, setRemember] = useState(remembered !== null);
@@ -56,32 +49,14 @@ export function JoinForm({ lobby, remembered, onJoin }: JoinFormProps) {
 
   return (
     <form noValidate onSubmit={handleSubmit} className="mt-8 flex flex-col gap-6">
-      <div className="flex flex-col gap-1.5">
-        <div className="flex flex-wrap items-baseline justify-between gap-x-4">
-          <Label htmlFor={nameId}>Your name (optional)</Label>
-          <span id={nameHintId} className="text-xs text-ink-muted">
-            Leave blank to appear as Anonymous
-          </span>
-        </div>
-        <Input
-          id={nameId}
-          name="displayName"
-          value={displayName}
-          onChange={(event) => {
-            setDisplayName(event.target.value);
-            if (nameError) setNameError(null);
-          }}
-          placeholder="Anonymous"
-          autoComplete="nickname"
-          aria-invalid={nameError ? true : undefined}
-          aria-describedby={cn(nameHintId, nameError && nameErrorId)}
-        />
-        {nameError ? (
-          <p id={nameErrorId} role="alert" className="text-sm text-danger">
-            {nameError}
-          </p>
-        ) : null}
-      </div>
+      <DisplayNameField
+        value={displayName}
+        onChange={(value) => {
+          setDisplayName(value);
+          if (nameError) setNameError(null);
+        }}
+        error={nameError}
+      />
 
       <AvatarPicker value={avatarId} onChange={setAvatarId} />
 

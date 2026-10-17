@@ -1,4 +1,4 @@
-import type { ReactNode } from "react";
+import type { CSSProperties, ReactNode } from "react";
 
 import { type CardId, getCard } from "@/domain/rules/deck";
 import { cn } from "@/lib/cn";
@@ -22,16 +22,20 @@ export interface VoteCardProps {
   /** Optional content in the middle of the card, such as the voter's avatar and name. */
   children?: ReactNode;
   className?: string;
+  style?: CSSProperties;
 }
 
 /**
  * A playing card in the design's tactile style: value in two corners, flat colour, crisp edge.
  * The corner values are hidden from screen readers; give the card an accessible name where used.
  */
-export function VoteCard({ card, children, className }: VoteCardProps) {
+export function VoteCard({ card, children, className, style }: VoteCardProps) {
   if (card === null) {
     return (
-      <div className={cn("relative rounded-xl bg-card-back p-1.5 shadow-card", className)}>
+      <div
+        className={cn("relative rounded-xl bg-card-back p-1.5 shadow-card", className)}
+        style={style}
+      >
         <div className="size-full rounded-lg border border-primary/80" />
       </div>
     );
@@ -45,6 +49,7 @@ export function VoteCard({ card, children, className }: VoteCardProps) {
         FACE_STYLES[card],
         className,
       )}
+      style={style}
     >
       <span aria-hidden className="text-lg leading-none font-bold">
         {label}

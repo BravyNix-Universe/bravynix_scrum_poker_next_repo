@@ -1,6 +1,7 @@
 import type { MyRoomsRepository } from "@/application/ports/my-rooms-repository";
 import type { ProfilePreferences } from "@/application/ports/profile-preferences";
 import type { OpenRoomSession } from "@/application/ports/room-session";
+import { type ChangeProfile, makeChangeProfile } from "@/application/room/change-profile";
 import { type CreateRoom, makeCreateRoom } from "@/application/room/create-room";
 import { type JoinRoom, makeJoinRoom } from "@/application/room/join-room";
 import { makeResolveRoomRole, type ResolveRoomRole } from "@/application/room/resolve-room-role";
@@ -21,6 +22,7 @@ let myRooms: MyRoomsRepository | null = null;
 let preferences: ProfilePreferences | null = null;
 let createRoom: CreateRoom | null = null;
 let joinRoom: JoinRoom | null = null;
+let changeProfile: ChangeProfile | null = null;
 let resolveRoomRole: ResolveRoomRole | null = null;
 
 export function getMyRoomsRepository(): MyRoomsRepository {
@@ -49,6 +51,11 @@ export function getJoinRoom(): JoinRoom {
     now,
   });
   return joinRoom;
+}
+
+export function getChangeProfile(): ChangeProfile {
+  changeProfile ??= makeChangeProfile({ preferences: getProfilePreferences() });
+  return changeProfile;
 }
 
 export function getResolveRoomRole(): ResolveRoomRole {

@@ -76,6 +76,20 @@
   --shadow-card-raised: 0 6px 0 0 #daddea;
   --shadow-overlay: 0 8px 24px -4px rgb(22 27 51 / 0.08);
   --shadow-panel: 0 20px 40px -12px rgb(22 27 51 / 0.35);
+
+  /* Motion: used only behind motion-safe, so reduced motion gets the end state (PRD 8.6) */
+  --animate-card-flip: card-flip 450ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+
+  @keyframes card-flip {
+    from {
+      opacity: 0;
+      transform: perspective(600px) rotateY(90deg);
+    }
+    to {
+      opacity: 1;
+      transform: perspective(600px) rotateY(0deg);
+    }
+  }
 }
 
 @layer base {

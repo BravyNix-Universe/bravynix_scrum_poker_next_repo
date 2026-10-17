@@ -66,7 +66,7 @@ describe("preview room session", () => {
     expect(view(session).activeStoryId).toBe(story.id);
     expect(view(session).round).toBeNull();
 
-    session.startEstimation();
+    session.startRound();
     expect(view(session).round).toMatchObject({ number: 1, status: "voting", votedIds: [] });
 
     session.castVote("5");
@@ -79,6 +79,63 @@ describe("preview room session", () => {
     session.close();
   });
 
+  it("reveals: every voter's device opens its vote and the round records the outcome", async () => {
+    const session = open("host");
+    vi.advanceTimersByTime(1_000);
+    await session.join({ displayName: "Priya", avatarId: "panda" });
+    vi.advanceTimersByTime(10_000);
+    session.addStory("Show delivery ETA on the order page");
+    session.startRound();
+    session.castVote("5");
+    vi.advanceTimersByTime(20_000);
+
+    session.reveal();
+    expect(view(session).round?.status).toBe("revealing");
+    vi.advanceTimersByTime(5_000);
+
+    const round = view(session).round!;
+    expect(round.status).toBe("revealed");
+    expect(round.outcome?.votes).toContainEqual(
+      expect.objectContaining({ participantId: view(session).me, card: "5" }),
+    );
+    expect(round.outcome?.votes).toHaveLength(view(session).participants.length);
+    expect(view(session).myVote).toBeNull();
+    session.close();
+  });
+
+  it("drops a participant into a room in progress, with history and a timer", async () => {
+    const session = open("participant");
+    vi.advanceTimersByTime(1_000);
+    await session.join({ displayName: null, avatarId: null });
+
+    const current = view(session);
+    expect(current.rounds.filter((round) => round.status === "revealed")).toHaveLength(2);
+    expect(current.round).toMatchObject({ status: "voting", number: 1 });
+    expect(current.timer).not.toBeNull();
+    expect(current.stories.map((story) => story.status)).toEqual([
+      "estimated",
+      "active",
+      "queued",
+      "removed",
+    ]);
+    session.close();
+  });
+
+  it("has the simulated host reveal once everyone has voted", async () => {
+    const session = open("participant");
+    vi.advanceTimersByTime(1_000);
+    await session.join({ displayName: null, avatarId: null });
+    session.castVote("3");
+    vi.advanceTimersByTime(7_000);
+    expect(view(session).round?.status).toBe("revealed");
+
+    // A little later the host moves to the next story and opens its first round.
+    vi.advanceTimersByTime(15_000);
+    expect(view(session).round).toMatchObject({ status: "voting", number: 1 });
+    expect(view(session).stories[2]?.status).toBe("active");
+    session.close();
+  });
+
   it("refuses host actions from participants", async () => {
     const session = open("participant");
     vi.advanceTimersByTime(1_000);
@@ -86,7 +143,7 @@ describe("preview room session", () => {
 
     const before = view(session);
     session.addStory("Another story");
-    session.startEstimation();
+    session.startRound();
     expect(view(session).stories).toEqual(before.stories);
     expect(before.round?.expectedVoterIds).toContain(before.me);
     session.close();

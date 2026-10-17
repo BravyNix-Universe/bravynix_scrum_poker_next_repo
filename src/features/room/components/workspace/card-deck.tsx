@@ -4,8 +4,20 @@ import { VoteCard } from "@/components/ui/vote-card";
 import { type Card, type CardId, DECK } from "@/domain/rules/deck";
 import { cn } from "@/lib/cn";
 
+/**
+ * locked: Discuss, before the host starts estimation. open: VOTING. revealing: the host has
+ * revealed and votes are opening. closed: the round is revealed.
+ */
+export type DeckMode = "locked" | "open" | "revealing" | "closed";
+
+const HINTS: Record<Exclude<DeckMode, "open">, string> = {
+  locked: "Cards unlock when the host starts estimation.",
+  revealing: "Voting has closed. Revealing votes…",
+  closed: "Voting is closed for this round.",
+};
+
 export interface CardDeckProps {
-  enabled: boolean;
+  mode: DeckMode;
   selected: CardId | null;
   onSelect: (card: CardId) => void;
   className?: string;
@@ -15,12 +27,14 @@ export interface CardDeckProps {
  * The fixed deck as a radio group (PRD FR-011, 8.6): arrow keys move between cards, each card has
  * an accessible name, and the selection is marked with a lift, a ring and a "Your vote" tag.
  */
-export function CardDeck({ enabled, selected, onSelect, className }: CardDeckProps) {
-  const hint = !enabled
-    ? "Cards unlock when the host starts estimation."
-    : selected
-      ? "Pick another card to change your vote."
-      : "Pick a card to vote. Nobody sees it until the host reveals.";
+export function CardDeck({ mode, selected, onSelect, className }: CardDeckProps) {
+  const enabled = mode === "open";
+  const hint =
+    mode !== "open"
+      ? HINTS[mode]
+      : selected
+        ? "Pick another card to change your vote."
+        : "Pick a card to vote. Nobody sees it until the host reveals.";
 
   return (
     <section

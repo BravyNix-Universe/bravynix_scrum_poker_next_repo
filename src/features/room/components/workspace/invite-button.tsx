@@ -30,13 +30,22 @@ export function InviteButton({ roomId }: { roomId: RoomId }) {
 
   return (
     <>
-      <Button variant="secondary" size="sm" onClick={copy} aria-label="Copy invite link">
+      <Button
+        variant="secondary"
+        size="sm"
+        onClick={copy}
+        aria-label="Copy invite link"
+        title="Copy invite link"
+        className="max-sm:w-9 max-sm:px-0"
+      >
         {status === "copied" ? (
           <Check aria-hidden className="size-4 text-success" />
         ) : (
           <Share2 aria-hidden className="size-4" />
         )}
-        <span aria-hidden>{status === "copied" ? "Copied" : "Invite"}</span>
+        <span aria-hidden className="max-sm:hidden">
+          {status === "copied" ? "Copied" : "Invite"}
+        </span>
       </Button>
       <span role="status" className="sr-only">
         {status === "copied"

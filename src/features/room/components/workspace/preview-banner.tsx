@@ -10,7 +10,7 @@ export function PreviewBanner() {
         <FlaskConical aria-hidden className="mt-0.5 size-3.5 shrink-0 sm:mt-0" />
         <p>
           <strong className="font-semibold">Preview:</strong> teammates are simulated and nothing
-          leaves this tab. Reveal and results arrive in Phase 3, live rooms in Phase 5.
+          leaves this tab. Live rooms with real teammates arrive in Phase 5.
         </p>
       </Container>
     </div>

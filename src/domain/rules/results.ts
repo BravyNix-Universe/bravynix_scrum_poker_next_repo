@@ -1,4 +1,4 @@
-import { type CardId, getCard } from "./deck";
+import { type CardId, DECK, getCard } from "./deck";
 
 export interface VoteSummary {
   /** Votes with a numeric card (0 and ½ included). */
@@ -41,6 +41,39 @@ export function summarizeVotes(votes: readonly CardId[]): VoteSummary {
     displayAverage: numericCount === 0 ? null : formatAverage(sumHalfPoints, numericCount),
     distribution,
   };
+}
+
+export interface MostCommon {
+  /** Every card that shares the top count, in deck order. */
+  cards: CardId[];
+  count: number;
+}
+
+/**
+ * The most chosen card or cards, ? included. A fact about the votes, never a decision: the app
+ * doesn't pick a consensus or round to a card (PRD 4.1, 11.3).
+ */
+export function getMostCommon(distribution: ReadonlyMap<CardId, number>): MostCommon | null {
+  let count = 0;
+  for (const value of distribution.values()) count = Math.max(count, value);
+  if (count === 0) return null;
+  return {
+    cards: DECK.map((card) => card.id).filter((id) => distribution.get(id) === count),
+    count,
+  };
+}
+
+export interface Spread {
+  low: CardId;
+  high: CardId;
+}
+
+/** The lowest and highest numeric cards played, or null with no numeric votes. */
+export function getSpread(votes: readonly CardId[]): Spread | null {
+  const numeric = DECK.filter((card) => card.halfPoints !== null && votes.includes(card.id));
+  const low = numeric[0];
+  const high = numeric[numeric.length - 1];
+  return low && high ? { low: low.id, high: high.id } : null;
 }
 
 /**

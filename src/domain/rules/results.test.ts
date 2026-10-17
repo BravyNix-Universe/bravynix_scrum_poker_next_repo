@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 
-import { formatAverage, summarizeVotes } from "./results";
+import { formatAverage, getMostCommon, getSpread, summarizeVotes } from "./results";
 
 describe("summarizeVotes", () => {
   it("averages numeric votes and counts ? separately (PRD 18.4.1)", () => {
@@ -42,5 +42,33 @@ describe("formatAverage (PRD 18.4.8)", () => {
   it("rejects invalid input", () => {
     expect(() => formatAverage(1, 0)).toThrow(RangeError);
     expect(() => formatAverage(1.5, 2)).toThrow(RangeError);
+  });
+});
+
+describe("getMostCommon", () => {
+  it("names the top card, or every card tied for the top count, in deck order", () => {
+    expect(getMostCommon(summarizeVotes(["5", "3", "5", "8"]).distribution)).toEqual({
+      cards: ["5"],
+      count: 2,
+    });
+    expect(getMostCommon(summarizeVotes(["8", "unsure", "3"]).distribution)).toEqual({
+      cards: ["3", "8", "unsure"],
+      count: 1,
+    });
+  });
+
+  it("is null with no votes", () => {
+    expect(getMostCommon(new Map())).toBeNull();
+  });
+});
+
+describe("getSpread", () => {
+  it("gives the lowest and highest numeric card", () => {
+    expect(getSpread(["5", "half", "13", "unsure"])).toEqual({ low: "half", high: "13" });
+    expect(getSpread(["3"])).toEqual({ low: "3", high: "3" });
+  });
+
+  it("is null without numeric votes", () => {
+    expect(getSpread(["unsure"])).toBeNull();
   });
 });

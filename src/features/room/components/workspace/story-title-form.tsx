@@ -1,7 +1,7 @@
 "use client";
 
 import { Plus } from "lucide-react";
-import { type FormEvent, useId, useState } from "react";
+import { type FormEvent, type ReactNode, useId, useState } from "react";
 
 import { Button } from "@/components/ui/button";
 import { Input, Label } from "@/components/ui/input";
@@ -16,15 +16,26 @@ const TITLE_ERRORS: Record<TitleError, string> = {
 
 export interface StoryTitleFormProps {
   onSubmit: (title: string) => void;
+  /** For renaming: the current title. */
+  initialTitle?: string;
+  submitLabel?: string;
+  submitIcon?: ReactNode;
   autoFocus?: boolean;
   className?: string;
 }
 
-/** A story is just a title of 1 to 160 characters (PRD FR-008, FR-010). */
-export function StoryTitleForm({ onSubmit, autoFocus, className }: StoryTitleFormProps) {
+/** A story is just a title of 1 to 160 characters (PRD FR-008, FR-010, FR-038). */
+export function StoryTitleForm({
+  onSubmit,
+  initialTitle = "",
+  submitLabel = "Add story",
+  submitIcon = <Plus aria-hidden className="size-4" />,
+  autoFocus,
+  className,
+}: StoryTitleFormProps) {
   const inputId = useId();
   const errorId = useId();
-  const [title, setTitle] = useState("");
+  const [title, setTitle] = useState(initialTitle);
   const [error, setError] = useState<string | null>(null);
 
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
@@ -57,8 +68,8 @@ export function StoryTitleForm({ onSubmit, autoFocus, className }: StoryTitleFor
           aria-describedby={error ? errorId : undefined}
         />
         <Button type="submit">
-          <Plus aria-hidden className="size-4" />
-          Add story
+          {submitIcon}
+          {submitLabel}
         </Button>
       </div>
       {error ? (

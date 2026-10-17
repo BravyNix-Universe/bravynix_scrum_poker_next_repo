@@ -1,4 +1,4 @@
-import { Check, Moon, Star } from "lucide-react";
+import { Check, EyeOff, LoaderCircle, Minus, Moon, Star } from "lucide-react";
 
 import { Avatar } from "@/components/ui/avatar";
 import { VoteCard } from "@/components/ui/vote-card";
@@ -11,6 +11,7 @@ import {
   type RoomPhase,
   type Round,
 } from "@/domain/room/room";
+import { type CardId, getCard } from "@/domain/rules/deck";
 import { cn } from "@/lib/cn";
 
 export interface RosterProps {
@@ -21,21 +22,33 @@ export interface RosterProps {
   className?: string;
 }
 
-type SeatStatus = "here" | "away" | "voted" | "thinking";
+type Seat =
+  | { status: "here" | "away" | "voted" | "thinking" | "revealing" | "not-voted" | "not-revealed" }
+  | { status: "revealed"; card: CardId };
 
-const STATUS_LABELS: Record<SeatStatus, string> = {
+const STATUS_LABELS: Record<Seat["status"], string> = {
   here: "Here",
   away: "Away",
   voted: "Voted",
   thinking: "Thinking…",
+  revealing: "Revealing…",
+  revealed: "Voted",
+  "not-voted": "Not voted",
+  "not-revealed": "Not revealed",
 };
 
 /**
  * Everyone in the room with their status (PRD 8.3, FR-027). Before reveal it shows only who has
- * voted, never a value (FR-013). Status is written out, not shown by colour alone.
+ * voted, never a value (FR-013); after reveal each card turns face up. Status is written out,
+ * not shown by colour alone.
  */
 export function Roster({ participants, me, phase, round, className }: RosterProps) {
   const online = participants.filter((person) => person.online).length;
+  const seats = participants.map((person) => ({ person, seat: seatOf(person, phase, round) }));
+  // Revealed cards turn over one after another, in roster order.
+  const revealOrder = seats
+    .filter(({ seat }) => seat.status === "revealed")
+    .map(({ person }) => person.id);
 
   return (
     <section aria-labelledby="roster-title" className={className}>
@@ -46,12 +59,13 @@ export function Roster({ participants, me, phase, round, className }: RosterProp
         People here ({online})
       </h2>
       <ul className="mt-3 grid grid-cols-3 gap-3 sm:grid-cols-4 sm:gap-4 md:grid-cols-6 lg:grid-cols-8">
-        {participants.map((person) => (
-          <Seat
+        {seats.map(({ person, seat }) => (
+          <SeatView
             key={person.id}
             person={person}
             isMe={person.id === me}
-            status={seatStatus(person, phase, round)}
+            seat={seat}
+            revealIndex={revealOrder.indexOf(person.id)}
           />
         ))}
       </ul>
@@ -59,67 +73,69 @@ export function Roster({ participants, me, phase, round, className }: RosterProp
   );
 }
 
-function seatStatus(person: Participant, phase: RoomPhase, round: Round | null): SeatStatus {
-  if (!person.online) return "away";
-  if (phase !== "estimate" || !isExpectedVoter(round, person.id)) return "here";
-  return hasVoted(round, person.id) ? "voted" : "thinking";
+function seatOf(person: Participant, phase: RoomPhase, round: Round | null): Seat {
+  if (phase === "review" && round?.outcome) {
+    const vote = round.outcome.votes.find((item) => item.participantId === person.id);
+    if (vote) return { status: "revealed", card: vote.card };
+    if (round.outcome.notRevealed.some((item) => item.participantId === person.id)) {
+      return { status: "not-revealed" };
+    }
+    if (round.outcome.notVoted.some((item) => item.participantId === person.id)) {
+      return { status: "not-voted" };
+    }
+  }
+  if (!person.online) return { status: "away" };
+  if (phase !== "estimate" || !isExpectedVoter(round, person.id)) return { status: "here" };
+  const voted = hasVoted(round, person.id);
+  if (round?.status === "revealing") return { status: voted ? "revealing" : "not-voted" };
+  return { status: voted ? "voted" : "thinking" };
 }
 
-function Seat({
+function SeatView({
   person,
   isMe,
-  status,
+  seat,
+  revealIndex,
 }: {
   person: Participant;
   isMe: boolean;
-  status: SeatStatus;
+  seat: Seat;
+  revealIndex: number;
 }) {
   const name = displayNameOf(person);
+  const showsCard = ["voted", "revealing", "revealed"].includes(seat.status);
 
   return (
     <li className="flex min-w-0 flex-col items-center gap-2 text-center">
       <div className="relative aspect-[3/4] w-full max-w-24">
-        {status === "voted" ? (
+        {seat.status === "revealed" ? (
+          <VoteCard
+            card={seat.card}
+            className="size-full p-2.5 motion-safe:animate-card-flip [&>span]:text-2xl"
+            style={{ animationDelay: `${revealIndex * 70}ms` }}
+          />
+        ) : showsCard ? (
           <>
             <VoteCard card={null} className="size-full" />
             <span
               aria-hidden
               className="absolute -top-1.5 -right-1.5 flex size-6 items-center justify-center rounded-full bg-success text-white ring-2 ring-canvas"
             >
-              <Check className="size-3.5" strokeWidth={3} />
+              {seat.status === "revealing" ? (
+                <LoaderCircle className="size-3.5 motion-safe:animate-spin" strokeWidth={3} />
+              ) : (
+                <Check className="size-3.5" strokeWidth={3} />
+              )}
             </span>
           </>
         ) : (
-          <div
-            className={cn(
-              "flex size-full items-center justify-center rounded-xl border-2",
-              status === "thinking"
-                ? "border-dashed border-line-strong/60 bg-canvas-sunken"
-                : "border-line bg-surface",
-              status === "away" && "opacity-50",
-              isMe && "border-primary",
-            )}
-          >
-            {status === "thinking" ? (
-              <span aria-hidden className="flex gap-1">
-                {[0, 1, 2].map((dot) => (
-                  <span
-                    key={dot}
-                    className="size-1.5 rounded-full bg-ink-subtle motion-safe:animate-pulse"
-                    style={{ animationDelay: `${dot * 200}ms` }}
-                  />
-                ))}
-              </span>
-            ) : (
-              <Avatar avatarId={person.avatarId} size="lg" />
-            )}
-          </div>
+          <EmptySeat person={person} isMe={isMe} seat={seat} />
         )}
       </div>
 
       <div className="flex w-full min-w-0 flex-col items-center gap-0.5">
         <span className="flex max-w-full items-center gap-1 text-sm font-medium text-ink">
-          {status === "voted" || status === "thinking" ? (
+          {showsCard || seat.status === "thinking" ? (
             <Avatar avatarId={person.avatarId} size="xs" />
           ) : null}
           {person.isHost ? (
@@ -139,12 +155,52 @@ function Seat({
               <span aria-hidden>·</span>
             </>
           ) : null}
-          {status === "away" ? <Moon aria-hidden className="size-3" /> : null}
-          <span className={cn(status === "voted" && "font-semibold text-success")}>
-            {STATUS_LABELS[status]}
+          {seat.status === "away" ? <Moon aria-hidden className="size-3" /> : null}
+          <span
+            className={cn(
+              (seat.status === "voted" || seat.status === "revealed") &&
+                "font-semibold text-success",
+            )}
+          >
+            {STATUS_LABELS[seat.status]}
+            {seat.status === "revealed" ? (
+              <span className="sr-only"> {getCard(seat.card).label}</span>
+            ) : null}
           </span>
         </span>
       </div>
     </li>
+  );
+}
+
+function EmptySeat({ person, isMe, seat }: { person: Participant; isMe: boolean; seat: Seat }) {
+  const dashed = seat.status === "thinking" || seat.status === "not-voted";
+  return (
+    <div
+      className={cn(
+        "flex size-full items-center justify-center rounded-xl border-2",
+        dashed ? "border-dashed border-line-strong/60 bg-canvas-sunken" : "border-line bg-surface",
+        seat.status === "away" && "opacity-50",
+        isMe && "border-primary",
+      )}
+    >
+      {seat.status === "thinking" ? (
+        <span aria-hidden className="flex gap-1">
+          {[0, 1, 2].map((dot) => (
+            <span
+              key={dot}
+              className="size-1.5 rounded-full bg-ink-subtle motion-safe:animate-pulse"
+              style={{ animationDelay: `${dot * 200}ms` }}
+            />
+          ))}
+        </span>
+      ) : seat.status === "not-voted" ? (
+        <Minus aria-hidden className="size-6 text-ink-subtle" />
+      ) : seat.status === "not-revealed" ? (
+        <EyeOff aria-hidden className="size-6 text-ink-subtle" />
+      ) : (
+        <Avatar avatarId={person.avatarId} size="lg" />
+      )}
+    </div>
   );
 }

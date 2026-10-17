@@ -1,8 +1,19 @@
-import { ChevronLeft, ChevronRight, Eye, Play, Plus } from "lucide-react";
+import {
+  ArrowRight,
+  ChevronLeft,
+  ChevronRight,
+  Eye,
+  LoaderCircle,
+  Pencil,
+  Play,
+  Plus,
+  RotateCcw,
+} from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { IconButton } from "@/components/ui/icon-button";
 import {
+  getNextStory,
   getStoryPosition,
   getVoteProgress,
   type RoomPhase,
@@ -11,6 +22,7 @@ import {
   type StoryId,
   visibleStories,
 } from "@/domain/room/room";
+import { getRoundResults } from "@/domain/room/round-results";
 import type { CardId } from "@/domain/rules/deck";
 
 import { PhaseSteps } from "./phase-steps";
@@ -20,11 +32,16 @@ export interface StoryPanelProps {
   stories: readonly Story[];
   round: Round | null;
   phase: RoomPhase;
-  isHost: boolean;
+  /** Host controls show only for the host of an active room. */
+  canHost: boolean;
+  /** An ended room shows where it stopped, with no next step (FR-022). */
+  ended: boolean;
   myVote: CardId | null;
   onAddStory: () => void;
+  onRenameStory: () => void;
   onActivateStory: (storyId: StoryId) => void;
-  onStartEstimation: () => void;
+  onStartRound: () => void;
+  onReveal: () => void;
 }
 
 /** The current story, its place in the queue, the round phase and the host's next action. */
@@ -33,19 +50,24 @@ export function StoryPanel({
   stories,
   round,
   phase,
-  isHost,
+  canHost,
+  ended,
   myVote,
   onAddStory,
+  onRenameStory,
   onActivateStory,
-  onStartEstimation,
+  onStartRound,
+  onReveal,
 }: StoryPanelProps) {
   const position = getStoryPosition(stories, story.id);
   const queue = visibleStories(stories);
   const index = queue.findIndex((item) => item.id === story.id);
   const previous = index > 0 ? queue[index - 1] : undefined;
-  const next = queue[index + 1];
-  // Switching story mid-vote needs the cancel confirmation that arrives with Phase 3 (FR-041).
-  const canSwitch = round?.status !== "voting";
+  const following = index === -1 ? undefined : queue[index + 1];
+  const next = getNextStory(stories, story.id);
+  const revealing = round?.status === "revealing";
+  // A round cancelled by ending the room isn't a round anyone can act on.
+  const shownRound = round?.status === "cancelled" ? null : round;
 
   return (
     <section
@@ -55,13 +77,19 @@ export function StoryPanel({
       <div className="flex items-center justify-between gap-3">
         <p className="text-xs font-semibold tracking-wide text-ink-muted uppercase">
           {position ? `Story ${position.number} of ${position.total}` : "Story"}
-          {round ? ` · Round ${round.number}` : null}
+          {shownRound ? ` · Round ${shownRound.number}` : null}
         </p>
-        {isHost ? (
-          <Button variant="ghost" size="sm" onClick={onAddStory}>
-            <Plus aria-hidden className="size-4" />
-            Add story
-          </Button>
+        {canHost ? (
+          <div className="-mr-2 flex items-center gap-1">
+            <Button variant="ghost" size="sm" onClick={onRenameStory}>
+              <Pencil aria-hidden className="size-3.5" />
+              Rename
+            </Button>
+            <Button variant="ghost" size="sm" onClick={onAddStory}>
+              <Plus aria-hidden className="size-4" />
+              Add story
+            </Button>
+          </div>
         ) : null}
       </div>
 
@@ -72,68 +100,166 @@ export function StoryPanel({
         {story.title}
       </h2>
 
-      <div className="mt-6 flex flex-col gap-4 border-t border-line pt-5 sm:flex-row sm:items-center sm:justify-between">
-        <div className="flex items-center gap-2">
-          {isHost ? (
-            <IconButton
-              label="Previous story"
-              disabled={!previous || !canSwitch}
-              onClick={() => previous && onActivateStory(previous.id)}
-              className="disabled:opacity-40"
-            >
-              <ChevronLeft aria-hidden className="size-5" />
-            </IconButton>
-          ) : null}
-          <PhaseSteps phase={phase} />
-          {isHost ? (
-            <IconButton
-              label="Next story"
-              disabled={!next || !canSwitch}
-              onClick={() => next && onActivateStory(next.id)}
-              className="disabled:opacity-40"
-            >
-              <ChevronRight aria-hidden className="size-5" />
-            </IconButton>
+      {ended ? null : (
+        <div className="mt-6 flex flex-col gap-4 border-t border-line pt-5 sm:flex-row sm:items-center sm:justify-between">
+          <div className="flex items-center gap-2">
+            {canHost ? (
+              <IconButton
+                label="Previous story"
+                disabled={!previous || revealing}
+                onClick={() => previous && onActivateStory(previous.id)}
+                className="disabled:opacity-40"
+              >
+                <ChevronLeft aria-hidden className="size-5" />
+              </IconButton>
+            ) : null}
+            <PhaseSteps phase={phase} />
+            {canHost ? (
+              <IconButton
+                label="Next story in the queue"
+                disabled={!following || revealing}
+                onClick={() => following && onActivateStory(following.id)}
+                className="disabled:opacity-40"
+              >
+                <ChevronRight aria-hidden className="size-5" />
+              </IconButton>
+            ) : null}
+          </div>
+
+          {canHost ? (
+            <HostActions
+              phase={phase}
+              round={round}
+              next={next}
+              onActivateStory={onActivateStory}
+              onStartRound={onStartRound}
+              onReveal={onReveal}
+            />
           ) : null}
         </div>
-
-        {isHost && phase === "discuss" ? (
-          <Button onClick={onStartEstimation}>
-            <Play aria-hidden className="size-4" />
-            Start estimation
-          </Button>
-        ) : null}
-        {isHost && phase === "estimate" ? (
-          <Button variant="accent" disabled>
-            <Eye aria-hidden className="size-4" />
-            Reveal votes
-          </Button>
-        ) : null}
-      </div>
+      )}
 
       <div aria-live="polite" className="mt-4 flex flex-col gap-1 text-sm">
-        <StatusText phase={phase} round={round} isHost={isHost} myVote={myVote} />
+        {ended ? (
+          <p className="text-ink-muted">
+            {round?.status === "revealed"
+              ? "These results are final: the room has ended."
+              : "The room ended before votes were revealed for this story."}
+          </p>
+        ) : (
+          <StatusText phase={phase} round={round} canHost={canHost} myVote={myVote} />
+        )}
       </div>
     </section>
   );
 }
 
+function HostActions({
+  phase,
+  round,
+  next,
+  onActivateStory,
+  onStartRound,
+  onReveal,
+}: Pick<StoryPanelProps, "phase" | "round" | "onActivateStory" | "onStartRound" | "onReveal"> & {
+  next: Story | null;
+}) {
+  const layout = "flex flex-col-reverse gap-2 sm:flex-row sm:items-center";
+
+  if (phase === "discuss") {
+    return (
+      <Button onClick={onStartRound}>
+        <Play aria-hidden className="size-4" />
+        Start estimation
+      </Button>
+    );
+  }
+
+  if (phase === "estimate" && round?.status === "revealing") {
+    return (
+      <Button variant="accent" disabled>
+        <LoaderCircle aria-hidden className="size-4 motion-safe:animate-spin" />
+        Revealing…
+      </Button>
+    );
+  }
+
+  if (phase === "estimate" && round) {
+    return (
+      <div className={layout}>
+        <Button variant="ghost" onClick={onStartRound}>
+          <RotateCcw aria-hidden className="size-4" />
+          Restart round
+        </Button>
+        <Button
+          variant="accent"
+          disabled={round.votedIds.length === 0}
+          title={round.votedIds.length === 0 ? "Reveal opens once someone votes" : undefined}
+          onClick={onReveal}
+        >
+          <Eye aria-hidden className="size-4" />
+          Reveal votes
+        </Button>
+      </div>
+    );
+  }
+
+  if (phase === "review") {
+    return (
+      <div className={layout}>
+        <Button variant={next ? "secondary" : "primary"} onClick={onStartRound}>
+          <RotateCcw aria-hidden className="size-4" />
+          Start new round
+        </Button>
+        {next ? (
+          <Button onClick={() => onActivateStory(next.id)}>
+            Next story
+            <ArrowRight aria-hidden className="size-4" />
+          </Button>
+        ) : null}
+      </div>
+    );
+  }
+
+  return null;
+}
+
 function StatusText({
   phase,
   round,
-  isHost,
+  canHost,
   myVote,
-}: Pick<StoryPanelProps, "phase" | "round" | "isHost" | "myVote">) {
+}: Pick<StoryPanelProps, "phase" | "round" | "canHost" | "myVote">) {
   if (phase === "discuss") {
     return (
       <p className="text-ink-muted">
-        {isHost
+        {canHost
           ? "Start estimation when the team is ready."
           : "The team is discussing. The host will start estimation."}
       </p>
     );
   }
+
+  if (phase === "review" && round?.outcome) {
+    const { displayAverage, numericCount } = getRoundResults(round.outcome);
+    return (
+      <p className="text-ink-muted">
+        Votes are revealed.
+        <span className="sr-only">
+          {displayAverage
+            ? ` Average ${displayAverage} from ${numericCount} numeric ${numericCount === 1 ? "vote" : "votes"}.`
+            : " No numeric estimate."}
+        </span>
+        {canHost ? null : " The host will start a new round or move on."}
+      </p>
+    );
+  }
+
   if (phase !== "estimate" || !round) return null;
+
+  if (round.status === "revealing") {
+    return <p className="font-medium text-ink">Revealing votes…</p>;
+  }
 
   const progress = getVoteProgress(round);
   return (

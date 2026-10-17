@@ -2,7 +2,7 @@ import type { ComponentProps } from "react";
 
 import { cn } from "@/lib/cn";
 
-export type ButtonVariant = "primary" | "secondary" | "ghost" | "accent";
+export type ButtonVariant = "primary" | "secondary" | "ghost" | "accent" | "danger";
 export type ButtonSize = "sm" | "md" | "lg";
 
 const VARIANT_STYLES: Record<ButtonVariant, string> = {
@@ -10,6 +10,7 @@ const VARIANT_STYLES: Record<ButtonVariant, string> = {
   secondary: "border border-line bg-surface text-ink hover:bg-surface-muted",
   ghost: "text-ink-muted hover:bg-surface-muted hover:text-ink",
   accent: "bg-accent text-ink hover:bg-accent-hover",
+  danger: "bg-danger text-white hover:bg-danger/90",
 };
 
 const SIZE_STYLES: Record<ButtonSize, string> = {
